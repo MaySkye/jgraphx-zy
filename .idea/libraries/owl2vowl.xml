@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="owl2vowl">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/lib/owl2vowl.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

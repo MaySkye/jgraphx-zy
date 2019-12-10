@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<Template>
+    <graph image="/com/mxgraph/examples/swing/config_files/模板1.png"
+           mxe="/com/mxgraph/examples/swing/config_files/模板1.mxe"
+           name="模板1">
+        <cell num="1" type="参考腔稳频激光器单元"/>
+        <cell num="1" type="拍频比对设备"/>
+        <cell num="1" type="光频传递系统接收设备"/>
+        <cell num="1" type="光频传递系统发送设备"/>
+        <cell num="1" type="参考腔稳频激光器单元@connect@拍频比对设备"/>
+        <cell num="1" type="参考腔稳频激光器单元@connect@光频传递系统发送设备"/>
+        <cell num="1" type="拍频比对设备@connect@光频传递系统接收设备"/>
+    </graph>
+    <graph image="/com/mxgraph/examples/swing/config_files/模板2.png"
+           mxe="/com/mxgraph/examples/swing/config_files/模板2.mxe"
+           name="模板2">
+        <cell num="2" type="光频传递系统接收设备"/>
+        <cell num="2" type="光频传递系统发送设备"/>
+        <cell num="1" type="光纤稳频激光器单元"/>
+        <cell num="2" type="光频传递系统接收设备@connect@光纤稳频激光器单元"/>
+        <cell num="2" type="光纤稳频激光器单元@connect@光频传递系统发送设备"/>
+
+    </graph>
+    <graph image="/com/mxgraph/examples/swing/config_files/模板3.png"
+           mxe="/com/mxgraph/examples/swing/config_files/模板3.mxe"
+           name="模板3">
+          <cell num="2" type="光频传递系统接收设备"/>
+          <cell num="2" type="光频传递系统发送设备"/>
+          <cell num="1" type="参考腔稳频激光器净化单元"/>
+          <cell num="2" type="光频传递系统接收设备@connect@参考腔稳频激光器净化单元"/>
+          <cell num="2" type="参考腔稳频激光器净化单元@connect@光频传递系统发送设备"/>
+    </graph>
+
+    <graph image="/com/mxgraph/examples/swing/config_files/模板3.png"
+               mxe="/com/mxgraph/examples/swing/config_files/模板4.mxe"
+               name="模板4">
+              <cell num="2" type="双向EDFA设备"/>
+              <cell num="1" type="监控单元"/>
+              <cell num="2" type="监控单元@data_trans@双向EDFA设备"/>
+    </graph>
+
+</Template>

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<Template>
+	<edge>
+		<name>fiber_horizontal</name>
+		<type>FiberEdge</type>
+		<width>150</width>
+		<height>150</height>
+		<icon>/com/mxgraph/examples/swing/images/1.png</icon>
+		<style>edgeStyle=elbowEdgeStyle;strokeWidth=5;endArrow=none;verticalLabelPosition=middle;verticalAlign=middle;fontFamily=微软雅黑 Light;fontSize=24;fontColor=#FF0000;labelBackgroundColor=#FFFFFF;labelBorderColor=#000000;strokeColor=#488FAD</style>
+	</edge>
+
+	<edge>
+		<name>fiber_vertical</name>
+		<type>FiberEdge</type>
+		<width>150</width>
+		<height>150</height>
+		<icon>/com/mxgraph/examples/swing/images/2.png</icon>
+		<style>edgeStyle=elbowEdgeStyle;elbow=vertical;strokeWidth=5;endArrow=none;verticalLabelPosition=middle;verticalAlign=middle;fontFamily=微软雅黑 Light;fontSize=24;fontColor=#FF0000;labelBackgroundColor=#FFFFFF;labelBorderColor=#000000;strokeColor=#488FAD</style>
+	</edge>
+
+	<edge>
+		<name>fiber</name>
+		<type>FiberEdge</type>
+		<width>150</width>
+		<height>150</height>
+		<icon>/com/mxgraph/examples/swing/images/5.png</icon>
+		<style>edgeStyle=EdgeStyle;elbow=vertical;strokeWidth=5;endArrow=none;verticalLabelPosition=middle;verticalAlign=middle;fontFamily=微软雅黑 Light;fontSize=24;fontColor=#FF0000;labelBackgroundColor=#FFFFFF;labelBorderColor=#000000;strokeColor=#488FAD</style>
+	</edge>
+
+	<edge>
+		<name>data_horizontal</name>
+		<type>DataEdge</type>
+		<width>150</width>
+		<height>150</height>
+		<icon>/com/mxgraph/examples/swing/images/3.png</icon>
+		<style>edgeStyle=elbowEdgeStyle;strokeWidth=5;endArrow=none;verticalLabelPosition=middle;verticalAlign=middle;fontFamily=微软雅黑 Light;fontSize=24;fontColor=#FF0000;labelBackgroundColor=#FFFFFF;labelBorderColor=#C9C9B6;strokeColor=#C9C9B6</style>
+	</edge>
+
+	<edge>
+		<name>data_vertical</name>
+		<type>DataEdge</type>
+		<width>150</width>
+		<height>150</height>
+		<icon>/com/mxgraph/examples/swing/images/4.png</icon>
+		<style>edgeStyle=elbowEdgeStyle;elbow=vertical;strokeWidth=5;endArrow=none;verticalLabelPosition=middle;verticalAlign=middle;fontFamily=微软雅黑 Light;fontSize=24;fontColor=#FF0000;labelBackgroundColor=#FFFFFF;labelBorderColor=#C9C9B6;strokeColor=#C9C9B6</style>
+	</edge>
+
+	<edge>
+		<name>data</name>
+		<type>DataEdge</type>
+		<width>150</width>
+		<height>150</height>
+		<icon>/com/mxgraph/examples/swing/images/6.png</icon>
+		<style>edgeStyle=EdgeStyle;elbow=vertical;strokeWidth=5;endArrow=none;verticalLabelPosition=middle;verticalAlign=middle;fontFamily=微软雅黑 Light;fontSize=24;fontColor=#FF0000;labelBackgroundColor=#FFFFFF;labelBorderColor=#C9C9B6;strokeColor=#C9C9B6</style>
+	</edge>
+
+</Template>

@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="jdic">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/lib/jdic.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

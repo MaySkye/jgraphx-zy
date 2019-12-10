@@ -1,0 +1,23 @@
+<component name="ArtifactManager">
+  <artifact name="jgraphx-master-2.0">
+    <output-path>D:/jar/demo6</output-path>
+    <root id="root">
+      <element id="archive" name="jgraphx-master.jar">
+        <element id="module-output" name="jgraphx-master" />
+      </element>
+      <element id="directory" name="libs">
+        <element id="library" level="project" name="jcommon-1.0.23" />
+        <element id="library" level="project" name="jdic" />
+        <element id="library" level="project" name="jena" />
+        <element id="library" level="project" name="jfreechart-1.0.19" />
+        <element id="library" level="project" name="jfreesvg-2.0" />
+        <element id="library" level="project" name="jPowerShell-1.5.2" />
+        <element id="library" level="project" name="json" />
+        <element id="library" level="project" name="lib" />
+        <element id="library" level="project" name="owl2vowl" />
+        <element id="library" level="project" name="subscribe" />
+        <element id="library" level="project" name="substance-5.3" />
+      </element>
+    </root>
+  </artifact>
+</component>
