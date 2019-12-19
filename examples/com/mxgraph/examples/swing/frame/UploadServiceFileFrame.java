@@ -35,6 +35,9 @@ import java.net.URLDecoder;
 import java.util.Properties;
 
 public class UploadServiceFileFrame extends JFrame {
+
+    // 静态代码块
+    static
     {
         try {
             Properties pps = new Properties();
@@ -157,6 +160,7 @@ public class UploadServiceFileFrame extends JFrame {
      * Create the frame.
      */
     public UploadServiceFileFrame(BasicGraphEditor editor) {
+        this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.editor = editor;
 
         try {
