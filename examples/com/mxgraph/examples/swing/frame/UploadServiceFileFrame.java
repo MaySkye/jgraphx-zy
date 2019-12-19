@@ -161,7 +161,7 @@ public class UploadServiceFileFrame extends JFrame {
 
         try {
             String pathname= FileUtil.getRootPath();
-            ini = new Wini(new File(pathname+"\\resources\\config\\site_info.ini"));
+            ini = new Wini(this.getClass().getResourceAsStream("/config/site_info.ini"));
         } catch (Exception e) {
             e.printStackTrace();
         }
