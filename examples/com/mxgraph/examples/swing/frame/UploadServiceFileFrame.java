@@ -41,6 +41,9 @@ import java.util.Properties;
 import static com.mxgraph.examples.swing.util.HttpUtil.getSiteDTOList;
 
 public class UploadServiceFileFrame extends JFrame {
+
+    // 静态代码块
+    static
     {
         try {
             Properties pps = new Properties();
@@ -179,12 +182,13 @@ public class UploadServiceFileFrame extends JFrame {
      * Create the frame.
      */
     public UploadServiceFileFrame(BasicGraphEditor editor) {
+        this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.editor = editor;
         siteDTOList=getSiteDTOList(getSiteInfoUrl);
 
         /*try {
             String pathname= FileUtil.getRootPath();
-            ini = new Wini(new File(pathname+"\\resources\\config\\site_info.ini"));
+            ini = new Wini(this.getClass().getResourceAsStream("/config/site_info.ini"));
         } catch (Exception e) {
             e.printStackTrace();
         }*/
