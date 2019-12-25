@@ -25,10 +25,10 @@ import java.net.URLEncoder;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
-import java.util.HashSet;
+import java.util.*;
 import java.util.List;
-import java.util.Properties;
-import java.util.Set;
+
+import static com.mxgraph.examples.swing.util.HttpUtil.getTelemetryDTOList;
 
 /**
  * @Author:zhoayi
@@ -43,8 +43,8 @@ public class DBDataAdaptor extends Thread {
     private BasicGraphEditor editor = null;
     private Set<String> monitorInfoSet = new HashSet<>();
     private String site_name=null;
-    String resStr = "";
-
+    private String resStr = "";
+    private Map<String, JTextField> property_data;
     //将每次获取的数据放在一个List集合中
     private List<TelemetryDTO> telemetryDTOList = null;
     //List集合的下标 自增来模拟不同设备的不同属性值
@@ -67,9 +67,10 @@ public class DBDataAdaptor extends Thread {
     //创建sql语句封装对象
     private QueryRunner queryRunner = new JdbcConfig(properties).createQueryRunner();
 
-    public DBDataAdaptor(BasicGraphEditor editor, mxGraph graph) {
+    public DBDataAdaptor(BasicGraphEditor editor, mxGraph graph, Map<String, JTextField> property_data) {
         this.graph = graph;
         this.editor = editor;
+        this.property_data=property_data;
     }
 
     public void cancel() {
@@ -100,17 +101,18 @@ public class DBDataAdaptor extends Thread {
             index = 29;*/
             String url= null;
             try {
-                url = "http://localhost:8888/telemetry/findMonitorValue/"+site_name+"/"+ URLEncoder.encode(resStr,"utf-8");
+                url = "http://localhost:8888/telemetry/findMonitorValue/"+URLEncoder.encode(site_name,"utf-8")+"/"+ URLEncoder.encode(resStr,"utf-8");
             } catch (UnsupportedEncodingException e) {
                 e.printStackTrace();
             }
-            HttpUtil httpUtil = new HttpUtil(url);
-            telemetryDTOList=httpUtil.getTelemetryDTOList();
+            //HttpUtil httpUtil = new HttpUtil(url);
+            telemetryDTOList=getTelemetryDTOList(url);
             //输出list的内容
           /*  for(TelemetryDTO telemetryDTO:telemetryDTOList){
                 System.out.println(telemetryDTO.getDeviceName()+"  "+telemetryDTO.getDataName()+"  "+telemetryDTO.getDetectedValue());
             }*/
 
+            updatePropertyData(property_data);
             //更新一张图片上所有的属性值
             updateCellData(root);
             graph.refresh();
@@ -158,7 +160,7 @@ public class DBDataAdaptor extends Thread {
                 site_name=cell.getValue().toString();
                 site_name=site_name.substring(0,site_name.length()-5);
                 System.out.println("getMonitorInfoStr  site_name：  "+site_name);
-                site_name="xian";
+                //site_name="xian";
             }
         }
 
@@ -176,6 +178,17 @@ public class DBDataAdaptor extends Thread {
         for (int i = 0; i < cell.getChildCount(); i++) {
             mxCell child = (mxCell) cell.getChildAt(i);
             getMonitorInfoStr(child, monitorInfoSet);
+        }
+    }
+
+    public void updatePropertyData(Map<String, JTextField> property_data){
+        for (Map.Entry<String, JTextField> entry : property_data.entrySet()) {
+            for (int i = 0; i < telemetryDTOList.size(); i++) {
+                if(entry.getKey().equals(telemetryDTOList.get(i).getDataName())){
+                    String dataValue = telemetryDTOList.get(i).getDetectedValue();
+                    entry.getValue().setText(dataValue);
+                }
+            }
         }
     }
 

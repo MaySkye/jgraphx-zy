@@ -518,19 +518,18 @@ public class EditorMenuBar extends JMenuBar {
 
         menu.add(editor.bind("选择文件资源", new EditorActions.ConfigureFileResAction()));
         menu.add(editor.bind("生成组态图", new EditorActions.GenerateDiagramAction()));
+        menu.add(editor.bind("同步数据库数据", new EditorActions.SynDatabaseAction()));
         menu.addSeparator();
         menu.add(editor.bind("预览组态图", new EditorActions.RunDiagramAction()));
         menu.add(editor.bind("退出运行态", new EditorActions.QuitRunStateAction()));
         menu.add(editor.bind("提交组态图", new EditorActions.SaveServiceFileAction()));
         menu.addSeparator();
-        menu.add(editor.bind("站点管理", new EditorActions.ManageSiteAction()));
         menu.add(editor.bind("查看关系图", new EditorActions.ViewSchemaAction()));
         //menu.add(editor.bind("地图展示", new MapChartAction()));
         //menu.add(editor.bind("直接加载fibre", new EditorActions.TestAction()));
         //menu.add(editor.bind("选择fibre显示的资源", new EditorActions.SelectResAction()));
         //menu.add(editor.bind("打开service文件", new EditorActions.OpenServiceFileAction()));
         //menu.add(editor.bind("打开xmodel文件", new EditorActions.OpenxModelFileAction()));
-
     }
 
     /**
@@ -1143,7 +1142,5 @@ public class EditorMenuBar extends JMenuBar {
                 }
             }
         }
-    }
-
-    ;
+    };
 };

@@ -306,9 +306,10 @@ public class EditorPalette extends JPanel
 		}
 
 		final JLabel entry = new JLabel(icon);
-		entry.setPreferredSize(new Dimension(80, 80));
+		entry.setPreferredSize(new Dimension(50, 50));
 		entry.setBackground(EditorPalette.this.getBackground().brighter());
-		entry.setFont(new Font("MS Song", Font.PLAIN, 9));
+		//entry.setFont(new Font("MS Song", Font.PLAIN, 9));
+		entry.setFont(new Font(entry.getFont().getFamily(), 0, 10));
 
 		entry.setVerticalTextPosition(JLabel.BOTTOM);
 		entry.setHorizontalTextPosition(JLabel.CENTER);

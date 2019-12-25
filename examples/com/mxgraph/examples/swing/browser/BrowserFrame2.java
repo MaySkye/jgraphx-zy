@@ -8,7 +8,9 @@ import java.io.*;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.math.BigInteger;
+import java.util.Properties;
 
+import com.mxgraph.examples.swing.frame.UploadServiceFileFrame;
 import com.mxgraph.examples.swing.util.FileUtil;
 import com.teamdev.jxbrowser.chromium.Browser;
 import com.teamdev.jxbrowser.chromium.ba;
@@ -43,25 +45,37 @@ public class BrowserFrame2 {
             e1.printStackTrace();
         }
     }
+    private static String webvOwlUrl;
+    private static String webvDataPath;
 
     public static void viewschema(String filepath, String filename) {
+        try {
+            Properties pps = new Properties();
+            pps.load(UploadServiceFileFrame.class.getResourceAsStream("/config/http_url.properties"));
+            webvOwlUrl = pps.getProperty("mxbaseUrl") + pps.getProperty("webvOwlHtml");
+            System.out.println("webvOwlUrl:"+webvOwlUrl);
+            webvDataPath=pps.getProperty("webvDataPath");
+            System.out.println("webvDataPath:"+webvDataPath);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         updateJson(filepath, filename);
-        final String url = "http://localhost:8080/OwlView/WebContent/index.html";
         final String title = filename.substring(0, filename.length() - 4) + "站点关系图";
         Browser browser = new Browser();
         BrowserView view = new BrowserView(browser);
 
-
         JFrame frame = new JFrame();
         //禁用close功能
-        frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+       // frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         //不显示标题栏,最大化,最小化,退出按钮
         //frame.setUndecorated(true);
         frame.setTitle(title);
-        frame.setSize(1200, 900);
+        frame.setSize(1500, 900);
         frame.add(view, BorderLayout.CENTER);
         //frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
-        frame.setLocationByPlatform(true);
+        //frame.setLocationByPlatform(true);
+        frame.setLocationRelativeTo(null);
         frame.setVisible(true);
         frame.addWindowListener(new WindowAdapter() {
             @Override
@@ -73,11 +87,18 @@ public class BrowserFrame2 {
                 }
             }
         });
-        browser.loadURL(url);
+        browser.loadURL(webvOwlUrl);
     }
 
+    /*
+    * D:\Graduation\mxgraph-master\javascript\examples\grapheditor\www\data\foaf.json*/
     public static void updateJson(String filepath, String filename) {
-        String jsonPath = FileUtil.getAppPath() +"/";
+
+        String jarPath = FileUtil.getAppPath() ;
+        jarPath=jarPath.substring(1);
+        jarPath=jarPath+"/";
+        System.out.println("jarPath:"+jarPath);
+
         //存储临时的json文件
         //String jsonPath = BrowserFrame2.class.getResource("/").getPath();
         String tomcatPath = System.getenv("CATALINA_HOME");
@@ -100,8 +121,8 @@ public class BrowserFrame2 {
         }*/
         //第三步
         //java -jar owl2vowl.jar -file ontologies/foaf.rdf
-        String command3 = "java -jar " + tomcatPath + "/webapps/ROOT/OwlView/owl2vowl.jar -file " + filepath;
-        //System.out.println("command3:" + command3);
+        String command3 = "java -jar " + jarPath+"owl/owl2vowl.jar" + " -file " + filepath;
+        System.out.println("command3:" + command3);
         try {
             runProcess("cmd.exe /c "+command3);
            // runProcess(command3);
@@ -109,20 +130,20 @@ public class BrowserFrame2 {
             e.printStackTrace();
         }
 
-        //第四步
+       //第四步
         //删文件
         //deleteFile(jsonPath + "foaf.json");
-        deleteFile(tomcatPath + "/webapps/ROOT/OwlView/WebContent/data/foaf.json");
+        deleteFile(webvDataPath+"foaf.json");
         //给文件改名  D:\LearnedProject\jgraphx-master\jgraphx-master
         String oldName = filename.substring(0, filename.length() - 4) + ".json";
        // System.out.println("oldName:" + oldName);
         String newName = "foaf.json";
-        String absolutePath = jsonPath;
+        String absolutePath = jarPath;
         renameFile(oldName, newName, absolutePath);
 
         String sourceFile = absolutePath + newName;
        // System.out.println("sourceFile:" + sourceFile);
-        String targetFile = tomcatPath + "/webapps/ROOT/OwlView/WebContent/data/foaf.json";
+        String targetFile = webvDataPath+"foaf.json";
 
         //给文件移位置
         File file1 = new File(sourceFile);
@@ -130,8 +151,8 @@ public class BrowserFrame2 {
         copyFile(file1, file2);
         deleteFile(sourceFile);
 
-        try {
-            convert(tomcatPath + "/webapps/ROOT/OwlView/WebContent/data/foaf.json",
+       try {
+            convert(webvDataPath+"foaf.json",
                     "GB2312", "UTF-8", new FilenameFilter() {
                         @Override
                         public boolean accept(File dir, String name) {
@@ -158,6 +179,11 @@ public class BrowserFrame2 {
         while ((line = in.readLine()) != null) {
             System.out.println(cmd + " " + line);
         }
+    }
+
+    public static void main(String[] args) {
+        viewschema("C:\\Users\\ASUS\\Desktop\\郑州.owl","郑州.owl");
+
     }
 
 }

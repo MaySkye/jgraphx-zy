@@ -8,7 +8,10 @@ import javax.swing.border.EmptyBorder;
 
 import com.alibaba.fastjson.JSONObject;
 import com.mxgraph.examples.swing.db.DBConfig;
+import com.mxgraph.examples.swing.db.SiteDTO;
+import com.mxgraph.examples.swing.db.TelemetryDTO;
 import com.mxgraph.examples.swing.editor.BasicGraphEditor;
+import com.mxgraph.examples.swing.owl.Site;
 import com.mxgraph.examples.swing.util.FileUtil;
 import com.mxgraph.examples.swing.util.PortStyleUpdate;
 import com.mxgraph.io.mxCodec;
@@ -32,7 +35,10 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.net.URLDecoder;
+import java.util.List;
 import java.util.Properties;
+
+import static com.mxgraph.examples.swing.util.HttpUtil.getSiteDTOList;
 
 public class UploadServiceFileFrame extends JFrame {
     {
@@ -40,15 +46,18 @@ public class UploadServiceFileFrame extends JFrame {
             Properties pps = new Properties();
             pps.load(UploadServiceFileFrame.class.getResourceAsStream("/config/http_url.properties"));
             uploadFileUrl = pps.getProperty("baseUrl") + pps.getProperty("uploadServiceFile");
+            getSiteInfoUrl = pps.getProperty("baseUrl") + pps.getProperty("getSiteInfo");
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
     // 站点配置文件
-    private Wini ini = null;
+    //private Wini ini = null;
     private static String uploadFileUrl;
     private int levelNumber = 0;
+    private  static String getSiteInfoUrl;
+    private List<SiteDTO> siteDTOList = null;
     //JFrame组件
     private JPanel contentPane;
     private JTextField fileNameFiled = new JTextField();
@@ -90,17 +99,22 @@ public class UploadServiceFileFrame extends JFrame {
     // 根据站级获取站点名
     private void getSiteNamesBySiteLevel(String levelData) {
         siteNameCombox.removeAllItems();
-        ini.entrySet().forEach((entry) -> {
+        /*ini.entrySet().forEach((entry) -> {
             Section sec = entry.getValue();
             if (levelData.equals(sec.get("site_level"))) {
                 siteNameCombox.addItem(sec.get("chinese_name"));
             }
-        });
+        });*/
+        for (SiteDTO s : siteDTOList) {
+            if (levelData.equals(String.valueOf(s.getSiteLevel()))) {
+                siteNameCombox.addItem(s.getSiteName());
+            }
+        }
     }
 
     //根据站点名获取等级和类型
     private void getSiteInfoByChineseName(String siteName) {
-        ini.entrySet().forEach((entry) -> {
+        /*ini.entrySet().forEach((entry) -> {
             Section sec = entry.getValue();
             if (siteName.equals(sec.get("chinese_name"))) {
             	levelNumber = Integer.parseInt(sec.get("site_level"));
@@ -108,7 +122,15 @@ public class UploadServiceFileFrame extends JFrame {
                 siteLevelComboBox.setSelectedIndex(index);
                 siteTypeField.setText(sec.get("site_type"));
             }
-        });
+        });*/
+        for (SiteDTO s : siteDTOList) {
+            if (siteName.equals(s.getSiteName())) {
+                levelNumber=Integer.parseInt(String.valueOf(s.getSiteLevel()));
+                int index = levelNumber - 1;
+                siteLevelComboBox.setSelectedIndex(index);
+                siteTypeField.setText(s.getSiteType());
+            }
+        }
     }
 
     //Http发送文件
@@ -120,7 +142,8 @@ public class UploadServiceFileFrame extends JFrame {
             postMethod.setQueryString(new NameValuePair[]{
             		new NameValuePair("site_name",siteNameCombox.getSelectedItem().toString()),
 					new NameValuePair("site_level",String.valueOf(levelNumber)),
-					new NameValuePair("latest","true")  //默认为最新
+					new NameValuePair("latest","true"),  //默认为最新
+                    new NameValuePair("filename",file.getName())
 			});
 
             try {
@@ -152,19 +175,19 @@ public class UploadServiceFileFrame extends JFrame {
         }
     }
 
-
     /**
      * Create the frame.
      */
     public UploadServiceFileFrame(BasicGraphEditor editor) {
         this.editor = editor;
+        siteDTOList=getSiteDTOList(getSiteInfoUrl);
 
-        try {
+        /*try {
             String pathname= FileUtil.getRootPath();
             ini = new Wini(new File(pathname+"\\resources\\config\\site_info.ini"));
         } catch (Exception e) {
             e.printStackTrace();
-        }
+        }*/
 
         setResizable(false);
         setTitle("发布组态图");

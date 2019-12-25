@@ -38,22 +38,24 @@ import javax.swing.text.html.HTMLDocument;
 import javax.swing.text.html.HTMLEditorKit;
 
 
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.mxgraph.examples.swing.browser.BrowserFrame2;
 import com.mxgraph.examples.swing.db.DBDataAdaptor;
 import com.mxgraph.examples.swing.frame.UploadServiceFileFrame;
 import com.mxgraph.examples.swing.graph.GraphInterface;
+import com.mxgraph.examples.swing.graph.Vertex;
+import com.mxgraph.examples.swing.graph.VertexInterface;
 import com.mxgraph.examples.swing.graph.showGraph;
 import com.mxgraph.examples.swing.map.Liulanqi;
 import com.mxgraph.examples.swing.map.OpenMap;
 import com.mxgraph.examples.swing.match.ModifyTemplateCore;
 import com.mxgraph.examples.swing.match.ResMatchCore;
+import com.mxgraph.examples.swing.owl.OwlObject;
 import com.mxgraph.examples.swing.owl.OwlResourceData;
 import com.mxgraph.examples.swing.select.ResSelectFrame4;
 import com.mxgraph.examples.swing.select.ResSelectFrame5;
-import com.mxgraph.examples.swing.util.AliasName;
-import com.mxgraph.examples.swing.util.EncodeUtil;
-import com.mxgraph.examples.swing.util.FileUtil;
-import com.mxgraph.examples.swing.util.PortStyleUpdate;
+import com.mxgraph.examples.swing.util.*;
 import com.mxgraph.model.mxGeometry;
 import com.mxgraph.util.*;
 import com.teamdev.jxbrowser.chromium.Browser;
@@ -84,6 +86,7 @@ import com.mxgraph.util.png.mxPngTextDecoder;
 import com.mxgraph.view.mxGraph;
 
 import static com.mxgraph.examples.swing.owl.OwlResourceUtil.*;
+import static com.mxgraph.examples.swing.util.HttpUtil.sendHttpPost;
 import static com.sun.deploy.uitoolkit.ToolkitStore.dispose;
 
 /**
@@ -2612,12 +2615,12 @@ public class EditorActions
 			editor.switchToView();
 
 			mxGraph graph = editor.getGraphComponent().getGraph();
-
 			PortStyleUpdate.switchToTransparency((mxCell) graph.getDefaultParent());//去掉连接点
 			graph.refresh();
 
+			Map<String, JTextField> property_data=editor.getProperty_data();
 			//显示数据库数据
-			updateThread = new DBDataAdaptor(editor,graph);
+			updateThread = new DBDataAdaptor(editor,graph,property_data);
 			updateThread.start();
 		}
 
@@ -2649,9 +2652,7 @@ public class EditorActions
 			 if(updateThread != null) {
 				updateThread.cancel();
 			}
-
 		}
-
 	}
 
 
@@ -2695,33 +2696,93 @@ public class EditorActions
 		}
 	}
 
-	//站点管理
-	public static class ManageSiteAction extends AbstractAction
+	/*同步数据库数据*/
+	public static class SynDatabaseAction extends AbstractAction
 	{
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			/*Properties properties = System.getProperties();
-			String osName = properties.getProperty("os.name");
-			System.out.println (osName);
+			BasicGraphEditor editor = getEditor(e);
+			OwlResourceData ord=editor.getNew_owlResourceData();
+			Map<String, OwlObject> objmap=ord.objMap;
+			JSONArray array = new JSONArray();
+			JSONArray res_array = new JSONArray();
+			final String[] site_name = {""};
+			//把objmap的信息同步到数据库
+			objmap.forEach((uri, obj) -> {
+				if((findKind(obj.type).equals("Site"))){
+					site_name[0] =obj.id;
+					System.out.println("site_name[0]:"+site_name[0]);
+				}
+			});
+			JSONObject res_jsonObject  = new JSONObject();
+			res_jsonObject.put("site_name", site_name[0]);
+			objmap.forEach((uri, obj) -> {
+				if((findKind(obj.type).equals("FeatureOfInterest"))&&obj.visible==true){
+					String device_name=obj.id;
+					//解析它的属性信息
+					obj.objAttrs.forEach((objAttr, objSet) -> {
+						objSet.forEach(obj2 -> {
+							System.out.println(obj.id+"->" + objAttr.id + "->"+obj2.id);
+						    if(objAttr.id.equals("has_property")){
+								JSONObject jsonObject  = new JSONObject();
+								jsonObject.put("site_name", site_name[0]);
+								jsonObject.put("device_name", device_name);
+								jsonObject.put("data_name", obj2.id);
 
-			if (osName.indexOf("Linux") != -1) {
-				try {
-					Runtime.getRuntime().exec("htmlview");
-				} catch (IOException e1) {
-					e1.printStackTrace();
+								jsonObject.put("base", "");
+								jsonObject.put("offset", "");
+								jsonObject.put("ratio", "");
+								jsonObject.put("upper_limit", "");
+								jsonObject.put("lower_limit", "");
+								jsonObject.put("alarm_upper_limit", "");
+								jsonObject.put("alarm_lower_limit", "");
+								jsonObject.put("state", "");
+								jsonObject.put("blocked", "");
+								jsonObject.put("alarm_state", "");
+
+								OwlObject temp=objmap.get(obj2.uri);
+								temp.dataAttrs.forEach((temp_objAttr, temp_objSet) -> {
+									temp_objSet.forEach(temp_obj2 -> {
+										System.out.println(temp.id+"->" + temp_objAttr.id + "->"+temp_obj2);
+										if(temp_objAttr.id.equals("基值")){
+											jsonObject.put("base",temp_obj2);
+										}else if(temp_objAttr.id.equals("偏移")){
+											jsonObject.put("offset",temp_obj2);
+										}else if(temp_objAttr.id.equals("系数")){
+											jsonObject.put("ratio",temp_obj2);
+										}else if(temp_objAttr.id.equals("上限")){
+											jsonObject.put("upper_limit",temp_obj2);
+										}else if(temp_objAttr.id.equals("下限")){
+											jsonObject.put("lower_limit",temp_obj2);
+										}else if(temp_objAttr.id.equals("上上限")){
+											jsonObject.put("alarm_upper_limit",temp_obj2);
+										}else if(temp_objAttr.id.equals("下下限")){
+											jsonObject.put("alarm_lower_limit",temp_obj2);
+										}else if(temp_objAttr.id.equals("状态")){
+											jsonObject.put("state",temp_obj2);
+										}else if(temp_objAttr.id.equals("封锁状态")){
+											jsonObject.put("blocked",temp_obj2);
+										}else if(temp_objAttr.id.equals("告警状态")){
+											jsonObject.put("alarm_state",temp_obj2);
+										}
+									});
+								});
+								array.add(jsonObject);
+							}
+						});
+					});
+					System.out.println("-----------------------------------------------");
 				}
-			} else if (osName.indexOf("Windows") != -1){
-				try {
-					Runtime.getRuntime().exec("explorer http://localhost:8080/javascript/examples/grapheditor/www/sitemap.html");
-				} catch (IOException e1) {
-					e1.printStackTrace();
-				}
-			} else {
-				throw new RuntimeException("Unknown OS.");
-			}*/
-			Liulanqi window = new Liulanqi();
-			window.open("http://localhost:8080/javascript/examples/grapheditor/www/sitemap.html");
+			});
+			res_jsonObject.put("telemetry_json",array.toString());
+			res_array.add(res_jsonObject);
+			System.out.println("res_array.toString():"+res_array.toString());
+			String url="http://localhost:8888/telemetry/addtelemetry";
+			try {
+				sendHttpPost(url,res_array.toJSONString());
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
 		}
 	}
-
 }

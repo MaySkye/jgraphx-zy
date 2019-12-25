@@ -23,7 +23,7 @@
     <orderEntry type="library" name="jdic" level="project" />
     <orderEntry type="library" name="owl2vowl" level="project" />
     <orderEntry type="library" name="jPowerShell-1.5.2" level="project" />
-    <orderEntry type="library" name="Maven: org.ini4j:ini4j:0.5.4" level="project" />
     <orderEntry type="library" name="brower" level="project" />
+    <orderEntry type="library" name="Maven: org.ini4j:ini4j:0.5.4" level="project" />
   </component>
 </module>

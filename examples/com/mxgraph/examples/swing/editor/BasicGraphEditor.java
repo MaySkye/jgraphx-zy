@@ -130,6 +130,8 @@ public class BasicGraphEditor extends JPanel
     private JScrollPane jScrollPane = new JScrollPane(propertyPanel);
     private Map<String,JLabel> property_name = new HashMap<>();
     private Map<String,JTextField> property_data = new HashMap<>();
+	private Map<String,JLabel> property_unit = new HashMap<>();
+
     private Map<String,JPanel> device_property=new HashMap<>();
     private Map<String,OwlObject> cell_property=new HashMap<>();
     //用来记录包括哪些记录数据的图元
@@ -144,6 +146,13 @@ public class BasicGraphEditor extends JPanel
 	private AbstractTableModel attrListModel;
 	private JScrollPane scrollPanel;
 
+	public Map<String, JTextField> getProperty_data() {
+		return property_data;
+	}
+
+	public void setProperty_data(Map<String, JTextField> property_data) {
+		this.property_data = property_data;
+	}
 
 	/**
 	 * Adds required resources for i18n
@@ -301,7 +310,7 @@ public class BasicGraphEditor extends JPanel
 		propertyPanel.setVisible(false);
 		jScrollPane.setVisible(false);
 		dataPanel.setOneTouchExpandable(true);
-		dataPanel.setDividerLocation(900);
+		dataPanel.setDividerLocation(0.1);
 		dataPanel.setDividerSize(6);
 		dataPanel.setBorder(null);
 
@@ -417,7 +426,7 @@ public class BasicGraphEditor extends JPanel
 			public void componentResized(ComponentEvent e)
 			{
 				int w = scrollPane.getWidth()
-						- scrollPane.getVerticalScrollBar().getWidth();
+						-scrollPane.getVerticalScrollBar().getWidth();
 				palette.setPreferredWidth(w);
 			}
 
@@ -1044,16 +1053,20 @@ public class BasicGraphEditor extends JPanel
 		initPropertyPanel();
 		inner.setVisible(false);
 		//button.setVisible(true);
-		Dimension preferredSize = new Dimension(400,2000);//设置尺寸
-		propertyPanel.setPreferredSize(preferredSize);
+		//Dimension preferredSize = new Dimension(300,2000);//设置尺寸
+		//propertyPanel.setPreferredSize(preferredSize);
+		propertyPanel.setLayout(new BoxLayout(propertyPanel, BoxLayout.Y_AXIS));
+		propertyPanel.add(Box.createVerticalStrut(15));
 		int len=property_name.size();
-		propertyPanel.setLayout(new FlowLayout(FlowLayout.CENTER,20,20));
+		//propertyPanel.setLayout(new FlowLayout(FlowLayout.LEFT,20,20));
 		propertyPanel.removeAll();
 		for (Map.Entry<String, JPanel> entry : device_property.entrySet()) {
 			entry.getValue().setBorder(BorderFactory.createTitledBorder(entry.getKey()));
 			propertyPanel.add(entry.getValue());
 		}
 		propertyPanel.setVisible(true);
+		jScrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+		jScrollPane.setVerticalScrollBarPolicy( JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 		jScrollPane.setVisible(true);
 
 		//保留原先的，查漏补缺
@@ -1111,9 +1124,10 @@ public class BasicGraphEditor extends JPanel
 		//先清空
 		property_name.clear();
 		property_data.clear();
+		property_unit.clear();
 		device_property.clear();
 		cell_property.clear();
-        //初始化property_name，property_data
+        //初始化property_name，property_data,property_unit
 		if(new_owlResourceData==null){
 			System.out.println("new_owlResourceData is null!");
 			return;
@@ -1121,30 +1135,44 @@ public class BasicGraphEditor extends JPanel
 		for (Map.Entry<String, OwlObject> entry : new_owlResourceData.objMap.entrySet()) {
 			if((findKind(entry.getValue().type).equals("FeatureOfInterest")
 					//||findKind(entry.getValue().type).equals("Site")
-					||findKind(entry.getValue().type).equals("ControlRoom"))
+					||findKind(entry.getValue().type).equals("ControlRoom")) //如果ControlRoom有变量也要监控
 					&&entry.getValue().visible){
-
 				for (Map.Entry<OwlObjectAttribute, Set<OwlObject>> entrys : entry.getValue().objAttrs.entrySet()) {
-
 					if (entrys.getKey().id.equals("has_property")&&entrys.getValue().size()!=0) {
-						//System.out.println("entrys.getValue():"+entrys.getValue());
 						JPanel jPanel=new JPanel();
-						device_property.put(entry.getValue().type.id,jPanel);
+						device_property.put(entry.getValue().id,jPanel);
 						int m=entrys.getValue().size();
-						jPanel.setLayout(new GridLayout(m,2,10,10));
+						//jPanel.setLayout(new GridLayout(m,3,10,10));
+						BoxLayout boxl=new BoxLayout(jPanel, BoxLayout.Y_AXIS);
+						jPanel.setLayout(boxl);
 						for (OwlObject obj : entrys.getValue()) {
-							JLabel jLabel=new JLabel(obj.type.id);
-							//Dimension preferredSize1 = new Dimension(100,50);//设置尺寸
-							//jLabel.setPreferredSize(preferredSize1);
+							JPanel child_jPanel=new JPanel();
+							child_jPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+
+							JLabel jLabel=new JLabel(obj.id);
 							String name=obj.id;
 							property_name.put(name,jLabel);
-							JTextField jTextField=new JTextField(6);
-							//Dimension preferredSize2 = new Dimension(100,50);//设置尺寸
-							//jTextField.setPreferredSize(preferredSize2);
-							property_data.put(name,jTextField);
-							jPanel.add(jLabel);
-							jPanel.add(jTextField);
+							jLabel.setPreferredSize(new Dimension(250, 30));
+							child_jPanel.add(jLabel);
 
+							JTextField jTextField=new JTextField(4);
+							property_data.put(name,jTextField);
+							jTextField.setPreferredSize(new Dimension(150, 30));
+							child_jPanel.add(jTextField);
+							//单位
+							obj.dataAttrs.forEach((temp_objAttr, temp_objSet) -> {
+								temp_objSet.forEach(temp_obj2 -> {
+									System.out.println(obj.id+"->" + temp_objAttr.id + "->"+temp_obj2);
+									if(temp_objAttr.id.equals("资源单位")){
+										JLabel jLabel1=new JLabel(temp_obj2.toString());
+										System.out.println("temp_obj2:"+temp_obj2);
+										property_name.put(name,jLabel1);
+										jLabel1.setPreferredSize(new Dimension(150, 30));
+										child_jPanel.add(jLabel1);
+									}
+								});
+							});
+							jPanel.add(child_jPanel);
 							//System.out.println("name:"+name);
 							cell_property.put(name,obj);
 						}
