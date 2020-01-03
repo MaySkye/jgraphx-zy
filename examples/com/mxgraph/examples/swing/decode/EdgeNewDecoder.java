@@ -5,22 +5,28 @@ import com.mxgraph.util.mxXmlUtils;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class EdgeDecoder {
+/**
+ * @Author:zhoayi
+ * @Description:
+ * @Data: Created in 14:50 2020/1/2
+ * @Modify By:
+ */
+public class EdgeNewDecoder {
+    private InputStream inputStream;
+    private List<EdgeEle> data;
 
-    private static final InputStream inputStream = EdgeDecoder.class.getResourceAsStream("/com/mxgraph/examples/swing/config_files/edge_template");
-    private static List<EdgeEle> data;
 
-
-    private EdgeDecoder() {
+    public EdgeNewDecoder(String path) throws FileNotFoundException {
+        File f = new File(path);
+        inputStream= new FileInputStream(f);
         // static class, decode edge cell, eg: pipe
     }
 
-    public static List<EdgeEle> decodeDoc() {
+    public  List<EdgeEle> decodeDoc() {
 
         if (data == null) {
             try {
@@ -32,7 +38,7 @@ public class EdgeDecoder {
         return data;
     }
 
-    private static List<EdgeEle> decodeDoc(InputStream inputStream) throws IOException {
+    private  List<EdgeEle> decodeDoc(InputStream inputStream) throws IOException {
 
         List<EdgeEle> list = new ArrayList<>();
 
@@ -52,7 +58,7 @@ public class EdgeDecoder {
         return list;
     }
 
-    private static EdgeEle decodeCell(Node node) {
+    private  EdgeEle decodeCell(Node node) {
         /*
         <edge>
             <name>pipe_horizontal</name>
@@ -74,7 +80,7 @@ public class EdgeDecoder {
         return ele;
     }
 
-    private static EdgeEle decodeAttrs(Node node, EdgeEle ele) {
+    private  EdgeEle decodeAttrs(Node node, EdgeEle ele) {
         /*
         <edge>
          */
@@ -85,7 +91,7 @@ public class EdgeDecoder {
         return obj;
     }
 
-    private static EdgeEle decodeChildren(Node node, EdgeEle ele) {
+    private  EdgeEle decodeChildren(Node node, EdgeEle ele) {
         /*
         <edge>
             <name>pipe_horizontal</name>
@@ -131,7 +137,7 @@ public class EdgeDecoder {
         return ele;
     }
 
-    private static Pair<String, String> decodeChild(Node node) {
+    private  Pair<String, String> decodeChild(Node node) {
         /*
         <name>pipe_horizontal</name>
          */
@@ -146,5 +152,4 @@ public class EdgeDecoder {
         //System.out.println();
         return par;
     }
-
 }

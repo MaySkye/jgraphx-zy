@@ -516,6 +516,8 @@ public class EditorMenuBar extends JMenuBar {
             e.printStackTrace();
         }*/
 
+        menu.add(editor.bind("图元管理" ,new EditorActions.CellManagerAction()));
+        menu.addSeparator();
         menu.add(editor.bind("选择文件资源", new EditorActions.ConfigureFileResAction()));
         menu.add(editor.bind("生成组态图", new EditorActions.GenerateDiagramAction()));
         menu.add(editor.bind("同步数据库数据", new EditorActions.SynDatabaseAction()));

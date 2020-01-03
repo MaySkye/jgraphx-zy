@@ -445,7 +445,83 @@ public class GraphEditor extends BasicGraphEditor
 						80, 80, "Timer");
 		// Adds some template cells for dropping into the graph
 
-		// add cell and pipe node
+		updatecells(fiber_devicesPalette,linksPalette);
+		/*// add cell and pipe node
+		List<CellEle> cellList = CellDecoder.decodeDoc();
+		for (CellEle cellEle : cellList) {
+			mxCell cell = new mxCell();
+			//cell.setValue(cellEle.getName());
+			cell.setGeometry(new mxGeometry(0, 0, cellEle.getWidth(), cellEle.getHeight()));
+			cell.setStyle(cellEle.getStyle());
+			cell.setType(cellEle.getType());
+			cell.setName(cellEle.getName());
+			cell.setVertex(true);
+			cell.setMultiValue(cellEle.getMultiValue());
+
+			//cell.setMultiValue(cellEle.getMultiValue());
+			//cell.setOriginStyle(cellEle.getStyles());
+			//System.out.println("add cell in palette: " + cell.getName());
+
+			if (cellEle.getPorts() != null && !cellEle.getPorts().isEmpty()) {
+				// has connect point, handle port cell
+				cell.setConnectable(true);
+				//遍历图元的磁力点
+				for (CellPort cellPort : cellEle.getPorts()) {
+					mxGeometry geo = new mxGeometry(cellPort.getX(), cellPort.getY(), cellPort.getWidth(), cellPort.getHeight());
+					geo.setOffset(new mxPoint(-geo.getWidth() / 2, -geo.getHeight() / 2));
+					geo.setRelative(true);
+
+					mxCell port = new mxCell();
+					port.setStyle(cellPort.getStyle());
+					port.setGeometry(geo);
+					port.setName(cellPort.getName());
+					port.setVertex(true);
+					port.setType("Port");
+					port.setAttr(cellPort.getAttr());
+					port.setLocation(cellPort.getLocation());
+					port.setDirection(cellPort.getDirection());
+
+					//System.out.print("add cell port in " + cell.getName() + " # direction:" + port.getDirection());
+					//System.out.println(" x:" + port.getGeometry().getX() + " y:" + port.getGeometry().getY());
+
+					cell.insert(port);
+				}
+			}
+			AllCellMap.put(cell.getName(), cell);  //添加的图元、连接点
+			//System.out.println(cellEle.getIcon());
+			//System.out.println(GraphEditor.class.getResource(cellEle.getIcon()));
+			//System.out.println(cell);
+
+			fiber_devicesPalette.addTemplate(cellEle.getName(),
+					new ImageIcon(GraphEditor.class.getResource(cellEle.getIcon())), cell);
+		}
+
+		*//*
+		* shapesPalette
+				.addTemplate(
+						"Horizontal Line",
+						new ImageIcon(
+								GraphEditor.class
+										.getResource("/com/mxgraph/examples/swing/images/hline.png")),
+						"line", 160, 10, "");
+		* *//*
+		List<EdgeEle> edgeList = EdgeDecoder.decodeDoc();
+		for (EdgeEle edgeEle : edgeList) {
+			mxCell cell =linksPalette.addEdgeTemplate(edgeEle.getName(),
+					new ImageIcon(GraphEditor.class.getResource(edgeEle.getIcon())),
+					edgeEle.getStyle(),
+					//"straight;strokeWidth=20;endArrow=none;verticalLabelPosition=middle;verticalAlign=middle;fontFamily=微软雅黑 Light;fontSize=24;fontColor=#FF0000;labelBackgroundColor=#FFFFFF;labelBorderColor=#000000;strokeColor=#66FFFF",
+					edgeEle.getWidth(),edgeEle.getHeight(),edgeEle.getName(),edgeEle.getType(),""
+			);
+
+			//cell.setEdge(true);
+			AllCellMap.put(cell.getName(), cell);
+			//System.out.println("add edge cell in palette: " + edgeEle.getName());
+		}*/
+	}
+
+	//赵艺：更新设备图元和连线图元
+	public void updatecells(EditorPalette fiber_devicesPalette,EditorPalette linksPalette){
 		List<CellEle> cellList = CellDecoder.decodeDoc();
 		for (CellEle cellEle : cellList) {
 			mxCell cell = new mxCell();
@@ -518,7 +594,6 @@ public class GraphEditor extends BasicGraphEditor
 			//System.out.println("add edge cell in palette: " + edgeEle.getName());
 		}
 	}
-
 	/**
 	 * 
 	 */

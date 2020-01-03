@@ -42,6 +42,7 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.mxgraph.examples.swing.browser.BrowserFrame2;
 import com.mxgraph.examples.swing.db.DBDataAdaptor;
+import com.mxgraph.examples.swing.frame.CellManagerFrame;
 import com.mxgraph.examples.swing.frame.UploadServiceFileFrame;
 import com.mxgraph.examples.swing.graph.GraphInterface;
 import com.mxgraph.examples.swing.graph.Vertex;
@@ -2785,4 +2786,16 @@ public class EditorActions
 			}
 		}
 	}
+
+    /*图元管理*/
+	public static class CellManagerAction extends AbstractAction
+	{
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			BasicGraphEditor editor = getEditor(e);
+
+			new CellManagerFrame(editor);
+		}
+	}
+
 }

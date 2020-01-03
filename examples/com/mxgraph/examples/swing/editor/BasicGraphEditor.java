@@ -1297,5 +1297,7 @@ public class BasicGraphEditor extends JPanel
 			addPropertyCell(child,graph);
 		}
 	}
-
+	public  Map<String, mxCell> getAllCellMap() {
+		return AllCellMap;
+	}
 }
