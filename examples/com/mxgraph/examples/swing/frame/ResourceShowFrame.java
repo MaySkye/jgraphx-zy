@@ -55,8 +55,6 @@ public class ResourceShowFrame extends JFrame {
         this.graph=graph;
         this.cell=cell;
         RecentResourcePath = cell.getOriginalResourceFile();
-        System.out.println("RecentResourcePath:"+RecentResourcePath);
-        System.out.println("cell:"+cell);
 
         initFrame();
         initTablePanel();
@@ -135,9 +133,6 @@ public class ResourceShowFrame extends JFrame {
                 }
             });
 
-
-
-
         // Create the scroll pane and add the table to it.
         JScrollPane scrollPane = new JScrollPane(table);
         // Add the scroll pane to this panel.
@@ -158,7 +153,9 @@ public class ResourceShowFrame extends JFrame {
         //按钮初始化
         btnAlter = new JButton(AliasName.getAlias("resource_alter"));
         btnreBind = new JButton(AliasName.getAlias("resource_rebind"));
-        btnBack = new JButton(AliasName.getAlias("back"));
+        btnAlter.setVisible(false);
+        btnreBind.setVisible(false);
+        btnBack = new JButton(AliasName.getAlias("确定"));
         //为按钮绑定点击事件
         btnAlter.addActionListener(event -> btnAlterClickListener(event));
         btnreBind.addActionListener(event -> btnChoiceFileListener(event));
@@ -259,7 +256,7 @@ public class ResourceShowFrame extends JFrame {
                 if(cell.getV()!=null){
                     num1=cell.getV().getData_info().size();
                     num2=cell.getV().getLink_info().size();
-                    System.out.println("num1:"+num1+"num2:"+num2);
+                    //System.out.println("num1:"+num1+"num2:"+num2);
                 }else{
                     num1=0;
                     num2=0;

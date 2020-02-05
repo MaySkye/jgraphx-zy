@@ -15,11 +15,7 @@ import java.awt.print.PrinterException;
 import java.awt.print.PrinterJob;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.FilenameFilter;
-import java.io.IOException;
+import java.io.*;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
@@ -2716,6 +2712,11 @@ public class EditorActions
 				}
 			});
 			JSONObject res_jsonObject  = new JSONObject();
+			//如果站点名为空，退出此操作
+			if(site_name[0].equals("")){
+				JOptionPane.showMessageDialog(null, "站点名称为空!同步数据失败!", "错误", JOptionPane.INFORMATION_MESSAGE);
+				return;
+			}
 			res_jsonObject.put("site_name", site_name[0]);
 			objmap.forEach((uri, obj) -> {
 				if((findKind(obj.type).equals("FeatureOfInterest"))&&obj.visible==true){
@@ -2724,7 +2725,7 @@ public class EditorActions
 					obj.objAttrs.forEach((objAttr, objSet) -> {
 						objSet.forEach(obj2 -> {
 							System.out.println(obj.id+"->" + objAttr.id + "->"+obj2.id);
-						    if(objAttr.id.equals("has_property")){
+						    if(objAttr.id.equals("has_property")&&obj2.visible){
 								JSONObject jsonObject  = new JSONObject();
 								jsonObject.put("site_name", site_name[0]);
 								jsonObject.put("device_name", device_name);
@@ -2781,6 +2782,7 @@ public class EditorActions
 			String url="http://localhost:8888/telemetry/addtelemetry";
 			try {
 				sendHttpPost(url,res_array.toJSONString());
+				JOptionPane.showMessageDialog(null, "同步数据库数据完成.", "完成", JOptionPane.INFORMATION_MESSAGE);
 			} catch (Exception e1) {
 				e1.printStackTrace();
 			}
@@ -2795,6 +2797,70 @@ public class EditorActions
 			BasicGraphEditor editor = getEditor(e);
 
 			new CellManagerFrame(editor);
+		}
+	}
+
+	/*直接存为新图元*/
+	public static class saveAsCellAction extends AbstractAction
+	{
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			BasicGraphEditor editor = getEditor(e);
+			//获取graph存为图片
+			/*if (editor != null)
+			{
+				mxGraphComponent graphComponent = editor.getGraphComponent();
+				mxGraph graph = graphComponent.getGraph();
+				// Creates the image for the PNG file
+				BufferedImage image = mxCellRenderer.createBufferedImage(graph,
+						null, 1, bg, graphComponent.isAntiAlias(), null,
+						graphComponent.getCanvas());
+
+				// Creates the URL-encoded XML data
+				mxCodec codec = new mxCodec();
+				String xml = null;
+				try {
+					xml = URLEncoder.encode(
+							mxXmlUtils.getXml(codec.encode(graph.getModel())), "UTF-8");
+				} catch (UnsupportedEncodingException e1) {
+					e1.printStackTrace();
+				}
+				mxPngEncodeParam param = mxPngEncodeParam
+						.getDefaultEncodeParam(image);
+				param.setCompressedText(new String[] { "mxGraphModel", xml });
+
+				String filename
+				// Saves as a PNG file
+				FileOutputStream outputStream = new FileOutputStream(new File(
+						filename));
+				try
+				{
+					mxPngImageEncoder encoder = new mxPngImageEncoder(outputStream,
+							param);
+
+					if (image != null)
+					{
+						encoder.encode(image);
+
+						editor.setModified(false);
+						editor.setCurrentFile(new File(filename));
+					}
+					else
+					{
+						JOptionPane.showMessageDialog(graphComponent,
+								mxResources.get("noImageData"));
+					}
+				} catch (IOException e1) {
+					e1.printStackTrace();
+				} finally
+				{
+					outputStream.close();
+				}
+
+
+			}*/
+			//填写基本信息
+
 		}
 	}
 

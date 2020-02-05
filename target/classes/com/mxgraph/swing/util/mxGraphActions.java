@@ -856,24 +856,13 @@ public class mxGraphActions
 	public static class getresInfoAction extends AbstractAction
 	{
 
-		/**
-		 *
-		 */
 		private static final long serialVersionUID = 6501585024845668188L;
-		private BasicGraphEditor editor = null;
-		/**
-		 *
-		 * @param name
-		 */
+		private BasicGraphEditor editor;
 		public getresInfoAction(BasicGraphEditor editor, String name)
 		{
 			super(name);
 			this.editor = editor;
 		}
-
-		/**
-		 *
-		 */
 		public void actionPerformed(ActionEvent e)
 		{
 			BasicGraphEditor editor = getEditor(e);
@@ -885,13 +874,7 @@ public class mxGraphActions
 			}
 			mxCell cell = (mxCell) obj;//得到选中的图元对象
 
-			System.out.println("lllll:"+cell.getId());
-
 			if(cell.getV()!=null){
-				System.out.println("lllll:"+cell.getV().getName());//类型
-				System.out.println("lllll:"+cell.getV().getLabel());//lable和id一样
-				System.out.println("lllll:"+cell.getV().getId());
-				System.out.println("lllll:"+cell.getV().getUrl());
 				//输出数据属性信息
 				Map<String,String> data_info=cell.getV().getData_info();
 				Map<String,String> link_info=cell.getV().getLink_info();
@@ -910,13 +893,7 @@ public class mxGraphActions
 					System.out.println(entry.getKey()+":"+val);
 				}
 			}
-
-
-           //       OwlResourceData owlResourceData = parseResourceFile(filepath);
-
-			//ResourceListFrame wizard = new ResourceListFrame(editor, graph, cell, true);
-			ResourceShowFrame wizard = new ResourceShowFrame(editor,graph,cell);
-			//获得数据
+			new ResourceShowFrame(editor,graph,cell);
 
 		}
 

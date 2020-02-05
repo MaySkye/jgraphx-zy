@@ -360,13 +360,16 @@ public class showGraph {
                 obj.objAttrs.forEach((objAttr, objSet) -> {
                     objSet.forEach(obj2 -> {
                         System.out.println(obj.id+"->" + objAttr.id + "->"+obj2.id);
-                        if(link_info_map.get(objAttr.id )!=null){
-                            String str=link_info_map.get(objAttr.id );
-                            str=str+"; "+obj2.id;
-                            link_info_map.put(objAttr.id ,str);
-                        }else{
-                            link_info_map.put(objAttr.id ,obj2.id);
+                        if(obj2.visible==true){
+                            if(link_info_map.get(objAttr.id )!=null){
+                                String str=link_info_map.get(objAttr.id );
+                                str=str+"; "+obj2.id;
+                                link_info_map.put(objAttr.id ,str);
+                            }else{
+                                link_info_map.put(objAttr.id ,obj2.id);
+                            }
                         }
+
                     });
                 });
 

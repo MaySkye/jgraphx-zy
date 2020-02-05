@@ -517,6 +517,7 @@ public class EditorMenuBar extends JMenuBar {
         }*/
 
         menu.add(editor.bind("图元管理" ,new EditorActions.CellManagerAction()));
+        menu.add(editor.bind("存为设备图元" ,new EditorActions.saveAsCellAction()));
         menu.addSeparator();
         menu.add(editor.bind("选择文件资源", new EditorActions.ConfigureFileResAction()));
         menu.add(editor.bind("生成组态图", new EditorActions.GenerateDiagramAction()));

@@ -32,6 +32,7 @@ public class ResourceStaticData {
             return this.obj;
         }
 
+
         public int hashCode() {
             int x = 99;
             x = x << 1 ^ Objects.hashCode(sub);

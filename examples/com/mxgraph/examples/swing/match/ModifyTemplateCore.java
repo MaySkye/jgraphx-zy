@@ -78,7 +78,7 @@ public class ModifyTemplateCore {
         /*---------------------------------------------------------------------------------------------------*/
         // 第三步：删除多余Connector，连线
         removeCells.clear();
-        removeRedundantConnector(root, removeCells);
+        removeRedundantConnector(root,root, resourceStaticData.connMap,removeCells,editor);
         graph.removeCells(removeCells.toArray());
         /*---------------------------------------------------------------------------------------------------*/
         // 第四步：根据情况，删除没必要存在的Container图元
@@ -295,18 +295,33 @@ public class ModifyTemplateCore {
     /********************************************************************************************/
 
     //第三步：删除多余的连接(无两个连接的图元)
-    private void removeRedundantConnector(mxCell cell, List<mxCell> removeCells) {
+    private void removeRedundantConnector(mxCell root,mxCell cell, Map<ResourceStaticData.MTriple<String, String, String>, Integer> connMap,List<mxCell> removeCells,BasicGraphEditor editor) {
         if (cell == null || removeCells == null || removeCells.contains(cell)) {
             return;
         }
-
+        /*删除图元的情况*/
         if (cell.isEdge()&&ConnectorToEdgeMap.containsKey(cell.getName()) && (cell.getTarget()==null||cell.getSource()==null)) {
             System.out.println("will remove: " + cell.getName());
             removeCells.add(cell);
         }
+        if (cell.isEdge()&&ConnectorToEdgeMap.containsKey(cell.getName()) && (cell.getTarget()!=null&&cell.getSource()!=null)) {
+            mxCell firstcell=getCellById(root,cell.getSource().getId());
+            mxCell thirdcell=getCellById(root,cell.getTarget().getId());
+            if(firstcell.getType().equals("Port")){
+                firstcell=getCellById(root,cell.getSource().getParent().getId());
+            }
+            if(thirdcell.getType().equals("Port")){
+                thirdcell=getCellById(root,cell.getTarget().getParent().getId());
+            }
+            ResourceStaticData.MTriple<String, String, String> temp=new ResourceStaticData.MTriple<>(firstcell.getType(),"connect",thirdcell.getType());
+            if(!connMap.containsKey(temp)){
+                System.out.println("will remove1: " + cell.getName());
+                removeCells.add(cell);
+            }
+        }
         for (int i = 0; i < cell.getChildCount(); ++i) {
             mxCell child = (mxCell) cell.getChildAt(i);
-            removeRedundantConnector(child, removeCells);
+            removeRedundantConnector(root,child, connMap,removeCells,editor);
         }
     }
     //判断是不是孤立的，有没有与之相连接的图元(暂时未使用)
@@ -333,6 +348,23 @@ public class ModifyTemplateCore {
         return connectCells < 2;
     }
 
+    //这里的id指的是数字
+   private mxCell getCellById(mxCell root,String id){
+       if (root == null || id == null) {
+           return null;
+       }
+       if (root.getId().equals(id)) {
+           return root;
+       }
+       for (int i = 0; i < root.getChildCount(); ++i) {
+           mxCell child = (mxCell) root.getChildAt(i);
+           mxCell res = getCellById(child, id);
+           if (res != null) {
+               return res;
+           }
+       }
+       return null;
+    }
     /********************************************************************************************/
 
     //第四步：

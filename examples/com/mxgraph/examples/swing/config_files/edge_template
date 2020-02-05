@@ -48,13 +48,5 @@
     <height>150</height>  
     <icon>/com/mxgraph/examples/swing/images/6.png</icon>  
     <style>edgeStyle=EdgeStyle;elbow=vertical;strokeWidth=5;endArrow=none;verticalLabelPosition=middle;verticalAlign=middle;fontFamily=微软雅黑 Light;fontSize=24;fontColor=#FF0000;labelBackgroundColor=#FFFFFF;labelBorderColor=#C9C9B6;strokeColor=#C9C9B6</style> 
-  </edge>  
-  <edge>
-    <name>111</name>
-    <type>FiberEdge</type>
-    <width>111</width>
-    <height>111</height>
-    <icon>/com/mxgraph/examples/swing/images/cell_manage/test.png</icon>
-    <style>edgeStyle=elbowEdgeStyle;strokeWidth=5;endArrow=none;verticalLabelPosition=middle;verticalAlign=middle;fontFamily=微软雅黑 Light;fontSize=24;fontColor=#FF0000;labelBackgroundColor=#FFFFFF;labelBorderColor=#000000;strokeColor=#488FAD</style>
-  </edge>
+  </edge> 
 </Template>

@@ -143,6 +143,9 @@ public class CellManagerFrame extends JFrame {
         label2.setBounds(100, 24, 80, 30);
         label1.setBorder(BorderFactory.createLineBorder(Color.black, 2));
         label2.setBorder(BorderFactory.createLineBorder(Color.lightGray, 1));
+        System.out.println("hhhhhhh");
+        label1.revalidate();
+        label2.revalidate();
 
         JButton jbt1=new JButton("设备图元");
         JButton jbt2=new JButton("连线图元");
@@ -869,7 +872,7 @@ public class CellManagerFrame extends JFrame {
         Document document = saxReader.read(cell_template);
         //获取到文档的根节点
         Element rootElement = document.getRootElement();
-        System.out.println("根节点的名字是:" + rootElement.getName());
+        //System.out.println("根节点的名字是:" + rootElement.getName());
         //获取子节点列表
         Iterator it = rootElement.elementIterator();
         while (it.hasNext()) {
@@ -877,7 +880,7 @@ public class CellManagerFrame extends JFrame {
             //获取节点的属性值
             device_names.add(fistChild.attribute("name").getValue());
             device_icons.add(fistChild.attribute("icon").getValue());
-            System.out.println(fistChild.attribute("icon").getValue());
+            //System.out.println(fistChild.attribute("icon").getValue());
             JPanel jp=new JPanel();
             //jp.setLayout(new BoxLayout(jp, BoxLayout.Y_AXIS));
            // jp.add(Box.createVerticalStrut(5));
@@ -1005,7 +1008,7 @@ public class CellManagerFrame extends JFrame {
             Document document = saxReader.read(edge_template);
             //获取到文档的根节点
             Element rootElement = document.getRootElement();
-            System.out.println("根节点的名字是:" + rootElement.getName());
+            //System.out.println("根节点的名字是:" + rootElement.getName());
             //获取子节点列表
             Iterator it = rootElement.elementIterator();
             while (it.hasNext()) {
@@ -1078,7 +1081,7 @@ public class CellManagerFrame extends JFrame {
                                 @Override
                                 public void actionPerformed(ActionEvent e) {
                                     String action=e.getActionCommand();
-                                    System.out.println("执行命令："+action);
+                                    //System.out.println("执行命令："+action);
                                     //当是打开命令时，再弹出一个窗口
                                     if(action.equals("delete"))
                                     {
@@ -1116,7 +1119,7 @@ public class CellManagerFrame extends JFrame {
                                 }
                             });
                             String imagePath=imagedir+"/delete.png";
-                            System.out.println("imagePath:"+imagePath);
+                            //System.out.println("imagePath:"+imagePath);
                             //RL imageURL=getClass().getResource(imagePath);
                             //System.out.println("imageURL:"+imageURL);
                             ImageIcon icon=new ImageIcon(imagePath);
@@ -1887,6 +1890,7 @@ public class CellManagerFrame extends JFrame {
 					cell.insert(port);
 				}
 			}
+			System.out.println("cell.getName():"+cell.getName());
 			AllCellMap.put(cell.getName(), cell);  //添加的图元、连接点
 			fiber_devicesPalette.addTemplate(cellEle.getName(),
 					new ImageIcon(GraphEditor.class.getResource(cellEle.getIcon())), cell);

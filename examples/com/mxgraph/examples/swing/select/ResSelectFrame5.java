@@ -3,6 +3,8 @@ package com.mxgraph.examples.swing.select;
 import com.mxgraph.examples.swing.editor.BasicGraphEditor;
 import com.mxgraph.examples.swing.editor.DefaultFileFilter;
 import com.mxgraph.examples.swing.graph.GraphInterface;
+import com.mxgraph.examples.swing.graph.Vertex;
+import com.mxgraph.examples.swing.graph.VertexInterface;
 import com.mxgraph.examples.swing.graph.showGraph;
 import com.mxgraph.examples.swing.match.ModifyTemplateCore;
 import com.mxgraph.examples.swing.match.ResMatchCore;
@@ -188,6 +190,7 @@ public class ResSelectFrame5 extends Frame{
                 // 根据资源模型文件，对模板组态图进行调整,
                 // 则可以显示出调整好的组态图，图元没有绑定资源信息
                 GraphInterface<String> graph= showGraph.createGraph(new_owlResourceData);
+
                 new ModifyTemplateCore(TemplatePath).postProcess(graph,editor,filepath);
 
                 //添加标题
@@ -214,6 +217,16 @@ public class ResSelectFrame5 extends Frame{
                     graph.removeCells(graph.getChildVertices(graph.getDefaultParent()));
                     parent = graph.getDefaultParent();
                     paint(new_objMap);
+
+                    //打印new_owlResourceData
+                   /* new_owlResourceData.objMap.forEach((uri, obj) -> {
+                        //解析它的基本信息，对象信息和属性信息
+                        obj.objAttrs.forEach((objAttr, objSet) -> {
+                            objSet.forEach(obj2 -> {
+                                System.out.println(obj.id+"->" + objAttr.id + "->"+obj2.id);
+                            });
+                        });
+                    });*/
                 }
                 finally
                 {
@@ -780,13 +793,18 @@ public class ResSelectFrame5 extends Frame{
                             if(obj.id.equals(first)){
                                 obj.objAttrs.forEach((objAttr, objSet) -> {
                                     if(objAttr.id.equals("connect")||objAttr.id.equals("data_trans")){
+
+
                                         if(objSet.contains(last_obj)){
                                             if(!entry1.getValue().isSelected()){
+                                                System.out.println(last_obj.id+"被移除");
                                                 objSet.remove(last_obj);
+
                                             }
                                         }else{
                                             if(entry1.getValue().isSelected()){
                                                 objSet.add(last_obj);
+                                                System.out.println(last_obj.id+"被添加");
                                             }
                                         }
                                     }

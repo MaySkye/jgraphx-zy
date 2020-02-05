@@ -1146,35 +1146,37 @@ public class BasicGraphEditor extends JPanel
 						BoxLayout boxl=new BoxLayout(jPanel, BoxLayout.Y_AXIS);
 						jPanel.setLayout(boxl);
 						for (OwlObject obj : entrys.getValue()) {
-							JPanel child_jPanel=new JPanel();
-							child_jPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
 
-							JLabel jLabel=new JLabel(obj.id);
-							String name=obj.id;
-							property_name.put(name,jLabel);
-							jLabel.setPreferredSize(new Dimension(250, 30));
-							child_jPanel.add(jLabel);
+                            if(obj.visible){
+								JPanel child_jPanel=new JPanel();
+								child_jPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+								JLabel jLabel=new JLabel(obj.id);
+								String name=obj.id;
+								property_name.put(name,jLabel);
+								jLabel.setPreferredSize(new Dimension(250, 30));
+								child_jPanel.add(jLabel);
 
-							JTextField jTextField=new JTextField(4);
-							property_data.put(name,jTextField);
-							jTextField.setPreferredSize(new Dimension(150, 30));
-							child_jPanel.add(jTextField);
-							//单位
-							obj.dataAttrs.forEach((temp_objAttr, temp_objSet) -> {
-								temp_objSet.forEach(temp_obj2 -> {
-									System.out.println(obj.id+"->" + temp_objAttr.id + "->"+temp_obj2);
-									if(temp_objAttr.id.equals("资源单位")){
-										JLabel jLabel1=new JLabel(temp_obj2.toString());
-										System.out.println("temp_obj2:"+temp_obj2);
-										property_name.put(name,jLabel1);
-										jLabel1.setPreferredSize(new Dimension(150, 30));
-										child_jPanel.add(jLabel1);
-									}
+								JTextField jTextField=new JTextField(4);
+								property_data.put(name,jTextField);
+								jTextField.setPreferredSize(new Dimension(150, 30));
+								child_jPanel.add(jTextField);
+								//单位
+								obj.dataAttrs.forEach((temp_objAttr, temp_objSet) -> {
+									temp_objSet.forEach(temp_obj2 -> {
+										System.out.println(obj.id+"->" + temp_objAttr.id + "->"+temp_obj2);
+										if(temp_objAttr.id.equals("资源单位")){
+											JLabel jLabel1=new JLabel(temp_obj2.toString());
+											System.out.println("temp_obj2:"+temp_obj2);
+											property_name.put(name,jLabel1);
+											jLabel1.setPreferredSize(new Dimension(150, 30));
+											child_jPanel.add(jLabel1);
+										}
+									});
 								});
-							});
-							jPanel.add(child_jPanel);
-							//System.out.println("name:"+name);
-							cell_property.put(name,obj);
+								jPanel.add(child_jPanel);
+								//System.out.println("name:"+name);
+								cell_property.put(name,obj);
+							}
 						}
 					}
 				}
