@@ -25,7 +25,7 @@ public class StartFrame {
         });
 
         try {
-            //优化界面
+            //浼樺寲鐣岄潰
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
         } catch (Exception e) {
             e.printStackTrace();
@@ -37,7 +37,7 @@ public class StartFrame {
         //mxConstants.SHADOW_COLOR = Color.LIGHT_GRAY;
 
         JFrame frame = null;
-        if (loginflag)     //根据flag信息，调整菜单栏
+        if (loginflag)     //鏍规嵁flag淇℃伅锛岃皟鏁磋彍鍗曟爮
         {
            // frame = editor.createFrame(new EditorMenuBar(editor));
             //editor.setOldMenuBar(new EditorSimpleMenuBar(editor));
@@ -54,7 +54,7 @@ public class StartFrame {
         try {
             //StartUI.isAllOk = true;
             //System.out.println("done!!!!");
-            Thread.sleep(20); //线程休眠
+            Thread.sleep(20); //绾跨▼浼戠湢
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -66,7 +66,7 @@ public class StartFrame {
 //        try {
 //            new Thread(new StartUI()).start();
 //            new StartFrame();
-//            //设置外观
+//            //璁剧疆澶栬
 //           /* UIManager.setLookAndFeel(new SubstanceSaharaLookAndFeel());
 //            JFrame.setDefaultLookAndFeelDecorated(true);
 //            SubstanceSaharaLookAndFeel.setSkin(new CremeSkin());*/

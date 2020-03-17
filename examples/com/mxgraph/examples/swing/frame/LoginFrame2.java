@@ -12,59 +12,59 @@ public class LoginFrame2 extends JFrame {
 
     private Toolkit kit = Toolkit.getDefaultToolkit();
 
-    //»ñÈ¡ÆÁÄ»µÄ¿í¶È
+    //è·å–å±å¹•çš„å®½åº¦
     public int getWidth() {
         return kit.getScreenSize().width;
     }
 
-    //»ñÈ¡ÆÁÄ»µÄ¸ß¶È
+    //è·å–å±å¹•çš„é«˜åº¦
     public int getHeight() {
         return kit.getScreenSize().height;
     }
 
-    //ÉèÖÃ½çÃæµÄ´óĞ¡
+    //è®¾ç½®ç•Œé¢çš„å¤§å°
     private static final int width = 500;
     private static final int height = 400;
 
-    //ÉèÖÃ½çÃæµÄÍ¼±ê
+    //è®¾ç½®ç•Œé¢çš„å›¾æ ‡
     private Image img = new ImageIcon("com/mxgraph/examples/swing/images/icon.png").getImage();
 
 
-    //³õÊ¼»¯Ö÷¿ò¼Ü
+    //åˆå§‹åŒ–ä¸»æ¡†æ¶
     public void init() {
-        //ÉèÖÃ½çÃæ´óĞ¡²»¿ÉÀ­Éì
+        //è®¾ç½®ç•Œé¢å¤§å°ä¸å¯æ‹‰ä¼¸
         setResizable(false);
         setSize(width, height);
-        //ÉèÖÃÖĞĞÄÎ»ÖÃ
+        //è®¾ç½®ä¸­å¿ƒä½ç½®
         setLocation(getWidth() / 2 - width / 2, getHeight() / 2 - height / 2);
         //setLocationByPlatform(true);
         setIconImage(img);
-        setTitle("ÊÚÊ±ÖĞĞÄµÇÂ½½çÃæ");
+        setTitle("æˆæ—¶ä¸­å¿ƒç™»é™†ç•Œé¢");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setVisible(true);
     }
 
-    //Ãæ°å
+    //é¢æ¿
     private JPanel topPanel;
     private JPanel middlePanel;
     private JPanel middlePanel_name;
     private JPanel middlePanel_password;
     private JPanel bottomPanel;
 
-    //±êÇ©
+    //æ ‡ç­¾
     private JLabel nameLabel;
     private JLabel passwordLabel;
 
     private JLabel enrollLabel;
     private JLabel findLable;
-    //¶¥²¿±êÇ©ĞÅÏ¢
+    //é¡¶éƒ¨æ ‡ç­¾ä¿¡æ¯
     private JLabel messageLabel;
 
-    //ÎÄ±¾¿ò
+    //æ–‡æœ¬æ¡†
     private JTextField nameText;
     private JPasswordField passwordText;
 
-    //°´Å¥
+    //æŒ‰é’®
     private JButton loginButton;
     private JButton cancelButton;
 
@@ -72,33 +72,33 @@ public class LoginFrame2 extends JFrame {
 
         init();
 
-        //¶¥²¿Ãæ°å
+        //é¡¶éƒ¨é¢æ¿
         topPanel = new JPanel();
         topPanel.setPreferredSize(new Dimension(600,100));
-        messageLabel = new JLabel("¶¥²¿ÏÔÊ¾ĞÅÏ¢");
+        messageLabel = new JLabel("é¡¶éƒ¨æ˜¾ç¤ºä¿¡æ¯");
         topPanel.add(messageLabel);
         this.add(topPanel, BorderLayout.NORTH);
 
-        //ÖĞ¼äÃæ°å
+        //ä¸­é—´é¢æ¿
         middlePanel = new JPanel();
         middlePanel.setLayout(new FlowLayout(FlowLayout.CENTER));
-        //µÚÒ»ĞĞ
+        //ç¬¬ä¸€è¡Œ
         middlePanel_name = new JPanel();
-        nameLabel = new JLabel("ÕËºÅ:",SwingConstants.RIGHT);
+        nameLabel = new JLabel("è´¦å·:",SwingConstants.RIGHT);
         nameText = new JTextField();
         nameText.setPreferredSize(new Dimension(200,30));
-        enrollLabel = new JLabel("×¢²áÕËºÅ",SwingConstants.LEFT);
+        enrollLabel = new JLabel("æ³¨å†Œè´¦å·",SwingConstants.LEFT);
 
         middlePanel_name.add(nameLabel);
         middlePanel_name.add(nameText);
         middlePanel_name.add(enrollLabel);
 
-        //µÚ¶şĞĞ
+        //ç¬¬äºŒè¡Œ
         middlePanel_password = new JPanel();
-        passwordLabel = new JLabel("ÃÜÂë:",SwingConstants.RIGHT);
+        passwordLabel = new JLabel("å¯†ç :",SwingConstants.RIGHT);
         passwordText = new JPasswordField();
         passwordText.setPreferredSize(new Dimension(200,30));
-        findLable = new JLabel("Íü¼ÇÃÜÂë",SwingConstants.LEFT);
+        findLable = new JLabel("å¿˜è®°å¯†ç ",SwingConstants.LEFT);
         findLable.setEnabled(false);
 
 
@@ -114,11 +114,11 @@ public class LoginFrame2 extends JFrame {
 
         this.add(middlePanel, BorderLayout.CENTER);
 
-        //µ×²¿Ãæ°å
+        //åº•éƒ¨é¢æ¿
         bottomPanel = new JPanel();
         bottomPanel.setPreferredSize(new Dimension(600,100));
-        loginButton = new JButton("µÇÂ½");
-        cancelButton = new JButton("È¡Ïû");
+        loginButton = new JButton("ç™»é™†");
+        cancelButton = new JButton("å–æ¶ˆ");
         bottomPanel.add(loginButton);
         bottomPanel.add(cancelButton);
 
@@ -126,15 +126,15 @@ public class LoginFrame2 extends JFrame {
 
     }
 
-    //µÇÂ½
+    //ç™»é™†
     private class loginAction implements ActionListener{
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            System.out.println("ÕıÔÚÖ´ĞĞµÇÂ½²Ù×÷£¡");
+            System.out.println("æ­£åœ¨æ‰§è¡Œç™»é™†æ“ä½œï¼");
             boolean loginFlag = false;
             if(loginFlag){
-                //µÇÂ½³É¹¦µÄ²Ù×÷
+                //ç™»é™†æˆåŠŸçš„æ“ä½œ
 //                try {
 //                    //new Thread(new StartUI()).start();
 //                } catch (UnsupportedEncodingException ex) {
@@ -142,29 +142,29 @@ public class LoginFrame2 extends JFrame {
 //                }
                 new StartFrame();
             }else{
-                //µÇÂ½Ê§°ÜµÄ²Ù×÷
+                //ç™»é™†å¤±è´¥çš„æ“ä½œ
 
             }
         }
     }
 
-    //È¡Ïû
+    //å–æ¶ˆ
     private class cancelAction implements ActionListener{
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            //¹Ø±ÕµÇÂ½´°¿Ú
+            //å…³é—­ç™»é™†çª—å£
         }
     }
 
-    //µã»÷×¢²áÌø×ª
+    //ç‚¹å‡»æ³¨å†Œè·³è½¬
     private class registerAction implements ActionListener{
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            //¹Ø±Õµ±Ç°´°¿Ú
+            //å…³é—­å½“å‰çª—å£
 
-            //´ò¿ªĞÂµÄ×¢²á´°¿Ú
+            //æ‰“å¼€æ–°çš„æ³¨å†Œçª—å£
             RegisterFrame registerFrame = new RegisterFrame();
             registerFrame.setVisible(true);
         }

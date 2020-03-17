@@ -14,18 +14,18 @@ public class LoginFrame extends JFrame {
     private String path;
     private String username;
 
-    //private JTabbedPane tabPane = new JTabbedPane();//Ñ¡Ïî¿¨²¼¾Ö
-    private Font font = new Font("ËÎÌå", Font.PLAIN, 16);
+    //private JTabbedPane tabPane = new JTabbedPane();//é€‰é¡¹å¡å¸ƒå±€
+    private Font font = new Font("å®‹ä½“", Font.PLAIN, 16);
 
-    private Container con = this.getContentPane();//²¼¾Ö1
-    //private Container con1 = new Container();//²¼¾Ö2
-    private JLabel label1 = new JLabel("¿¨Â·¾¶");
-    private JLabel label2 = new JLabel("ÓÃ»§Ãû");
+    private Container con = this.getContentPane();//å¸ƒå±€1
+    //private Container con1 = new Container();//å¸ƒå±€2
+    private JLabel label1 = new JLabel("å¡è·¯å¾„");
+    private JLabel label2 = new JLabel("ç”¨æˆ·å");
     private JTextField text1 = new JTextField();
     private JTextField text2 = new JTextField();
     private JButton button1 = new JButton("...");
     private JButton button2 = new JButton("ok");
-    private JFileChooser jfc = new JFileChooser();//ÎÄ¼şÑ¡ÔñÆ÷
+    private JFileChooser jfc = new JFileChooser();//æ–‡ä»¶é€‰æ‹©å™¨
     private LoginAction loginAction = new LoginAction();
 
     private JLabel labelBack = new JLabel(new ImageIcon(this.getClass().getResource("/com/mxgraph/examples/swing/images/login_back.jpg")));
@@ -34,10 +34,10 @@ public class LoginFrame extends JFrame {
 
         double lx = Toolkit.getDefaultToolkit().getScreenSize().getWidth();
         double ly = Toolkit.getDefaultToolkit().getScreenSize().getHeight();
-        this.setLocation(new Point((int) (lx / 2) - 300, (int) (ly / 2) - 200));//Éè¶¨´°¿Ú³öÏÖÎ»ÖÃ
-        this.setSize(600, 400);//Éè¶¨´°¿Ú´óĞ¡
-        // this.setContentPane(tabPane);//ÉèÖÃ²¼¾Ö
-        //ÏÂÃæÉè¶¨±êÇ©µÈµÄ³öÏÖÎ»ÖÃºÍ¸ß¿í
+        this.setLocation(new Point((int) (lx / 2) - 300, (int) (ly / 2) - 200));//è®¾å®šçª—å£å‡ºç°ä½ç½®
+        this.setSize(600, 400);//è®¾å®šçª—å£å¤§å°
+        // this.setContentPane(tabPane);//è®¾ç½®å¸ƒå±€
+        //ä¸‹é¢è®¾å®šæ ‡ç­¾ç­‰çš„å‡ºç°ä½ç½®å’Œé«˜å®½
         label1.setBounds(40, 120, 200, 25);
         label1.setFont(font);
         label2.setBounds(40, 40, 200, 25);
@@ -50,8 +50,8 @@ public class LoginFrame extends JFrame {
         button2.setBounds(220, 220, 80, 30);
         button1.setFont(font);
         button2.setFont(font);
-        button1.addActionListener(loginAction);//Ìí¼ÓÊÂ¼ş´¦Àí
-        button2.addActionListener(loginAction);//Ìí¼ÓÊÂ¼ş´¦Àí
+        button1.addActionListener(loginAction);//æ·»åŠ äº‹ä»¶å¤„ç†
+        button2.addActionListener(loginAction);//æ·»åŠ äº‹ä»¶å¤„ç†
         con.add(label1);
         con.add(label2);
         con.add(text1);
@@ -60,10 +60,10 @@ public class LoginFrame extends JFrame {
         con.add(button2);
         con.add(jfc);
         con.add(labelBack);
-        //tabPane.add("µÇÂ¼ĞÅÏ¢", con);//Ìí¼Ó²¼¾Ö1
-        //tabPane.add("ÔİÎŞÄÚÈİ",con1);//Ìí¼Ó²¼¾Ö2
+        //tabPane.add("ç™»å½•ä¿¡æ¯", con);//æ·»åŠ å¸ƒå±€1
+        //tabPane.add("æš‚æ— å†…å®¹",con1);//æ·»åŠ å¸ƒå±€2
         //this.add(con);
-        //ÓÅ»¯Ò»ÏÂ½çÃæ
+        //ä¼˜åŒ–ä¸€ä¸‹ç•Œé¢
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
         } catch (Exception e) {
@@ -71,21 +71,21 @@ public class LoginFrame extends JFrame {
         }
 
         this.setIconImage(new ImageIcon(this.getClass().getResource("/com/mxgraph/examples/swing/images/icon.png")).getImage());
-        this.setVisible(true);//´°¿Ú¿É¼û
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);//Ê¹ÄÜ¹Ø±Õ´°¿Ú£¬½áÊø³ÌĞò
+        this.setVisible(true);//çª—å£å¯è§
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);//ä½¿èƒ½å…³é—­çª—å£ï¼Œç»“æŸç¨‹åº
     }
 
     private class LoginAction implements ActionListener {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            if (e.getSource().equals(button1)) {//ÅĞ¶Ï´¥·¢·½·¨µÄ°´Å¥ÊÇÄÄ¸ö
-                jfc.setFileSelectionMode(1);//Éè¶¨Ö»ÄÜÑ¡Ôñµ½ÎÄ¼ş¼Ğ
-                int state = jfc.showOpenDialog(null);//´Ë¾äÊÇ´ò¿ªÎÄ¼şÑ¡ÔñÆ÷½çÃæµÄ´¥·¢Óï¾ä
+            if (e.getSource().equals(button1)) {//åˆ¤æ–­è§¦å‘æ–¹æ³•çš„æŒ‰é’®æ˜¯å“ªä¸ª
+                jfc.setFileSelectionMode(1);//è®¾å®šåªèƒ½é€‰æ‹©åˆ°æ–‡ä»¶å¤¹
+                int state = jfc.showOpenDialog(null);//æ­¤å¥æ˜¯æ‰“å¼€æ–‡ä»¶é€‰æ‹©å™¨ç•Œé¢çš„è§¦å‘è¯­å¥
                 if (state == 1) {
-                    return;//³·ÏúÔò·µ»Ø
+                    return;//æ’¤é”€åˆ™è¿”å›
                 } else {
-                    File f = jfc.getSelectedFile();//fÎªÑ¡Ôñµ½µÄÄ¿Â¼
+                    File f = jfc.getSelectedFile();//fä¸ºé€‰æ‹©åˆ°çš„ç›®å½•
                     text1.setText(f.getAbsolutePath());
                 }
             }
@@ -98,8 +98,8 @@ public class LoginFrame extends JFrame {
                         dispose();
                         new StartUI(username);
                     } else {
-                        //ÏÔÊ¾´íÎóµ¯³ö¿ò
-                        JOptionPane.showMessageDialog(null,"µÇÂ½Ê§°Ü£¬ÇëÖØĞÂµÇÂ½");
+                        //æ˜¾ç¤ºé”™è¯¯å¼¹å‡ºæ¡†
+                        JOptionPane.showMessageDialog(null,"ç™»é™†å¤±è´¥ï¼Œè¯·é‡æ–°ç™»é™†");
                         return;
                     }
                 } catch (Exception ex) {

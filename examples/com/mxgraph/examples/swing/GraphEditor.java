@@ -73,15 +73,15 @@ public class GraphEditor extends BasicGraphEditor {
 
         // Creates the shapes palette
         EditorPalette shapesPalette = insertPalette(mxResources.get("shapes"));
-		/* ÍõÎ°×¢½â
+		/* ç‹ä¼Ÿæ³¨è§£
 		EditorPalette imagesPalette = insertPalette(mxResources.get("images"));
 		EditorPalette symbolsPalette = insertPalette(mxResources.get("symbols"));
-		ÍõÎ°×¢½â */
-        EditorPalette fiberDevicesPalette = insertPalette("¹âÆµÉè±¸");
-        EditorPalette networkDevicesPalette = insertPalette("ÍøÂçÉè±¸");
-        //EditorPalette time_devicesPalette = insertPalette("Ê±¼äÉè±¸");
-        //EditorPalette micro_devicesPalette = insertPalette("Î¢²¨Éè±¸");
-        EditorPalette linksPalette = insertPalette(mxResources.get("links"));  // ÍõÎ°×¢½â
+		ç‹ä¼Ÿæ³¨è§£ */
+        EditorPalette fiberDevicesPalette = insertPalette("å…‰é¢‘è®¾å¤‡");
+        EditorPalette networkDevicesPalette = insertPalette("ç½‘ç»œè®¾å¤‡");
+        //EditorPalette time_devicesPalette = insertPalette("æ—¶é—´è®¾å¤‡");
+        //EditorPalette micro_devicesPalette = insertPalette("å¾®æ³¢è®¾å¤‡");
+        EditorPalette linksPalette = insertPalette(mxResources.get("links"));  // ç‹ä¼Ÿæ³¨è§£
 
         // Sets the edge template to be used for creating new edges if an edge
         // is clicked in the shape palette
@@ -248,19 +248,19 @@ public class GraphEditor extends BasicGraphEditor {
                         "arrow", 120, 120, "");
     }
 
-        // ÍõÎ°£ºÏòÃæ°åÌí¼Ó¹âÆµ¡¢ÍøÂçÉè±¸
+        // ç‹ä¼Ÿï¼šå‘é¢æ¿æ·»åŠ å…‰é¢‘ã€ç½‘ç»œè®¾å¤‡
         List<CellEle> fiberCellList = CellDecoder.fiberDeviceCellList;
         addCellsToPalette(fiberDevicesPalette, fiberCellList);
         List<CellEle> networkCellList = CellDecoder.networkDeviceCellList;
         addCellsToPalette(networkDevicesPalette, networkCellList);
 
-        // ÍõÎ°£ºÌí¼Ó±ß
+        // ç‹ä¼Ÿï¼šæ·»åŠ è¾¹
         List<EdgeEle> edgeList = EdgeDecoder.decodeDoc();
         for (EdgeEle edgeEle : edgeList) {
             mxCell cell = linksPalette.addEdgeTemplate(edgeEle.getName(),
                     new ImageIcon(GraphEditor.class.getResource(edgeEle.getIcon())),
                     edgeEle.getStyle(),
-                    //"straight;strokeWidth=20;endArrow=none;verticalLabelPosition=middle;verticalAlign=middle;fontFamily=Î¢ÈíÑÅºÚ Light;fontSize=24;fontColor=#FF0000;labelBackgroundColor=#FFFFFF;labelBorderColor=#000000;strokeColor=#66FFFF",
+                    //"straight;strokeWidth=20;endArrow=none;verticalLabelPosition=middle;verticalAlign=middle;fontFamily=å¾®è½¯é›…é»‘ Light;fontSize=24;fontColor=#FF0000;labelBackgroundColor=#FFFFFF;labelBorderColor=#000000;strokeColor=#66FFFF",
                     edgeEle.getWidth(), edgeEle.getHeight(), edgeEle.getName(), edgeEle.getType(), ""
             );
 
@@ -269,7 +269,7 @@ public class GraphEditor extends BasicGraphEditor {
             //System.out.println("add edge cell in palette: " + edgeEle.getName());
         }
 
-		/* ÕÔÒÕ×¢½â
+		/* èµµè‰ºæ³¨è§£
 		* shapesPalette
 				.addTemplate(
 						"Horizontal Line",
@@ -277,8 +277,8 @@ public class GraphEditor extends BasicGraphEditor {
 								GraphEditor.class
 										.getResource("/com/mxgraph/examples/swing/images/hline.png")),
 						"line", 160, 10, "");
-		ÕÔÒÕ×¢½â */
-		/* ÍõÎ°×¢½â
+		èµµè‰ºæ³¨è§£ */
+		/* ç‹ä¼Ÿæ³¨è§£
 		imagesPalette
 				.addTemplate(
 						"Bell",
@@ -472,7 +472,7 @@ public class GraphEditor extends BasicGraphEditor {
 										.getResource("/com/mxgraph/examples/swing/images/timer.png")),
 						"roundImage;image=/com/mxgraph/examples/swing/images/timer.png",
 						80, 80, "Timer");
-		 ÍõÎ°×¢½â */
+		 ç‹ä¼Ÿæ³¨è§£ */
     }
 
     private void addCellsToPalette(EditorPalette palette, List<CellEle> cellList) {
@@ -490,7 +490,7 @@ public class GraphEditor extends BasicGraphEditor {
             if (cellEle.getPorts() != null && !cellEle.getPorts().isEmpty()) {
                 // has connect point, handle port cell
                 cell.setConnectable(true);
-                //±éÀúÍ¼ÔªµÄ´ÅÁ¦µã
+                //éå†å›¾å…ƒçš„ç£åŠ›ç‚¹
                 for (CellPort cellPort : cellEle.getPorts()) {
                     mxGeometry geo = new mxGeometry(cellPort.getX(), cellPort.getY(), cellPort.getWidth(), cellPort.getHeight());
                     geo.setOffset(new mxPoint(-geo.getWidth() / 2, -geo.getHeight() / 2));
@@ -510,7 +510,7 @@ public class GraphEditor extends BasicGraphEditor {
                     cell.insert(port);
                 }
             }
-            AllCellMap.put(cell.getName(), cell);  //Ìí¼ÓµÄÍ¼Ôª¡¢Á¬½Óµã
+            AllCellMap.put(cell.getName(), cell);  //æ·»åŠ çš„å›¾å…ƒã€è¿æ¥ç‚¹
             //System.out.println(cellEle.getIcon());
             //System.out.println(GraphEditor.class.getResource(cellEle.getIcon()));
             //System.out.println(cell);

@@ -490,47 +490,47 @@ public class EditorMenuBar extends JMenuBar {
         });
 
         // Creates the chart menu
-        menu = add(new JMenu("Éè¼Æ×ÊÔ´×éÌ¬Í¼"));
+        menu = add(new JMenu("è®¾è®¡èµ„æºç»„æ€å›¾"));
         //System.out.println(username);
 
 
        /* String resourceFile = "owl";
         String prefix = username + "#" + resourceFile + "#";
-        String p1 = prefix + "Êı¾İĞŞ¸Ä";
-        String p2 = prefix + "Êı¾İ²é¿´";
+        String p1 = prefix + "æ•°æ®ä¿®æ”¹";
+        String p2 = prefix + "æ•°æ®æŸ¥çœ‹";
 
         try {
             if (FabricAuth.Enforce(p1)) {
-                menu.add(editor.bind("Ñ¡ÔñÎÄ¼ş×ÊÔ´", new EditorActions.ConfigureFileResAction()));
-                menu.add(editor.bind("Éú³É×éÌ¬Í¼", new EditorActions.GenerateDiagramAction()));
+                menu.add(editor.bind("é€‰æ‹©æ–‡ä»¶èµ„æº", new EditorActions.ConfigureFileResAction()));
+                menu.add(editor.bind("ç”Ÿæˆç»„æ€å›¾", new EditorActions.GenerateDiagramAction()));
                 menu.addSeparator();
-                menu.add(editor.bind("Ìá½»×éÌ¬Í¼", new EditorActions.SumbitDiagramAction()));
-                menu.add(editor.bind("ÔËĞĞ×éÌ¬Í¼", new EditorActions.RunDiagramAction()));
-                menu.add(editor.bind("ÍË³öÔËĞĞÌ¬", new EditorActions.QuitRunStateAction()));
+                menu.add(editor.bind("æäº¤ç»„æ€å›¾", new EditorActions.SumbitDiagramAction()));
+                menu.add(editor.bind("è¿è¡Œç»„æ€å›¾", new EditorActions.RunDiagramAction()));
+                menu.add(editor.bind("é€€å‡ºè¿è¡Œæ€", new EditorActions.QuitRunStateAction()));
             }
             if(FabricAuth.Enforce(p2)){
                 menu.addSeparator();
-                menu.add(editor.bind("²é¿´¹ØÏµÍ¼", new EditorActions.ViewSchemaAction()));
+                menu.add(editor.bind("æŸ¥çœ‹å…³ç³»å›¾", new EditorActions.ViewSchemaAction()));
             }
         } catch (Exception e) {
             e.printStackTrace();
         }*/
-        menu.add(editor.bind("ÁìÓòÍ¼Ôª¹ÜÀí" ,new EditorActions.CellManagerAction()));
+        menu.add(editor.bind("é¢†åŸŸå›¾å…ƒç®¡ç†" ,new EditorActions.CellManagerAction()));
         menu.addSeparator();
-        menu.add(editor.bind("¹¹½¨×éÌ¬Í¼", new EditorActions.GenerateMxeFileAction()));
-        menu.add(editor.bind("Éú³É×éÌ¬Í¼", new EditorActions.GenerateDiagramAction()));
-        menu.add(editor.bind("Í¬²½Êı¾İ¿âÊı¾İ", new EditorActions.SynDatabaseAction()));
+        menu.add(editor.bind("æ„å»ºç»„æ€å›¾", new EditorActions.GenerateMxeFileAction()));
+        menu.add(editor.bind("ç”Ÿæˆç»„æ€å›¾", new EditorActions.GenerateDiagramAction()));
+        menu.add(editor.bind("åŒæ­¥æ•°æ®åº“æ•°æ®", new EditorActions.SynDatabaseAction()));
         menu.addSeparator();
-        menu.add(editor.bind("ÔËĞĞÔ¤ÀÀ", new EditorActions.RunDiagramAction()));
-        menu.add(editor.bind("ÍË³öÔ¤ÀÀ", new EditorActions.QuitRunStateAction()));
-        menu.add(editor.bind("±£´æ·¢²¼", new EditorActions.SaveMxeFileAction()));
+        menu.add(editor.bind("è¿è¡Œé¢„è§ˆ", new EditorActions.RunDiagramAction()));
+        menu.add(editor.bind("é€€å‡ºé¢„è§ˆ", new EditorActions.QuitRunStateAction()));
+        menu.add(editor.bind("ä¿å­˜å‘å¸ƒ", new EditorActions.SaveMxeFileAction()));
         menu.addSeparator();
-        menu.add(editor.bind("²é¿´¹ØÏµÍ¼", new EditorActions.ViewSchemaAction()));
-        //menu.add(editor.bind("µØÍ¼Õ¹Ê¾", new MapChartAction()));
-        //menu.add(editor.bind("Ö±½Ó¼ÓÔØfibre", new EditorActions.TestAction()));
-        //menu.add(editor.bind("Ñ¡ÔñfibreÏÔÊ¾µÄ×ÊÔ´", new EditorActions.SelectResAction()));
-        //menu.add(editor.bind("´ò¿ªserviceÎÄ¼ş", new EditorActions.OpenServiceFileAction()));
-        //menu.add(editor.bind("´ò¿ªxmodelÎÄ¼ş", new EditorActions.OpenxModelFileAction()));
+        menu.add(editor.bind("æŸ¥çœ‹å…³ç³»å›¾", new EditorActions.ViewSchemaAction()));
+        //menu.add(editor.bind("åœ°å›¾å±•ç¤º", new MapChartAction()));
+        //menu.add(editor.bind("ç›´æ¥åŠ è½½fibre", new EditorActions.TestAction()));
+        //menu.add(editor.bind("é€‰æ‹©fibreæ˜¾ç¤ºçš„èµ„æº", new EditorActions.SelectResAction()));
+        //menu.add(editor.bind("æ‰“å¼€serviceæ–‡ä»¶", new EditorActions.OpenServiceFileAction()));
+        //menu.add(editor.bind("æ‰“å¼€xmodelæ–‡ä»¶", new EditorActions.OpenxModelFileAction()));
     }
 
     /**
