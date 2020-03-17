@@ -8,7 +8,8 @@ import java.util.*;
 
 public class CellTypeUtil {
 
-    private static List<CellEle> data = CellDecoder.decodeDoc();
+    private static List<CellEle> fiberDeviceData = CellDecoder.fiberDeviceCellList;
+    private static List<CellEle> networkDeviceData = CellDecoder.networkDeviceCellList;
     private static Map<String, List<CellEle>> cellMap = null;
     private static Map<String, List<String>> typeMap = null;
     private static Set<String> typeSet = null;
@@ -55,11 +56,28 @@ public class CellTypeUtil {
     }
 
     private static void loadData() {
-        cellMap = new HashMap<>(data.size());
-        typeMap = new HashMap<>(data.size());
-        typeSet = new HashSet<>(data.size());
-        typeList = new ArrayList<>(data.size());
-        data.forEach(cellEle -> {
+        cellMap = new HashMap<>(fiberDeviceData.size());
+        typeMap = new HashMap<>(fiberDeviceData.size());
+        typeSet = new HashSet<>(fiberDeviceData.size());
+        typeList = new ArrayList<>(fiberDeviceData.size());
+        fiberDeviceData.forEach(cellEle -> {
+            if (typeSet.add(cellEle.getType())) {
+                typeList.add(cellEle.getType());
+                typeMap.put(cellEle.getType(), new ArrayList<>());
+                cellMap.put(cellEle.getType(), new ArrayList<>());
+            }
+            List<String> list1 = typeMap.get(cellEle.getType());
+            list1.add(cellEle.getName());
+            List<CellEle> list2 = cellMap.get(cellEle.getType());
+            list2.add(cellEle);
+        });
+
+
+        cellMap = new HashMap<>(networkDeviceData.size());
+        typeMap = new HashMap<>(networkDeviceData.size());
+        typeSet = new HashSet<>(networkDeviceData.size());
+        typeList = new ArrayList<>(networkDeviceData.size());
+        networkDeviceData.forEach(cellEle -> {
             if (typeSet.add(cellEle.getType())) {
                 typeList.add(cellEle.getType());
                 typeMap.put(cellEle.getType(), new ArrayList<>());

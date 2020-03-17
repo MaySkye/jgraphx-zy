@@ -9,38 +9,34 @@ import org.w3c.dom.Node;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 
 public class CellDecoder {
-    private static final InputStream inputStream = CellDecoder.class.getResourceAsStream("/com/mxgraph/examples/swing/config_files/cell_template");
+    private static final InputStream fiberDeviceTemplateInputStream = CellDecoder.class.getResourceAsStream("/com/mxgraph/examples/swing/config_files/cell_template");
+    private static final InputStream networkDeviceTemplateInputStream = CellDecoder.class.getResourceAsStream("/com/mxgraph/examples/swing/config_files/cell_template_network");
 
-    private static List<CellEle> data = null;
+    public static List<CellEle> fiberDeviceCellList = null;
+    public static List<CellEle> networkDeviceCellList = null;
 
-    private CellDecoder() {
-        // static class
-    }
 
-    public static List<CellEle> decodeDoc() {
-
-        if (data == null) {
-            try {
-                data = decodeDoc(inputStream);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+    static{
+        HashMap res = new HashMap<String, List<CellEle>>();
+        try {
+            fiberDeviceCellList = decodeDoc(fiberDeviceTemplateInputStream);
+            networkDeviceCellList = decodeDoc(networkDeviceTemplateInputStream);
+            res.put("fiberDevice", fiberDeviceCellList);
+            res.put("networkDevice", networkDeviceCellList);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-        return data;
     }
 
-    private static List<CellEle> decodeDoc(InputStream path) throws IOException {
-        //System.out.println("path: " + path);
+    private static List<CellEle> decodeDoc(InputStream inputStream) throws IOException {
         List<CellEle> list = new ArrayList<>();
-
         String content = FileUtil.readFile(inputStream);
-
         Document document = mxXmlUtils.parseXml(content);
-
         Node root = document.getFirstChild();
         Node child = root.getFirstChild();
         while (child != null) {
@@ -50,7 +46,6 @@ public class CellDecoder {
             }
             child = child.getNextSibling();
         }
-
         return list;
     }
 

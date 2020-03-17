@@ -11,7 +11,7 @@ import java.awt.*;
 public class StartUI extends JFrame {
 
 
-    private JProgressBar progress; //è¿›åº¦æ¡
+    private JProgressBar progress; //½ø¶ÈÌõ
     private JFrame workFrame = null;
     private String username = null;
 
@@ -19,22 +19,22 @@ public class StartUI extends JFrame {
         this.username = username;
         //loadStartFrame();
         // System.out.println("loading resource");
-        Container container = getContentPane(); //å¾—åˆ°å®¹å™¨
-        setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));  //è®¾ç½®å…‰æ ‡
+        Container container = getContentPane(); //µÃµ½ÈİÆ÷
+        setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));  //ÉèÖÃ¹â±ê
         this.setIconImage(new ImageIcon(this.getClass().getResource("/com/mxgraph/examples/swing/images/icon.png")).getImage());
-        this.setTitle("æ¬¢è¿ä½¿ç”¨");
-        container.add(new JLabel(new ImageIcon(this.getClass().getResource("/com/mxgraph/examples/swing/images/back.jpg"))), BorderLayout.CENTER);  //å¢åŠ å›¾ç‰‡
-        progress = new JProgressBar(1, 100); //å®ä¾‹åŒ–è¿›åº¦æ¡
-        progress.setStringPainted(true); //æç»˜æ–‡å­—
-        progress.setString("åŠ è½½é…ç½®æ–‡ä»¶");  //è®¾ç½®æ˜¾ç¤ºæ–‡å­—
-        progress.setBackground(Color.white);  //è®¾ç½®èƒŒæ™¯è‰²
-        container.add(progress, BorderLayout.SOUTH);  //å¢åŠ è¿›åº¦æ¡åˆ°å®¹å™¨ä¸Š
+        this.setTitle("»¶Ó­Ê¹ÓÃ");
+        container.add(new JLabel(new ImageIcon(this.getClass().getResource("/com/mxgraph/examples/swing/images/back.jpg"))), BorderLayout.CENTER);  //Ôö¼ÓÍ¼Æ¬
+        progress = new JProgressBar(1, 100); //ÊµÀı»¯½ø¶ÈÌõ
+        progress.setStringPainted(true); //Ãè»æÎÄ×Ö
+        progress.setString("¼ÓÔØÅäÖÃÎÄ¼ş");  //ÉèÖÃÏÔÊ¾ÎÄ×Ö
+        progress.setBackground(Color.white);  //ÉèÖÃ±³¾°É«
+        container.add(progress, BorderLayout.SOUTH);  //Ôö¼Ó½ø¶ÈÌõµ½ÈİÆ÷ÉÏ
 
-        Dimension screen = getToolkit().getScreenSize();  //å¾—åˆ°å±å¹•å°ºå¯¸
+        Dimension screen = getToolkit().getScreenSize();  //µÃµ½ÆÁÄ»³ß´ç
         setSize(900,680);
-        //pack(); //çª—å£é€‚åº”ç»„ä»¶å°ºå¯¸
-        setLocation((screen.width - getSize().width) / 2, (screen.height - getSize().height) / 2); //è®¾ç½®çª—å£ä½ç½®
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);//ä½¿èƒ½å…³é—­çª—å£ï¼Œç»“æŸç¨‹åº
+        //pack(); //´°¿ÚÊÊÓ¦×é¼ş³ß´ç
+        setLocation((screen.width - getSize().width) / 2, (screen.height - getSize().height) / 2); //ÉèÖÃ´°¿ÚÎ»ÖÃ
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);//Ê¹ÄÜ¹Ø±Õ´°¿Ú£¬½áÊø³ÌĞò
         setVisible(true);
         new Thread(() -> loadStartFrame()).start();
         new Thread(() -> loadWorkFrame()).start();
@@ -56,12 +56,12 @@ public class StartUI extends JFrame {
 
     public void loadWorkFrame() {
         try {
-            //ä¼˜åŒ–ç•Œé¢
+            //ÓÅ»¯½çÃæ
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
         } catch (Exception e) {
             e.printStackTrace();
         }
-        GraphEditor editor = new GraphEditor("æˆæ—¶æ€åŠ¿ç›‘æ§ç³»ç»Ÿ");
+        GraphEditor editor = new GraphEditor("ÊÚÊ±Ì¬ÊÆ¼à¿ØÏµÍ³");
         workFrame = editor.createFrame(new EditorMenuBar(editor, username));
         ModelFactory.createDefaultModel();
         workFrame.setVisible(true);

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<Template>
+    <cell name="路由器设备" type="路由器设备" width="100" height="100" icon="/com/mxgraph/examples/swing/images/network/ww-router.png" style="roundImage;image=/com/mxgraph/examples/swing/images/network/ww-router.png">
+        <port attr="fiber" location="up" direction="in" x="0.5" y="0.1"/>
+        <port attr="fiber" location="left" direction="in" x="0.1" y="0.5"/>
+        <port attr="fiber" location="down" direction="in" x="0.5" y="0.9"/>
+        <port attr="fiber" location="right" direction="in" x="0.9" y="0.5"/>
+    </cell>
+
+    <cell name="客户端设备" type="客户端设备" width="100" height="100" icon="/com/mxgraph/examples/swing/images/network/ww-client.png" style="roundImage;image=/com/mxgraph/examples/swing/images/network/ww-client.png">
+        <port attr="fiber" location="up" direction="in" x="0.5" y="0.1"/>
+        <port attr="fiber" location="left" direction="in" x="0.1" y="0.5"/>
+        <port attr="fiber" location="down" direction="in" x="0.5" y="0.9"/>
+        <port attr="fiber" location="right" direction="in" x="0.9" y="0.5"/>
+    </cell>
+
+</Template>
