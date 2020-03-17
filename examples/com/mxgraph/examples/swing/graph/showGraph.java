@@ -29,18 +29,19 @@ public class showGraph {
     public static GraphInterface<String> createGraph(OwlResourceData owlResourceData){
         //声明一个图结构对象
         GraphInterface<String> graph=new DirectedGraph<>();
-        System.out.println("Graph is empty:"+graph.isEmpty());
+        //System.out.println("Graph is empty:"+graph.isEmpty());
 
         //循环找出设备顶点，存入graph
-        System.out.println("Adding vertexs...");
+        //System.out.println("Adding vertexs...");
+        System.out.println("---------------------------- graph info ---------------------------");
         saveResourceVerties(graph,owlResourceData);
         System.out.println("Number of graph's vertex="+graph.getNumberOfVertices());
 
         //循环找出设备的边，存入graph
-        System.out.println("Adding edges......");
+        //System.out.println("Adding edges......");
         saveResourceEdges(graph,owlResourceData);
         System.out.println("Number of graph's edge="+graph.getNumberOfEdges());
-
+        System.out.println("--------------------------- graph info end ---------------------------");
         return  graph;
     }
 
@@ -387,7 +388,7 @@ public class showGraph {
                         }
                     });
                 });
-                System.out.println("-----------------------------------------------");
+                //System.out.println("-----------------------------------------------");
 
                 graph.addV(v);
             }

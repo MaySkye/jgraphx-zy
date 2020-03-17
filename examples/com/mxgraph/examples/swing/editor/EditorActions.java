@@ -22,9 +22,7 @@ import java.lang.reflect.Modifier;
 import java.math.BigInteger;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Properties;
+import java.util.*;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -39,7 +37,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.mxgraph.examples.swing.browser.BrowserFrame2;
 import com.mxgraph.examples.swing.db.DBDataAdaptor;
 import com.mxgraph.examples.swing.frame.CellManagerFrame;
-import com.mxgraph.examples.swing.frame.UploadServiceFileFrame;
+import com.mxgraph.examples.swing.frame.UploadMxeFileFrame;
 import com.mxgraph.examples.swing.graph.GraphInterface;
 import com.mxgraph.examples.swing.graph.Vertex;
 import com.mxgraph.examples.swing.graph.VertexInterface;
@@ -50,11 +48,15 @@ import com.mxgraph.examples.swing.match.ModifyTemplateCore;
 import com.mxgraph.examples.swing.match.ResMatchCore;
 import com.mxgraph.examples.swing.owl.OwlObject;
 import com.mxgraph.examples.swing.owl.OwlResourceData;
+import com.mxgraph.examples.swing.owl.OwlResourceUtil;
 import com.mxgraph.examples.swing.select.ResSelectFrame4;
 import com.mxgraph.examples.swing.select.ResSelectFrame5;
 import com.mxgraph.examples.swing.util.*;
 import com.mxgraph.model.mxGeometry;
 import com.mxgraph.util.*;
+import com.mxgraph.view.mxCellState;
+import com.mxgraph.view.mxGraphView;
+import com.mxgraph.view.mxStylesheet;
 import com.teamdev.jxbrowser.chromium.Browser;
 import com.teamdev.jxbrowser.chromium.ba;
 import com.teamdev.jxbrowser.chromium.swing.BrowserView;
@@ -2418,7 +2420,7 @@ public class EditorActions
 		}
 	}
 
-	public static class ConfigureFileResAction extends AbstractAction
+	public static class GenerateMxeFileAction extends AbstractAction
 	{
 		public void actionPerformed(ActionEvent e)
 		{
@@ -2455,6 +2457,7 @@ public class EditorActions
 					OwlResourceData new_owlResourceData = parseResourceFile(filePath);
 					editor.setNew_owlResourceData(new_owlResourceData);
 					editor.setOrigin_owlResourceData(origin_owlResourceData);
+					OwlResourceUtil.print(new_owlResourceData);
 					ResSelectFrame5 resSelectFrame5=new ResSelectFrame5(editor,sFile.getName());
 
 
@@ -2480,8 +2483,8 @@ public class EditorActions
 		}
 	}
 
-	// 保存到mondodb,保存.service文件
-	public static class SaveServiceFileAction extends AbstractAction
+	// 保存到mondodb,保存.mxe文件
+	public static class SaveMxeFileAction extends AbstractAction
 	{
 		public void actionPerformed(ActionEvent e)
 		{
@@ -2492,7 +2495,7 @@ public class EditorActions
 				return;
 			}
 
-			new UploadServiceFileFrame(editor);
+			new UploadMxeFileFrame(editor);
 		}
 	}
 
@@ -2789,78 +2792,13 @@ public class EditorActions
 		}
 	}
 
-    /*图元管理*/
+    /*领域图元管理*/
 	public static class CellManagerAction extends AbstractAction
 	{
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			BasicGraphEditor editor = getEditor(e);
-
 			new CellManagerFrame(editor);
-		}
-	}
-
-	/*直接存为新图元*/
-	public static class saveAsCellAction extends AbstractAction
-	{
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			BasicGraphEditor editor = getEditor(e);
-			//获取graph存为图片
-			/*if (editor != null)
-			{
-				mxGraphComponent graphComponent = editor.getGraphComponent();
-				mxGraph graph = graphComponent.getGraph();
-				// Creates the image for the PNG file
-				BufferedImage image = mxCellRenderer.createBufferedImage(graph,
-						null, 1, bg, graphComponent.isAntiAlias(), null,
-						graphComponent.getCanvas());
-
-				// Creates the URL-encoded XML data
-				mxCodec codec = new mxCodec();
-				String xml = null;
-				try {
-					xml = URLEncoder.encode(
-							mxXmlUtils.getXml(codec.encode(graph.getModel())), "UTF-8");
-				} catch (UnsupportedEncodingException e1) {
-					e1.printStackTrace();
-				}
-				mxPngEncodeParam param = mxPngEncodeParam
-						.getDefaultEncodeParam(image);
-				param.setCompressedText(new String[] { "mxGraphModel", xml });
-
-				String filename
-				// Saves as a PNG file
-				FileOutputStream outputStream = new FileOutputStream(new File(
-						filename));
-				try
-				{
-					mxPngImageEncoder encoder = new mxPngImageEncoder(outputStream,
-							param);
-
-					if (image != null)
-					{
-						encoder.encode(image);
-
-						editor.setModified(false);
-						editor.setCurrentFile(new File(filename));
-					}
-					else
-					{
-						JOptionPane.showMessageDialog(graphComponent,
-								mxResources.get("noImageData"));
-					}
-				} catch (IOException e1) {
-					e1.printStackTrace();
-				} finally
-				{
-					outputStream.close();
-				}
-
-
-			}*/
-			//填写基本信息
-
 		}
 	}
 

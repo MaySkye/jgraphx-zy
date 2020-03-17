@@ -5,22 +5,13 @@ import com.mxgraph.examples.swing.graph.EdgeLink;
 import com.mxgraph.examples.swing.graph.GraphInterface;
 import com.mxgraph.examples.swing.graph.VertexInterface;
 import com.mxgraph.examples.swing.graph.showGraph;
-import com.mxgraph.examples.swing.owl.OwlObject;
-import com.mxgraph.examples.swing.owl.OwlObjectAttribute;
-import com.mxgraph.examples.swing.owl.OwlResourceData;
 import com.mxgraph.model.mxCell;
 import com.mxgraph.model.mxGeometry;
-import com.mxgraph.swing.mxGraphComponent;
-import com.mxgraph.util.mxEvent;
-import com.mxgraph.util.mxEventObject;
-import com.mxgraph.util.mxPoint;
 import com.mxgraph.view.mxGraph;
 import javafx.util.Pair;
 import org.apache.commons.lang3.tuple.MutableTriple;
 
 import java.util.*;
-
-import static com.mxgraph.examples.swing.match.ResMatchCore.calcStaticMap;
 
 /**
  * @Author:zhoayi
@@ -78,7 +69,7 @@ public class ModifyTemplateCore {
         /*---------------------------------------------------------------------------------------------------*/
         // 第三步：删除多余Connector，连线
         removeCells.clear();
-        removeRedundantConnector(root,root, resourceStaticData.connMap,removeCells,editor);
+        removeRedundantConnector(root, removeCells);
         graph.removeCells(removeCells.toArray());
         /*---------------------------------------------------------------------------------------------------*/
         // 第四步：根据情况，删除没必要存在的Container图元
@@ -142,7 +133,7 @@ public class ModifyTemplateCore {
     /********************************************************************************************/
 
     //第二步：删除多余的单值图元
-    private void removeRedundantCell(mxCell cell, Map<String, Integer> cellMap, List<mxCell> removeCells,BasicGraphEditor editor) {
+    private void removeRedundantCell(mxCell cell, Map<String, Integer> cellMap, List<mxCell> removeCells, BasicGraphEditor editor) {
         //如果包括这个类型的，说明这个类型的被处理完了
         removeCells.forEach(mxCell -> {
             if ( Objects.equals(mxCell.getType(),cell.getType())) {
@@ -195,7 +186,7 @@ public class ModifyTemplateCore {
         }
     }
            //删除多余的多值图元
-    private void removeRedundantMultiCell(mxCell cell, Map<String, Integer> cellMap, List<mxCell> removeCells,BasicGraphEditor editor) {
+    private void removeRedundantMultiCell(mxCell cell, Map<String, Integer> cellMap, List<mxCell> removeCells, BasicGraphEditor editor) {
         //如果包括这个类型的，说明这个类型的被处理完了
         removeCells.forEach(mxCell -> {
             if ( Objects.equals(mxCell.getType(),cell.getType())) {
@@ -295,33 +286,18 @@ public class ModifyTemplateCore {
     /********************************************************************************************/
 
     //第三步：删除多余的连接(无两个连接的图元)
-    private void removeRedundantConnector(mxCell root,mxCell cell, Map<ResourceStaticData.MTriple<String, String, String>, Integer> connMap,List<mxCell> removeCells,BasicGraphEditor editor) {
+    private void removeRedundantConnector(mxCell cell, List<mxCell> removeCells) {
         if (cell == null || removeCells == null || removeCells.contains(cell)) {
             return;
         }
-        /*删除图元的情况*/
+
         if (cell.isEdge()&&ConnectorToEdgeMap.containsKey(cell.getName()) && (cell.getTarget()==null||cell.getSource()==null)) {
             System.out.println("will remove: " + cell.getName());
             removeCells.add(cell);
         }
-        if (cell.isEdge()&&ConnectorToEdgeMap.containsKey(cell.getName()) && (cell.getTarget()!=null&&cell.getSource()!=null)) {
-            mxCell firstcell=getCellById(root,cell.getSource().getId());
-            mxCell thirdcell=getCellById(root,cell.getTarget().getId());
-            if(firstcell.getType().equals("Port")){
-                firstcell=getCellById(root,cell.getSource().getParent().getId());
-            }
-            if(thirdcell.getType().equals("Port")){
-                thirdcell=getCellById(root,cell.getTarget().getParent().getId());
-            }
-            ResourceStaticData.MTriple<String, String, String> temp=new ResourceStaticData.MTriple<>(firstcell.getType(),"connect",thirdcell.getType());
-            if(!connMap.containsKey(temp)){
-                System.out.println("will remove1: " + cell.getName());
-                removeCells.add(cell);
-            }
-        }
         for (int i = 0; i < cell.getChildCount(); ++i) {
             mxCell child = (mxCell) cell.getChildAt(i);
-            removeRedundantConnector(root,child, connMap,removeCells,editor);
+            removeRedundantConnector(child, removeCells);
         }
     }
     //判断是不是孤立的，有没有与之相连接的图元(暂时未使用)
@@ -348,23 +324,6 @@ public class ModifyTemplateCore {
         return connectCells < 2;
     }
 
-    //这里的id指的是数字
-   private mxCell getCellById(mxCell root,String id){
-       if (root == null || id == null) {
-           return null;
-       }
-       if (root.getId().equals(id)) {
-           return root;
-       }
-       for (int i = 0; i < root.getChildCount(); ++i) {
-           mxCell child = (mxCell) root.getChildAt(i);
-           mxCell res = getCellById(child, id);
-           if (res != null) {
-               return res;
-           }
-       }
-       return null;
-    }
     /********************************************************************************************/
 
     //第四步：
@@ -392,7 +351,7 @@ public class ModifyTemplateCore {
     /********************************************************************************************/
 
     //第五步：
-    private void fillingCell(ResourceStaticData resourceStaticData,BasicGraphEditor editor) {
+    private void fillingCell(ResourceStaticData resourceStaticData, BasicGraphEditor editor) {
         mxGraph graph = editor.getGraphComponent().getGraph();
         mxCell root = (mxCell) graph.getModel().getRoot();
         double[] baseX = {getMaxX(root)};
@@ -501,9 +460,8 @@ public class ModifyTemplateCore {
         }
         return maxId;
     }
-    private  Pair<Double, Double> insertCell(String type, double baseX, double baseY,BasicGraphEditor editor) {
+    private  Pair<Double, Double> insertCell(String type, double baseX, double baseY, BasicGraphEditor editor) {
         Pair<Double, Double> res = new Pair<>(0.0, 0.0);
-
         List<String> cells = CellTypeUtil.getCells(type);
         if (cells == null || cells.size() == 0) {
             return res;
@@ -511,7 +469,6 @@ public class ModifyTemplateCore {
         String cellName = cells.get(0);
 
         mxCell originCell = editor.AllCellMap.get(cellName);
-
         mxGraph graph = editor.getGraphComponent().getGraph();
         Object[] cloneCells = graph.cloneCells(new mxCell[]{originCell});
         if (cloneCells == null || cloneCells.length == 0 || !(cloneCells[0] instanceof mxCell)) {
@@ -531,6 +488,7 @@ public class ModifyTemplateCore {
         }
         mxCell root = (mxCell) graph.getModel().getRoot();
         cell.setId((getMaxId(root) + 1) + "");
+
         root.getChildAt(0).insert(cell);
         newCreateCell.add(cell);
 
@@ -573,11 +531,11 @@ public class ModifyTemplateCore {
             for (Map.Entry<String, String> entry1 : resource.getLink_info().entrySet()) {
                 if(entry1.getKey().equals("has_property")){
                     hasproperty=entry1.getValue();
-                    System.out.println("hasproperty:"+hasproperty);
+                    //System.out.println("hasproperty:"+hasproperty);
                 }
                 if(entry1.getKey().equals("connect")){
                     hasconnect=entry1.getValue();
-                    System.out.println("hasconnect:"+hasconnect);
+                    //System.out.println("hasconnect:"+hasconnect);
                 }
             }
         }
@@ -616,8 +574,8 @@ public class ModifyTemplateCore {
 
         mxCell root=(mxCell) editor.getGraphComponent().getGraph().getModel().getRoot();
 
-        Map<String, MutableTriple<VertexInterface<String>,EdgeLink,VertexInterface<String>>> edges=res_graph.getEdges();
-        Iterator<Map.Entry<String, MutableTriple<VertexInterface<String>,EdgeLink,VertexInterface<String>>>>
+        Map<String, MutableTriple<VertexInterface<String>, EdgeLink, VertexInterface<String>>> edges=res_graph.getEdges();
+        Iterator<Map.Entry<String, MutableTriple<VertexInterface<String>, EdgeLink, VertexInterface<String>>>>
                 e_entry = edges.entrySet().iterator();
 
         while(e_entry.hasNext()) {
@@ -636,12 +594,13 @@ public class ModifyTemplateCore {
 
             if(!hasedge(begin_mx,end_mx,root)&&begin_mx!=null&&end_mx!=null){
                 edgelink_mx.setEdge(true);
+                System.out.println("need fill: " + begin_mx.getName() + "-" + end_mx.getName());
                 mxGeometry mx_edge_geometry=new mxGeometry(
                         (begin_mx.getGeometry().getX()+end_mx.getGeometry().getX())/2,
                         (begin_mx.getGeometry().getY()+end_mx.getGeometry().getY())/2, 200, 200);
 
-                String res=showGraph.getRelativeLocation(begin_mx,end_mx); //得到两个图元的相对位置
-                System.out.println("res:"+res);
+                String res= showGraph.getRelativeLocation(begin_mx,end_mx); //得到两个图元的相对位置
+                //System.out.println("res:"+res);
                 if(res.equals("directlyDown")){
                     if(edge_name.equals("data_trans")){
                         edgelink_mx.setStyle(editor.AllCellMap.get("data_vertical").getStyle());
@@ -745,14 +704,20 @@ public class ModifyTemplateCore {
             }
         }
     }
-    public boolean hasedge(mxCell begin,mxCell end,mxCell root){
+    public boolean hasedge(mxCell begin, mxCell end, mxCell root){
         boolean result=false;
         if (root == null||begin==null||end==null) {
             return false;
         }
         if(root.isEdge()&&
-                ((root.getSource().getParent()==begin&&root.getTarget().getParent()==end)||
-                (root.getSource().getParent()==end&&root.getTarget().getParent()==begin))){
+                (  (root.getSource().getParent().getId()==begin.getId()&&root.getTarget().getParent().getId()==end.getId())||
+                   (root.getSource().getParent().getId()==end.getId()&&root.getTarget().getParent().getId()==begin.getId())||
+                        (root.getSource().getId()==begin.getId()&&root.getTarget().getParent().getId()==end.getId())||
+                        (root.getSource().getId()==end.getId()&&root.getTarget().getParent().getId()==begin.getId())||
+                        (root.getSource().getParent().getId()==begin.getId()&&root.getTarget().getId()==end.getId())||
+                        (root.getSource().getParent().getId()==end.getId()&&root.getTarget().getId()==begin.getId())
+                )
+        ){
             return true;
         }
 
@@ -765,7 +730,7 @@ public class ModifyTemplateCore {
         return result;
     }
 
-    public mxCell getCellByV(mxCell root,VertexInterface<String> v){
+    public mxCell getCellByV(mxCell root, VertexInterface<String> v){
         if (root == null || v == null) {
             return null;
         }
@@ -784,7 +749,7 @@ public class ModifyTemplateCore {
 
     /********************************************************************************************/
     //第九步：并绑定连线的资源信息
-    private void autoBindEdge(GraphInterface<String> res_graph, mxCell cell,Set<String> hasBind) {
+    private void autoBindEdge(GraphInterface<String> res_graph, mxCell cell, Set<String> hasBind) {
         if (cell == null) {
             return;
         }
@@ -793,13 +758,13 @@ public class ModifyTemplateCore {
             cell.setOriginalResourceFile(filePath1);
             cell.setBindResourceFile(filePath1);
 
-            Map<String, MutableTriple<VertexInterface<String>,EdgeLink,VertexInterface<String>>> edges=res_graph.getEdges();
-            Iterator<Map.Entry<String, MutableTriple<VertexInterface<String>,EdgeLink,VertexInterface<String>>>>
+            Map<String, MutableTriple<VertexInterface<String>, EdgeLink, VertexInterface<String>>> edges=res_graph.getEdges();
+            Iterator<Map.Entry<String, MutableTriple<VertexInterface<String>, EdgeLink, VertexInterface<String>>>>
                     e_entry= edges.entrySet().iterator();
             while(e_entry.hasNext()){
 
-                Map.Entry<String, MutableTriple<VertexInterface<String>,EdgeLink,VertexInterface<String>>> entry = e_entry.next();
-                MutableTriple<VertexInterface<String>,EdgeLink,VertexInterface<String>> e=entry.getValue();
+                Map.Entry<String, MutableTriple<VertexInterface<String>, EdgeLink, VertexInterface<String>>> entry = e_entry.next();
+                MutableTriple<VertexInterface<String>, EdgeLink, VertexInterface<String>> e=entry.getValue();
 
                 if(cell.getV()==null&&cell.getTarget()==e.getLeft()&&cell.getSource()==e.getRight()
                         &&!hasBind.contains(e.getMiddle().getId())){

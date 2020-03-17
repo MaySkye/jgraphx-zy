@@ -580,6 +580,8 @@ public class GraphEditor extends BasicGraphEditor
 										.getResource("/com/mxgraph/examples/swing/images/hline.png")),
 						"line", 160, 10, "");
 		* */
+
+		
 		List<EdgeEle> edgeList = EdgeDecoder.decodeDoc();
 		for (EdgeEle edgeEle : edgeList) {
 			mxCell cell =linksPalette.addEdgeTemplate(edgeEle.getName(),

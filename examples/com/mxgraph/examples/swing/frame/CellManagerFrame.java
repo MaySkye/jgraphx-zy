@@ -18,6 +18,7 @@ import org.dom4j.io.OutputFormat;
 import org.dom4j.io.SAXReader;
 import org.dom4j.io.XMLWriter;
 import sun.swing.table.DefaultTableCellHeaderRenderer;
+import com.mxgraph.examples.swing.frame.CellEditorFrame.CustomGraphComponent;
 
 import javax.swing.*;
 import javax.swing.border.Border;
@@ -38,6 +39,7 @@ import java.util.List;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+
 /**
  * @Author:zhoayi
  * @Description:
@@ -61,16 +63,16 @@ public class CellManagerFrame extends JFrame {
     private static String appPath = FileUtil.getRootPath().substring(1);
     private static String cell_template=appPath+"/examples/com/mxgraph/examples/swing/config_files/cell_template";
     private static String edge_template=appPath+"/examples/com/mxgraph/examples/swing/config_files/edge_template";
-    private static String noimagePic=appPath+"/examples/com/mxgraph/examples/swing/images/cell_manage/backpic .png";
+    private static String noimagePic=appPath+"/examples/com/mxgraph/examples/swing/images/cell_manage/backpic.png";
     private static String imagedir=appPath+"/examples/com/mxgraph/examples/swing/images/cell_manage";
     private JPanel btnPanel;
     private JPanel showPanel;
     private JPanel kindPanel;
     private JPanel cellPanel;
     private JPanel linkPanel;
-    private JFrame jFrame;
-    private JFrame cellFrame;
-    private JFrame linkFrame;
+    private JFrame cellLeadInFrame;
+    private JFrame cellAddFrame;
+    private JFrame linkAddFrame;
 
     private ArrayList<String> device_names=new ArrayList<>();
     private ArrayList<String> device_icons=new ArrayList<>();
@@ -95,7 +97,7 @@ public class CellManagerFrame extends JFrame {
         setSize(width, height);
         //设置中心位置
         setLocation(getWidth() / 2 - width / 2, getHeight() / 2 - height / 2);
-        setTitle("图元管理");
+        setTitle("领域图元管理");
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setVisible(true);
        /* try{
@@ -116,13 +118,13 @@ public class CellManagerFrame extends JFrame {
         kindPanel = new JPanel();
         cellPanel = new JPanel();
         linkPanel = new JPanel();
-        jFrame = new JFrame();
-        cellFrame = new JFrame();
-        linkFrame = new JFrame();
+        cellLeadInFrame = new JFrame();
+        cellAddFrame = new JFrame();
+        linkAddFrame = new JFrame();
 
-        initFrame(jFrame,"添加图元");
-        initFrame(cellFrame,"添加设备图元");
-        initFrame(linkFrame,"添加连线图元");
+        initFrame(cellLeadInFrame,"图元引入");
+        initFrame(cellAddFrame,"引入设备图元");
+        initFrame(linkAddFrame,"引入连线图元");
     }
 
     public void initFrame(JFrame jFrame,String title){
@@ -143,7 +145,6 @@ public class CellManagerFrame extends JFrame {
         label2.setBounds(100, 24, 80, 30);
         label1.setBorder(BorderFactory.createLineBorder(Color.black, 2));
         label2.setBorder(BorderFactory.createLineBorder(Color.lightGray, 1));
-        System.out.println("hhhhhhh");
         label1.revalidate();
         label2.revalidate();
 
@@ -151,16 +152,16 @@ public class CellManagerFrame extends JFrame {
         JButton jbt2=new JButton("连线图元");
         jbt1.setBorderPainted(false);
         jbt2.setBorderPainted(false);
-        JButton jbt3=new JButton("添加");
-        JButton jbt4=new JButton("删除");
+        JButton jbt3=new JButton("图元引入");
+        JButton jbt4=new JButton("图元制作");
         jbt3.setBorder(new RoundBorder());
         jbt4.setBorder(new RoundBorder());
 
         jbt1.setBounds(20,  24, 80, 30);
         jbt2.setBounds(100, 24, 80, 30);
         //jbt3.setBounds(600, 20, 70, 30);
-        jbt3.setBounds(690, 20, 70, 30);
-        jbt4.setBounds(690, 20, 70, 30);
+        jbt3.setBounds(580, 20, 100, 30);
+        jbt4.setBounds(690, 20, 100, 30);
         JPanel imagePanel=new JPanel();
         imagePanel.setBounds(20, 55, 740, 480);
         imagePanel.setBorder(BorderFactory.createLineBorder(Color.gray, 2));
@@ -202,17 +203,23 @@ public class CellManagerFrame extends JFrame {
                 revalidate();
             }
         });
-        //添加
+        //图元引入
         jbt3.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                jFrame.setVisible(true);
+                cellLeadInFrame.setVisible(true);
             }
         });
-        //删除
+        //图元制作
         jbt4.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                System.out.println("图元制作");
+                CustomGraphComponent c = new CustomGraphComponent(new CellEditorFrame.CustomGraph());
+                CellEditorFrame editor = new CellEditorFrame("图元编辑器", c);
+                JFrame cellMakeframe = editor.createCellFrame();
+                c.setFrame(cellMakeframe);
+                cellMakeframe.setVisible(true);
             }
         });
         //showPanel.add(jbt1);
@@ -220,7 +227,7 @@ public class CellManagerFrame extends JFrame {
         showPanel.add(label1);
         showPanel.add(label2);
         showPanel.add(jbt3);
-        //showPanel.add(jbt4);
+        showPanel.add(jbt4);
         showPanel.add(sp);
         showPanel.add(imagePanel);
         this.add(showPanel);
@@ -256,20 +263,20 @@ public class CellManagerFrame extends JFrame {
 
         kindPanel.add(j1,BorderLayout.NORTH);
         kindPanel.add(j2,BorderLayout.CENTER);
-        jFrame.add(kindPanel);
-        jFrame.revalidate();
+        cellLeadInFrame.add(kindPanel);
+        cellLeadInFrame.revalidate();
         b1.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                jFrame.setVisible(false);
-                cellFrame.setVisible(true);
+                cellLeadInFrame.setVisible(false);
+                cellAddFrame.setVisible(true);
             }
         });
         b2.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                jFrame.setVisible(false);
-                linkFrame.setVisible(true);
+                cellLeadInFrame.setVisible(false);
+                linkAddFrame.setVisible(true);
             }
         });
     }
@@ -536,7 +543,7 @@ public class CellManagerFrame extends JFrame {
         jbt3.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                cellFrame.setVisible(false);
+                cellAddFrame.setVisible(false);
             }
         });
         //确定：添加到xml中
@@ -605,7 +612,7 @@ public class CellManagerFrame extends JFrame {
                     e1.printStackTrace();
                 }
                 JOptionPane.showConfirmDialog(null, "添加成功", "成功", JOptionPane.PLAIN_MESSAGE);
-                cellFrame.setVisible(false);
+                cellAddFrame.setVisible(false);
                 showPanel.removeAll();
                 showPanel.revalidate();
                 showpage();
@@ -620,8 +627,8 @@ public class CellManagerFrame extends JFrame {
         cellPanel.add(j7);
         cellPanel.add(j8);
         cellPanel.add(j4);
-        cellFrame.add(cellPanel);
-        cellFrame.revalidate();
+        cellAddFrame.add(cellPanel);
+        cellAddFrame.revalidate();
     }
 
     public void linkpage(){
@@ -734,7 +741,7 @@ public class CellManagerFrame extends JFrame {
         jbt3.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                linkFrame.setVisible(false);
+                linkAddFrame.setVisible(false);
             }
         });
         //确定：添加到xml中
@@ -781,7 +788,7 @@ public class CellManagerFrame extends JFrame {
                     e1.printStackTrace();
                 }
                 JOptionPane.showMessageDialog(null, "添加成功", "成功", JOptionPane.PLAIN_MESSAGE);
-                linkFrame.setVisible(false);
+                linkAddFrame.setVisible(false);
                 showPanel.removeAll();
                 showPanel.revalidate();
                 showpage();
@@ -796,8 +803,8 @@ public class CellManagerFrame extends JFrame {
         linkPanel.add(j3);
         linkPanel.add(j4);
         linkPanel.add(j5);
-        linkFrame.add(linkPanel);
-        linkFrame.revalidate();
+        linkAddFrame.add(linkPanel);
+        linkAddFrame.revalidate();
     }
 
     public File fileChooser(){
@@ -924,7 +931,7 @@ public class CellManagerFrame extends JFrame {
                         System.out.println("左击");
                         ArrayList<String> elementList=new ArrayList<>();
                         elementList=getportString(fistChild);
-                        popCellFrame1(fistChild,elementList);
+                        popCellFrame(fistChild,elementList);
                     }
                     if(e.getButton()== e.BUTTON2)
                     {
@@ -1062,7 +1069,7 @@ public class CellManagerFrame extends JFrame {
                         if(e.getButton()== e.BUTTON1)
                         {
                             System.out.println("左击");
-                            popLinkFrame1(fistChild);
+                            popLinkFrame(fistChild);
                         }
                         if(e.getButton()== e.BUTTON2)
                         {
@@ -1140,38 +1147,6 @@ public class CellManagerFrame extends JFrame {
     }
 
     public void popCellFrame(Element fistChild,ArrayList<String> elementList){
-        JFrame tableFrame = new JFrame();
-        tableFrame.setResizable(false);
-        tableFrame.setSize(500, 300);
-        //设置中心位置
-        tableFrame.setLocation(getWidth() / 2 - width / 2+200, getHeight() / 2 - height / 2+200);
-        tableFrame.setTitle(fistChild.attribute("name").getValue());
-        tableFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        tableFrame.setVisible(true);
-        // 表头（列名）
-        Object[] columnNames = {"名称", "内容"};
-        // 表格所有行数据
-        Object[][] rowData = {
-                {"name", fistChild.attribute("name").getValue()},
-                {"type", fistChild.attribute("type").getValue()},
-                {"width", fistChild.attribute("width").getValue()},
-                {"height", fistChild.attribute("height").getValue()},
-                {"icon", fistChild.attribute("icon").getValue()},
-                {"port", elementList.get(0)},
-                {"port", elementList.get(1)},
-                {"port", elementList.get(2)},
-                {"port", elementList.get(3)}
-        };
-        // 创建一个表格，指定 所有行数据 和 表头
-        JTable jTable = new JTable(rowData, columnNames);
-        jTable.setRowHeight(30);
-
-        JPanel jtablePanel=new JPanel();
-        jtablePanel.add(jTable);
-        tableFrame.add(jtablePanel);
-    }
-
-    public void popCellFrame1(Element fistChild,ArrayList<String> elementList){
         JFrame tableFrame = new JFrame();
         tableFrame.setResizable(false);
         tableFrame.setSize(500, 300);
@@ -1282,76 +1257,6 @@ public class CellManagerFrame extends JFrame {
     }
 
     public void popLinkFrame(Element fistChild){
-        JFrame tableFrame = new JFrame();
-        tableFrame.setResizable(false);
-        tableFrame.setSize(500, 300);
-        //设置中心位置
-        tableFrame.setLocation(getWidth() / 2 - width / 2+200, getHeight() / 2 - height / 2+200);
-
-        tableFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        tableFrame.setVisible(true);
-
-        String name="";
-        String type="";
-        String width="";
-        String height="";
-        String icon="";
-        String style="";
-        Iterator iterator = fistChild.elementIterator();
-        while (iterator.hasNext()) {
-            Element element = (Element) iterator.next();
-            if(element.getName().equals("name")){
-                name=element.getStringValue();
-            }
-            if(element.getName().equals("type")){
-                type=element.getStringValue();
-            }
-            if(element.getName().equals("width")){
-                width=element.getStringValue();
-            }
-            if(element.getName().equals("height")){
-                height=element.getStringValue();
-            }
-            if(element.getName().equals("icon")){
-                icon=element.getStringValue();
-            }
-            if(element.getName().equals("style")){
-                style=element.getStringValue();
-            }
-        }
-        tableFrame.setTitle(name);
-        // 表头（列名）
-        Object[] columnNames = {"名称", "内容"};
-        // 表格所有行数据
-        Object[][] rowData = {
-                {"name", name},
-                {"type", type},
-                {"width", width},
-                {"height", height},
-                {"icon", icon},
-                {"style", style},
-        };
-        // 创建一个表格，指定 所有行数据 和 表头
-        JTable jTable = new JTable(rowData, columnNames);
-        jTable.setRowHeight(30);
-        jTable.setPreferredScrollableViewportSize(new Dimension(490, 280));// 表格的显示尺寸
-
-        DefaultTableCellRenderer tcr = new DefaultTableCellRenderer();//单元格渲染器
-        tcr.setHorizontalAlignment(JLabel.CENTER);//居中显示
-        jTable.setDefaultRenderer(Object.class, tcr);//设置渲染器
-        jTable.setSelectionBackground(Color.GRAY);
-        DefaultTableCellHeaderRenderer hr = new DefaultTableCellHeaderRenderer();
-        hr.setHorizontalAlignment(JLabel.CENTER);
-        jTable.getTableHeader().setDefaultRenderer(hr);
-
-
-        JPanel jPanel=new JPanel();
-        JScrollPane  jtablePanel=new JScrollPane (jPanel);
-        jPanel.add(jTable);
-        tableFrame.add(jtablePanel);
-    }
-
-    public void popLinkFrame1(Element fistChild){
         JFrame tableFrame = new JFrame();
         tableFrame.setResizable(false);
         tableFrame.setSize(500, 300);

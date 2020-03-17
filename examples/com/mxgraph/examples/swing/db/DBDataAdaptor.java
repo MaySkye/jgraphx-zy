@@ -2,7 +2,6 @@ package com.mxgraph.examples.swing.db;
 
 import com.mxgraph.examples.swing.editor.BasicGraphEditor;
 import com.mxgraph.examples.swing.util.FileUtil;
-import com.mxgraph.examples.swing.util.HttpUtil;
 import com.mxgraph.io.mxCodec;
 import com.mxgraph.model.mxCell;
 import com.mxgraph.swing.mxGraphComponent;
@@ -16,7 +15,6 @@ import org.apache.commons.dbutils.QueryRunner;
 import sun.misc.BASE64Encoder;
 
 import javax.imageio.ImageIO;
-import javax.json.Json;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -142,7 +140,7 @@ public class DBDataAdaptor extends Thread {
     public void doUpdateData(mxCell cell) {
         //获取List集合中的对象 并使用对象总的value字段进行赋值
         for (int i = 0; i < telemetryDTOList.size(); i++) {
-            if(cell.getMonitor_name().equals(telemetryDTOList.get(i).getDataName())){
+            if(cell.getMonitor_property_name().equals(telemetryDTOList.get(i).getDataName())){
                 String dataValue = telemetryDTOList.get(i).getDetectedValue();
                 String alarm_state=telemetryDTOList.get(i).getAlarmState();
                 cell.setValue(dataValue);
@@ -168,7 +166,7 @@ public class DBDataAdaptor extends Thread {
             String monitor_device_name = cell.getMonitor_device_name();
             System.out.println("**********************************");
             System.out.println("monitor_device_name：  "+cell.getMonitor_device_name());
-            System.out.println("monitor_name：  "+cell.getName());
+            System.out.println("monitor_property_name：  "+cell.getName());
             System.out.println("monitor_unit：  "+cell.getMonitor_unit());
             System.out.println("**********************************");
 

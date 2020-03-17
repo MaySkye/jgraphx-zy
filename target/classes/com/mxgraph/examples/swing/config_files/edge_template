@@ -14,8 +14,8 @@
     <type>FiberEdge</type>  
     <width>150</width>  
     <height>150</height>  
-    <icon>/com/mxgraph/examples/swing/images/2.png</icon>  
-    <style>edgeStyle=elbowEdgeStyle;elbow=vertical;strokeWidth=5;endArrow=none;verticalLabelPosition=middle;verticalAlign=middle;fontFamily=微软雅黑 Light;fontSize=24;fontColor=#FF0000;labelBackgroundColor=#FFFFFF;labelBorderColor=#000000;strokeColor=#488FAD</style> 
+    <icon>/com/mxgraph/examples/swing/images/2.png</icon>
+    <style>roundImage;image=/com/mxgraph/examples/swing/images/2.png</style>
   </edge>  
   <edge> 
     <name>fiber</name>  

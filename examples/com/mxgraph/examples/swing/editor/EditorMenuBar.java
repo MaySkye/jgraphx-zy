@@ -490,7 +490,7 @@ public class EditorMenuBar extends JMenuBar {
         });
 
         // Creates the chart menu
-        menu = add(new JMenu("绘图"));
+        menu = add(new JMenu("设计资源组态图"));
         //System.out.println(username);
 
 
@@ -515,17 +515,15 @@ public class EditorMenuBar extends JMenuBar {
         } catch (Exception e) {
             e.printStackTrace();
         }*/
-
-        menu.add(editor.bind("图元管理" ,new EditorActions.CellManagerAction()));
-        menu.add(editor.bind("存为设备图元" ,new EditorActions.saveAsCellAction()));
+        menu.add(editor.bind("领域图元管理" ,new EditorActions.CellManagerAction()));
         menu.addSeparator();
-        menu.add(editor.bind("选择文件资源", new EditorActions.ConfigureFileResAction()));
+        menu.add(editor.bind("构建组态图", new EditorActions.GenerateMxeFileAction()));
         menu.add(editor.bind("生成组态图", new EditorActions.GenerateDiagramAction()));
         menu.add(editor.bind("同步数据库数据", new EditorActions.SynDatabaseAction()));
         menu.addSeparator();
-        menu.add(editor.bind("预览组态图", new EditorActions.RunDiagramAction()));
-        menu.add(editor.bind("退出运行态", new EditorActions.QuitRunStateAction()));
-        menu.add(editor.bind("提交组态图", new EditorActions.SaveServiceFileAction()));
+        menu.add(editor.bind("运行预览", new EditorActions.RunDiagramAction()));
+        menu.add(editor.bind("退出预览", new EditorActions.QuitRunStateAction()));
+        menu.add(editor.bind("保存发布", new EditorActions.SaveMxeFileAction()));
         menu.addSeparator();
         menu.add(editor.bind("查看关系图", new EditorActions.ViewSchemaAction()));
         //menu.add(editor.bind("地图展示", new MapChartAction()));

@@ -10,7 +10,8 @@ import java.lang.reflect.Modifier;
 import java.math.BigInteger;
 import java.util.Properties;
 
-import com.mxgraph.examples.swing.frame.UploadServiceFileFrame;
+
+import com.mxgraph.examples.swing.frame.UploadMxeFileFrame;
 import com.mxgraph.examples.swing.util.FileUtil;
 import com.teamdev.jxbrowser.chromium.Browser;
 import com.teamdev.jxbrowser.chromium.ba;
@@ -51,7 +52,7 @@ public class BrowserFrame2 {
     public static void viewschema(String filepath, String filename) {
         try {
             Properties pps = new Properties();
-            pps.load(UploadServiceFileFrame.class.getResourceAsStream("/config/http_url.properties"));
+            pps.load(UploadMxeFileFrame.class.getResourceAsStream("/config/http_url.properties"));
             webvOwlUrl = pps.getProperty("mxbaseUrl") + pps.getProperty("webvOwlHtml");
             System.out.println("webvOwlUrl:"+webvOwlUrl);
             webvDataPath=pps.getProperty("webvDataPath");

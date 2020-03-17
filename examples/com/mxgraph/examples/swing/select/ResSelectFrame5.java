@@ -172,7 +172,7 @@ public class ResSelectFrame5 extends Frame{
                 //匹配模板图时使用如下方法
                 //为graph匹配相似度最高的match_graph,得到对应模板图的文件名
                 String TemplatePath= ResMatchCore.getTemplatePath(new_owlResourceData);
-               // System.out.println("TemplatePath:"+TemplatePath);
+                System.out.println("TemplatePath:"+TemplatePath);
 
                 /*此段代码可以显示出模板mxe文件*/
                 if (TemplatePath == null) {

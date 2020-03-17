@@ -72,5 +72,11 @@
     <port attr="fiber" location="left" direction="in" x="0.1" y="0.5"/>  
     <port attr="fiber" location="down" direction="in" x="0.5" y="0.9"/>  
     <port attr="fiber" location="right" direction="in" x="0.9" y="0.5"/> 
+  </cell>  
+  <cell name="仪表盘" type="仪表盘" width="100" height="100" icon="/com/mxgraph/examples/swing/images/cell_manage/test.png" style="roundImage;image=/com/mxgraph/examples/swing/images/cell_manage/test.png"> 
+    <port attr="fiber" location="up" direction="in" x="0.5" y="0.1"/>  
+    <port attr="fiber" location="up" direction="in" x="0.1" y="0.5"/>  
+    <port attr="fiber" location="up" direction="in" x="0.5" y="0.9"/>  
+    <port attr="fiber" location="up" direction="in" x="0.9" y="0.5"/> 
   </cell> 
 </Template>

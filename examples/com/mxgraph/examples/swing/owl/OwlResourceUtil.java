@@ -40,13 +40,13 @@ public class OwlResourceUtil {
             String subjectName = subject.getLocalName();
             String predicateName = predicate.getLocalName();
 
-            System.out.println("-----------------------------------");
+           /* System.out.println("-----------------------------------");
             System.out.println("subjectStr:  "+subjectStr);
             System.out.println("predicateStr:  "+predicateStr);
             System.out.println("objectStr:  "+objectStr);
             System.out.println("subjectName:  "+subjectName);
-            System.out.println("predicateName:  "+predicateName);
-
+            System.out.println("predicateName:  "+predicateName);*/
+            System.out.println("subjectStr:  "+subjectStr+" predicateStr:  "+predicateStr+" objectStr:  "+objectStr);
             //将每个类初始化
             if (!subject.isLiteral() && !object.isLiteral() && objectStr.endsWith("Class") && predicateName.equals("type") && !classMap.containsKey(subjectStr)) {
                 OwlClass cls = new OwlClass();
@@ -524,7 +524,7 @@ public class OwlResourceUtil {
         owlResourceData.model.write(System.out, "N-TRIPLES");
         System.out.println("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<\n");
         */
-        System.out.println(">>>>>>>>>>>>>>>>>>>>>>>> Class >>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+        System.out.println("-------------------------- 类 -----------------------------");
         owlResourceData.classMap.forEach((String uri, OwlClass cls) -> {
             System.out.println("--uri: " + uri);
             System.out.println("--id: " + cls.id);
@@ -550,7 +550,7 @@ public class OwlResourceUtil {
         });
         System.out.println("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<\n");
 
-        System.out.println(">>>>>>>>>>>>>>>>>>>> ObjectAttribute >>>>>>>>>>>>>>>>>>>>>>>");
+        System.out.println("------------------------------- 对象属性 --------------------------");
         owlResourceData.objAttrMap.forEach((uri, objAttr) -> {
             System.out.println("--uri: " + uri);
             System.out.println("--id: " + objAttr.id);
@@ -578,7 +578,7 @@ public class OwlResourceUtil {
         });
         System.out.println("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<\n");
 
-        System.out.println(">>>>>>>>>>>>>>>>>>>> DataAttribute >>>>>>>>>>>>>>>>>>>>>>>");
+        System.out.println("---------------------- 数据属性 -------------------------");
         owlResourceData.dataAttrMap.forEach((uri, dataAttr) -> {
             System.out.println("--uri: " + uri);
             System.out.println("--id: " + dataAttr.id);
@@ -604,7 +604,7 @@ public class OwlResourceUtil {
         });
         System.out.println("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<\n");
 
-        System.out.println(">>>>>>>>>>>>>>>>>>>>> Individual >>>>>>>>>>>>>>>>>>>>>>>>");
+        System.out.println("--------------------- 实例 ------------------------");
         owlResourceData.objMap.forEach((uri, obj) -> {
             System.out.println("--uri: " + uri);
             System.out.println("--id: " + obj.id);
@@ -770,7 +770,6 @@ public class OwlResourceUtil {
         }
         return kind;
     }
-
 
     public static int getFOINum(Map<String, OwlObject> objMap){
         int num=0;

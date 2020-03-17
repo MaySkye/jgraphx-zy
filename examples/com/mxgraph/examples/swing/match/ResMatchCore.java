@@ -118,6 +118,7 @@ public class ResMatchCore {
         List<GraphEle> list = GraphDecoder.decodeDoc();
         String[] objs = new String[list.size()];
 
+
         for (GraphEle ele : list) {
             String graphName = ele.getName();
             printInfo(ele);

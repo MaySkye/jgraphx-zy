@@ -1,15 +1,7 @@
 package com.mxgraph.examples.swing.editor;
 
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseMotionListener;
-import java.awt.event.MouseWheelEvent;
-import java.awt.event.MouseWheelListener;
+import java.awt.event.*;
 import java.io.File;
 import java.util.*;
 import java.util.List;
@@ -120,6 +112,8 @@ public class BasicGraphEditor extends JPanel
 	 * right pane, paint
 	 */
 	private JSplitPane outer = null;
+	/*领域图元管理*/
+	protected JPanel panel;
 	/**
 	 * edit tool bar
 	 */
@@ -141,6 +135,8 @@ public class BasicGraphEditor extends JPanel
 	private static int MonitorNameWidth = 150;
 	private static int MonitorDataWidth = 60;
 	private static int MonitorUnitWidth = 40;
+	private static int DeviceWidth=250;
+	private static int DeviceHeight=30;
 
 	private JTable jTable;
 	private AbstractTableModel attrListModel;
@@ -1192,7 +1188,6 @@ public class BasicGraphEditor extends JPanel
 		  addPropertyCell(root,graph);
 		  revalidate();
 	}
-
 	private void addPropertyCell(mxCell cell,mxGraph graph) {
 		if (cell == null||cell.getChildCount()==0) {
 			return;
@@ -1200,7 +1195,7 @@ public class BasicGraphEditor extends JPanel
 		for (int i = 0; i < cell.getChildCount(); ++i) {
 			mxCell child = (mxCell) cell.getChildAt(i);
 			if(child.isVertex()&&child.getV()!=null){
-                //如果是顶点，看有没有属性
+				//如果是顶点，看有没有属性
 				//如果是顶点，得到图元的位置
 				mxGeometry geo = child.getGeometry();
 				double x = geo.getX();
@@ -1209,8 +1204,8 @@ public class BasicGraphEditor extends JPanel
 				if(child.getV().getName()!=null){
 					String nameStyle = AliasName.getAlias("monitor_name_style");
 					// nameCell UI坐标偏移量是相对于父图元，而不再是相对于UI原点
-					mxCell nameCell = new mxCell(child.getV().getName(), child.getV().getName(),
-							new mxGeometry(x-45, y, 250, 30), nameStyle);
+					mxCell nameCell = new mxCell(child.getV().getId(), child.getV().getId(),
+							new mxGeometry(x-45, y, DeviceWidth, DeviceHeight), nameStyle);
 					nameCell.setType("DeviceName");
 					nameCell.setAttr("device_name");
 					nameCell.setVertex(true);
@@ -1228,7 +1223,7 @@ public class BasicGraphEditor extends JPanel
 
 						//arr[r].trim()是属性名称  unit是属性单位
 						OwlObject owlObject=cell_property.get(arr[r].trim());
-						arr1[r]=owlObject.type.id;
+						arr1[r]=owlObject.id;
 						String unit="";
 						if(owlObject.dataAttrs!=null){
 							for (Map.Entry<OwlDataAttribute, Set<Object>> entry : owlObject.dataAttrs.entrySet()) {
@@ -1238,8 +1233,6 @@ public class BasicGraphEditor extends JPanel
 									}
 								}
 							}
-						}else{
-							unit="***";
 						}
 
 						//System.out.println("property_name:"+arr[r].trim()+"   property_unit:"+unit);
@@ -1262,13 +1255,21 @@ public class BasicGraphEditor extends JPanel
 							// 创建监控器图元三元组--Data，插入到cell中
 							String dataStyle = AliasName.getAlias("monitor_data_style");
 							// monitorCell UI坐标偏移量是相对于父图元，而不再是相对于UI原点
-							mxCell dataMonitorCell = new mxCell(arr[r].trim(), "",
-									new mxGeometry(x + MonitorNameWidth-45, (y+MonitorHeight*r+30), MonitorDataWidth, MonitorHeight), dataStyle);
+							mxCell dataMonitorCell;
+							if(!unit.equals("")){
+								dataMonitorCell = new mxCell(arr[r].trim(), "",
+										new mxGeometry(x + MonitorNameWidth-45, (y+MonitorHeight*r+30), MonitorDataWidth, MonitorHeight), dataStyle);
+							}else{
+								dataMonitorCell = new mxCell(arr[r].trim(), "",
+										new mxGeometry(x + MonitorNameWidth-45, (y+MonitorHeight*r+30), MonitorDataWidth+MonitorUnitWidth, MonitorHeight), dataStyle);
+							}
+
 							dataMonitorCell.setType("Property");
 							dataMonitorCell.setAttr("property_data");
 							dataMonitorCell.setVertex(true);
 							dataMonitorCell.setMonitor_device_name(child.getDeviceid());
-							dataMonitorCell.setMonitor_name(arr[r].trim());
+							dataMonitorCell.setMonitor_property_name(arr[r].trim());
+							dataMonitorCell.setMonitor_property_type(owlObject.type.id);
 							dataMonitorCell.setMonitor_unit(unit);
 							//dataMonitorCell.setOriginParentId(cell.getId());
 							dataMonitorCell.setConnectable(false);
@@ -1276,17 +1277,20 @@ public class BasicGraphEditor extends JPanel
 
 
 							// 创建监控器图元三元组--Unit，插入到cell中
-							String unitStyle = AliasName.getAlias("monitor_unit_style");
-							// monitorCell UI坐标偏移量是相对于父图元，而不再是相对于UI原点
-							mxCell unitMonitorCell = new mxCell(arr[r].trim(), unit,
-									new mxGeometry(x + MonitorNameWidth + MonitorDataWidth-45, (y+MonitorHeight*r+30),
-											MonitorUnitWidth, MonitorHeight), unitStyle);
-							unitMonitorCell.setType("Property");
-							unitMonitorCell.setAttr("property_unit");
-							unitMonitorCell.setVertex(true);
-							//unitMonitorCell.setOriginParentId(cell.getId());
-							unitMonitorCell.setConnectable(false);
-							((mxCell) graph.getDefaultParent()).insert(unitMonitorCell);
+							if(!unit.equals("")){
+								String unitStyle = AliasName.getAlias("monitor_unit_style");
+								// monitorCell UI坐标偏移量是相对于父图元，而不再是相对于UI原点
+								mxCell unitMonitorCell = new mxCell(arr[r].trim(), unit,
+										new mxGeometry(x + MonitorNameWidth + MonitorDataWidth-45, (y+MonitorHeight*r+30),
+												MonitorUnitWidth, MonitorHeight), unitStyle);
+								unitMonitorCell.setType("Property");
+								unitMonitorCell.setAttr("property_unit");
+								unitMonitorCell.setVertex(true);
+								//unitMonitorCell.setOriginParentId(cell.getId());
+								unitMonitorCell.setConnectable(false);
+								((mxCell) graph.getDefaultParent()).insert(unitMonitorCell);
+							}
+
 						}
 
 
@@ -1299,7 +1303,27 @@ public class BasicGraphEditor extends JPanel
 			addPropertyCell(child,graph);
 		}
 	}
+
 	public  Map<String, mxCell> getAllCellMap() {
 		return AllCellMap;
+	}
+
+	public JFrame createCellFrame() {
+
+		final JFrame frame = new JFrame("图元编辑器");
+		frame.getContentPane().add(this);
+		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		frame.addWindowListener(new WindowAdapter() {
+			public void windowClosing(WindowEvent e) {
+				//System.exit(0);
+				//	frame.dispose();
+			}
+		});
+		frame.setSize(550, 450);
+		double width = Toolkit.getDefaultToolkit().getScreenSize().getWidth();
+		double height = Toolkit.getDefaultToolkit().getScreenSize().getHeight();
+		frame.setLocation((int) width / 4,
+				(int) height / 4);
+		return frame;
 	}
 }

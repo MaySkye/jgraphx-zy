@@ -11,7 +11,6 @@ import com.mxgraph.examples.swing.graph.EdgeLink;
 import com.mxgraph.examples.swing.graph.VertexInterface;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
-import sun.security.provider.certpath.Vertex;
 
 /**
  * Cells are the elements of the graph model. They represent the state
@@ -819,7 +818,8 @@ public class mxCell implements mxICell, Cloneable, Serializable
 
 	//描述monitor图元的
 	protected String monitor_device_name;
-	protected String monitor_name;
+	protected String monitor_property_name;
+	protected String monitor_property_type;
 	protected String monitor_unit;
 
 	public String getMonitor_device_name() {
@@ -830,12 +830,20 @@ public class mxCell implements mxICell, Cloneable, Serializable
 		this.monitor_device_name = monitor_device_name;
 	}
 
-	public String getMonitor_name() {
-		return monitor_name;
+	public String getMonitor_property_name() {
+		return monitor_property_name;
 	}
 
-	public void setMonitor_name(String monitor_name) {
-		this.monitor_name = monitor_name;
+	public void setMonitor_property_name(String monitor_property_name) {
+		this.monitor_property_name = monitor_property_name;
+	}
+
+	public String getMonitor_property_type() {
+		return monitor_property_type;
+	}
+
+	public void setMonitor_property_type(String monitor_property_type) {
+		this.monitor_property_type = monitor_property_type;
 	}
 
 	public String getMonitor_unit() {
