@@ -6,26 +6,7 @@
     </artifacts-to-build>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4e7cafa5-c7d9-45f4-8d2c-d4ffeb63a9ec" name="Default" comment="1.添加图元编辑器&#10;2.修改图元属性&#10;  monitor_name改为monitor_property_name&#10;  添加monitor_property_type&#10;3.当监控属性的单位为空时，单位图元不显示">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/mxgraph/examples/swing/db/DBDataAdaptor.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/mxgraph/examples/swing/db/DBDataAdaptor.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/mxgraph/examples/swing/editor/EditorMenuBar$5.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/mxgraph/examples/swing/editor/EditorMenuBar$5.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/mxgraph/examples/swing/images/device/device1.png" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/mxgraph/examples/swing/images/device/device1.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/mxgraph/examples/swing/images/device/device_101.png" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/mxgraph/examples/swing/images/device/device_101.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/mxgraph/examples/swing/images/device/device_11.png" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/mxgraph/examples/swing/images/device/device_11.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/mxgraph/examples/swing/images/device/device_21.png" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/mxgraph/examples/swing/images/device/device_21.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/mxgraph/examples/swing/images/device/device_31.png" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/mxgraph/examples/swing/images/device/device_31.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/mxgraph/examples/swing/images/device/device_41.png" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/mxgraph/examples/swing/images/device/device_41.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/mxgraph/examples/swing/images/device/device_51.png" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/mxgraph/examples/swing/images/device/device_51.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/mxgraph/examples/swing/images/device/device_61.png" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/mxgraph/examples/swing/images/device/device_61.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/mxgraph/examples/swing/images/device/device_71.png" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/mxgraph/examples/swing/images/device/device_71.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/mxgraph/examples/swing/images/device/device_81.png" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/mxgraph/examples/swing/images/device/device_81.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/mxgraph/examples/swing/images/device/device_91.png" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/mxgraph/examples/swing/images/device/device_91.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/mxgraph/examples/swing/images/device/device_receive.png" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/mxgraph/examples/swing/images/device/device_receive.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/mxgraph/examples/swing/images/device/device_send.png" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/mxgraph/examples/swing/images/device/device_send.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/mxgraph/model/mxCell.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/mxgraph/model/mxCell.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/mxgraph/model/mxCell.java" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/mxgraph/model/mxCell.java" afterDir="false" />
-    </list>
+    <list default="true" id="4e7cafa5-c7d9-45f4-8d2c-d4ffeb63a9ec" name="Default" comment="上传UploadMxeFileFrame.java" />
     <ignored path="$PROJECT_DIR$/target/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -384,7 +365,29 @@
               <item name="mxgraph" type="462c0819:PsiDirectoryNode" />
               <item name="examples" type="462c0819:PsiDirectoryNode" />
               <item name="swing" type="462c0819:PsiDirectoryNode" />
-              <item name="editor" type="462c0819:PsiDirectoryNode" />
+              <item name="images" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="jgraphx" type="b2602c69:ProjectViewProjectNode" />
+              <item name="jgraphx-master" type="462c0819:PsiDirectoryNode" />
+              <item name="examples" type="462c0819:PsiDirectoryNode" />
+              <item name="com" type="462c0819:PsiDirectoryNode" />
+              <item name="mxgraph" type="462c0819:PsiDirectoryNode" />
+              <item name="examples" type="462c0819:PsiDirectoryNode" />
+              <item name="swing" type="462c0819:PsiDirectoryNode" />
+              <item name="images" type="462c0819:PsiDirectoryNode" />
+              <item name="device" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="jgraphx" type="b2602c69:ProjectViewProjectNode" />
+              <item name="jgraphx-master" type="462c0819:PsiDirectoryNode" />
+              <item name="examples" type="462c0819:PsiDirectoryNode" />
+              <item name="com" type="462c0819:PsiDirectoryNode" />
+              <item name="mxgraph" type="462c0819:PsiDirectoryNode" />
+              <item name="examples" type="462c0819:PsiDirectoryNode" />
+              <item name="swing" type="462c0819:PsiDirectoryNode" />
+              <item name="images" type="462c0819:PsiDirectoryNode" />
+              <item name="svg" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="jgraphx" type="b2602c69:ProjectViewProjectNode" />
@@ -456,7 +459,7 @@
     <property name="ToolWindowAnt Build.ShowToolbar" value="false" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1584454330716" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1584456304276" />
     <property name="go.gopath.indexing.explicitly.defined" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../fiber-monitor-system-server" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
@@ -853,7 +856,7 @@
       <workItem from="1580882917708" duration="3752000" />
       <workItem from="1581753195841" duration="36198000" />
       <workItem from="1583130166762" duration="32153000" />
-      <workItem from="1584249468093" duration="13851000" />
+      <workItem from="1584249468093" duration="14652000" />
     </task>
     <task id="LOCAL-00001" summary="none">
       <created>1577249350834</created>
@@ -883,11 +886,18 @@
       <option name="project" value="LOCAL" />
       <updated>1584452476880</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="上传UploadMxeFileFrame.java">
+      <created>1584454426552</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1584454426552</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="342608000" />
+    <option name="totallyTimeSpent" value="343409000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -900,10 +910,9 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1295" height="695" extended-state="6" />
-    <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.80445546" visible="true" weight="0.21261115" />
-      <window_info id="Structure" order="1" sideWeight="0.19554456" side_tool="true" visible="true" weight="0.21261115" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.8045977" visible="true" weight="0.24575587" />
+      <window_info id="Structure" order="1" sideWeight="0.1954023" side_tool="true" visible="true" weight="0.24575587" />
       <window_info id="Designer" order="2" />
       <window_info id="Image Layers" order="3" />
       <window_info id="Capture Tool" order="4" />
@@ -911,7 +920,7 @@
       <window_info id="Favorites" order="6" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.40630797" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.2504638" />
+      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.031539887" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.39888683" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -944,7 +953,8 @@
     <MESSAGE value="图元管理功能" />
     <MESSAGE value="2020.2.5" />
     <MESSAGE value="1.添加图元编辑器&#10;2.修改图元属性&#10;  monitor_name改为monitor_property_name&#10;  添加monitor_property_type&#10;3.当监控属性的单位为空时，单位图元不显示" />
-    <option name="LAST_COMMIT_MESSAGE" value="1.添加图元编辑器&#10;2.修改图元属性&#10;  monitor_name改为monitor_property_name&#10;  添加monitor_property_type&#10;3.当监控属性的单位为空时，单位图元不显示" />
+    <MESSAGE value="上传UploadMxeFileFrame.java" />
+    <option name="LAST_COMMIT_MESSAGE" value="上传UploadMxeFileFrame.java" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
