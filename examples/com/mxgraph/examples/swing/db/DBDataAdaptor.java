@@ -152,24 +152,24 @@ public class DBDataAdaptor extends Thread {
         if (cell == null) {
             return ;
         }
-        System.out.println("type:"+cell.getType());
+        //System.out.println("type:"+cell.getType());
         if(cell.getType()!=null){
             if(cell.getType().equals("title")){
                 site_name=cell.getValue().toString();
                 site_name=site_name.substring(0,site_name.length()-5);
-                System.out.println("getMonitorInfoStr  site_name：  "+site_name);
+                //System.out.println("getMonitorInfoStr  site_name：  "+site_name);
                 //site_name="xian";
             }
         }
 
         if (cell.isVertex()  && cell.getAttr() == "property_data") {
             String monitor_device_name = cell.getMonitor_device_name();
-            System.out.println("**********************************");
+           /* System.out.println("**********************************");
             System.out.println("monitor_device_name：  "+cell.getMonitor_device_name());
             System.out.println("monitor_property_name：  "+cell.getName());
             System.out.println("monitor_unit：  "+cell.getMonitor_unit());
             System.out.println("**********************************");
-
+*/
             String monitorInfo = cell.getMonitor_device_name()+":"+cell.getName();
             monitorInfoSet.add(monitorInfo);
         }
