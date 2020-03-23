@@ -44,7 +44,7 @@ public class QuanzhouUploadMxeFileFrame extends JFrame {
         try {
             Properties pps = new Properties();
             pps.load(QuanzhouUploadMxeFileFrame.class.getResourceAsStream("/config/http_url.properties"));
-            uploadFileUrl = pps.getProperty("baseUrl") + pps.getProperty("uploadMxeFile");
+            uploadFileUrl = pps.getProperty("quanzhouBaseUrl") + pps.getProperty("quanzhouUploadMxeFileUrl");
         } catch (IOException e) {
             e.printStackTrace();
         }
