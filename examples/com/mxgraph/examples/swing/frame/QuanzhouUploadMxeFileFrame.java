@@ -96,8 +96,8 @@ public class QuanzhouUploadMxeFileFrame extends JFrame {
 	 * Create the frame.
 	 */
 	public QuanzhouUploadMxeFileFrame(BasicGraphEditor editor) {
-		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setTitle("发布组态图——泉州项目");
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 600, 430);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -105,7 +105,7 @@ public class QuanzhouUploadMxeFileFrame extends JFrame {
 		contentPane.setLayout(null);
 
 		Box areaBox = Box.createHorizontalBox();
-		areaBox.setBounds(120, 72, 317, 29);
+		areaBox.setBounds(120, 120, 317, 29);
 		contentPane.add(areaBox);
 
 		JLabel areaLabel = new JLabel("区域：    ");
@@ -116,7 +116,7 @@ public class QuanzhouUploadMxeFileFrame extends JFrame {
 		areaFiled.setColumns(10);
 
 		Box nameBox = Box.createHorizontalBox();
-		nameBox.setBounds(120, 129, 317, 29);
+		nameBox.setBounds(120, 180, 317, 29);
 		contentPane.add(nameBox);
 
 		JLabel nameLabel = new JLabel("命名：    ");
@@ -126,7 +126,7 @@ public class QuanzhouUploadMxeFileFrame extends JFrame {
 		nameField.setColumns(10);
 		nameBox.add(nameField);
 
-		JLabel suffixLabel = new JLabel(".mxe");
+		JLabel suffixLabel = new JLabel("   .mxe");
 		nameBox.add(suffixLabel);
 
 		JButton btnNewButton = new JButton("发布");
@@ -187,6 +187,7 @@ public class QuanzhouUploadMxeFileFrame extends JFrame {
 		});
 		btnNewButton_1.setBounds(347, 312, 113, 27);
 		contentPane.add(btnNewButton_1);
+		setVisible(true);
 		toCenter();
 	}
 	
