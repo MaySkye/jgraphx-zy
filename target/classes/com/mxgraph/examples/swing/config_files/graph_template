@@ -39,4 +39,13 @@
               <cell num="2" type="监控单元@data_trans@双向EDFA设备"/>
     </graph>
 
+
+    <graph image="/com/mxgraph/examples/swing/config_files/模板3.png"
+                   mxe="/com/mxgraph/examples/swing/config_files/模板X.mxe"
+                   name="模板X">
+                  <cell num="1" type="路由器设备"/>
+                  <cell num="2" type="客户端设备"/>
+                  <cell num="2" type="路由器设备@connect@双向EDFA设备"/>
+    </graph>
+
 </Template>
