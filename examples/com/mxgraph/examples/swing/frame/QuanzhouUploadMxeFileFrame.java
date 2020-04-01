@@ -35,6 +35,7 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.util.Properties;
+import java.awt.Button;
 
 public class QuanzhouUploadMxeFileFrame extends JFrame {
 	
@@ -58,8 +59,11 @@ public class QuanzhouUploadMxeFileFrame extends JFrame {
     private BasicGraphEditor editor;
 
 	private JPanel contentPane;
-	private JTextField areaFiled;
+	private JTextField userAddressField;
 	private JTextField nameField;
+	private final ButtonGroup buttonGroup = new ButtonGroup();
+	private JRadioButton timeSyncRadio;
+	private JRadioButton timestampRadio;
 
 	/**
 	 * Launch the application.
@@ -105,18 +109,18 @@ public class QuanzhouUploadMxeFileFrame extends JFrame {
 		contentPane.setLayout(null);
 
 		Box areaBox = Box.createHorizontalBox();
-		areaBox.setBounds(120, 120, 317, 29);
+		areaBox.setBounds(126, 96, 317, 29);
 		contentPane.add(areaBox);
 
 		JLabel areaLabel = new JLabel("区域：    ");
 		areaBox.add(areaLabel);
 
-		areaFiled = new JTextField();
-		areaBox.add(areaFiled);
-		areaFiled.setColumns(10);
+		userAddressField = new JTextField();
+		areaBox.add(userAddressField);
+		userAddressField.setColumns(10);
 
 		Box nameBox = Box.createHorizontalBox();
-		nameBox.setBounds(120, 180, 317, 29);
+		nameBox.setBounds(126, 156, 317, 29);
 		contentPane.add(nameBox);
 
 		JLabel nameLabel = new JLabel("命名：    ");
@@ -129,8 +133,8 @@ public class QuanzhouUploadMxeFileFrame extends JFrame {
 		JLabel suffixLabel = new JLabel("   .mxe");
 		nameBox.add(suffixLabel);
 
-		JButton btnNewButton = new JButton("发布");
-		btnNewButton.addMouseListener(new MouseAdapter() {
+		JButton submitBtn = new JButton("发布");
+		submitBtn.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				mxGraphComponent graphComponent = editor.getGraphComponent();
@@ -170,23 +174,38 @@ public class QuanzhouUploadMxeFileFrame extends JFrame {
 				dispose();
 			}
 		});
-		btnNewButton.addActionListener(new ActionListener() {
+		submitBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 			}
 		});
-		btnNewButton.setBounds(126, 312, 113, 27);
-		contentPane.add(btnNewButton);
+		submitBtn.setBounds(126, 312, 113, 27);
+		contentPane.add(submitBtn);
 
-		JButton btnNewButton_1 = new JButton("关闭");
+		JButton closeBtn = new JButton("关闭");
 		JFrame that = this;
-		btnNewButton_1.addMouseListener(new MouseAdapter() {
+		closeBtn.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				dispose();
 			}
 		});
-		btnNewButton_1.setBounds(347, 312, 113, 27);
-		contentPane.add(btnNewButton_1);
+		closeBtn.setBounds(347, 312, 113, 27);
+		contentPane.add(closeBtn);
+		
+		JLabel label = new JLabel("类型：    ");
+		label.setBounds(126, 217, 77, 18);
+		contentPane.add(label);
+		
+		timeSyncRadio = new JRadioButton("时间同步");
+		timeSyncRadio.setSelected(true);
+		timeSyncRadio.setBounds(196, 213, 113, 27);
+		contentPane.add(timeSyncRadio);
+		buttonGroup.add(timeSyncRadio);
+		
+		timestampRadio = new JRadioButton("文档认证");
+		timestampRadio.setBounds(315, 213, 129, 27);
+		contentPane.add(timestampRadio);
+		buttonGroup.add(timestampRadio);
 		setVisible(true);
 		toCenter();
 	}
@@ -198,8 +217,8 @@ public class QuanzhouUploadMxeFileFrame extends JFrame {
             HttpClient client = new HttpClient();
             PostMethod postMethod = new PostMethod(url);
             postMethod.setQueryString(new NameValuePair[]{
-            		new NameValuePair("site_name",areaFiled.getText()),
-					new NameValuePair("site_level","default"),
+            		new NameValuePair("user_address",userAddressField.getText()),
+					new NameValuePair("type",buttonGroup.getElements().nextElement().getText()),
 					new NameValuePair("latest","true"),  //默认为最新
                     new NameValuePair("filename",file.getName())
 			});
@@ -232,4 +251,10 @@ public class QuanzhouUploadMxeFileFrame extends JFrame {
             }
         }
     }
+	public JRadioButton getTimeSyncRadio() {
+		return timeSyncRadio;
+	}
+	public JRadioButton getTimestampRadio() {
+		return timestampRadio;
+	}
 }

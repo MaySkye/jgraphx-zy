@@ -133,9 +133,9 @@ public class BasicGraphEditor extends JPanel
 	private static int MonitorHeight = 40;
 	private static int MonitorWidth = 240;
 	private static int MonitorNameWidth = 150;
-	private static int MonitorDataWidth = 60;
+	private static int MonitorDataWidth = 100;
 	private static int MonitorUnitWidth = 40;
-	private static int DeviceWidth=250;
+	private static int DeviceWidth=290;
 	private static int DeviceHeight=30;
 
 	private JTable jTable;

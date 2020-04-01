@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <Template> 
-  <cell name="光纤稳频激光器单元" type="光纤稳频激光器单元" width="100" height="100" icon="/com/mxgraph/examples/swing/images/device/device_11.png" style="roundImage;image=/com/mxgraph/examples/swing/images/device/device_11.png"> 
+  <cell name="光纤稳频激光器单元" type="光纤稳频激光器单元" width="100" height="100" icon="/com/mxgraph/examples/swing/images/device/device_11.png" style="roundImage;image=/com/mxgraph/examples/swing/images/device/device_11.png">
     <port attr="fiber" location="up" direction="out" x="0.5" y="0.1"/>  
     <port attr="fiber" location="left" direction="out" x="0.1" y="0.5"/>  
     <port attr="fiber" location="down" direction="out" x="0.5" y="0.9"/>  
@@ -78,5 +78,23 @@
     <port attr="fiber" location="up" direction="in" x="0.1" y="0.5"/>  
     <port attr="fiber" location="up" direction="in" x="0.5" y="0.9"/>  
     <port attr="fiber" location="up" direction="in" x="0.9" y="0.5"/> 
-  </cell> 
+  </cell>
+  <cell name="信号评估设备" type="信号评估设备" width="100" height="100" icon="/com/mxgraph/examples/swing/images/device/信号评估设备.png" style="roundImage;image=/com/mxgraph/examples/swing/images/device/信号评估设备.png">
+      <port attr="fiber" location="up" direction="in" x="0.5" y="0.1"/>
+      <port attr="fiber" location="up" direction="in" x="0.1" y="0.5"/>
+      <port attr="fiber" location="up" direction="in" x="0.5" y="0.9"/>
+      <port attr="fiber" location="up" direction="in" x="0.9" y="0.5"/>
+  </cell>
+  <cell name="光纤时间同步本地端设备" type="光纤时间同步本地端设备" width="100" height="100" icon="/com/mxgraph/examples/swing/images/device/光纤时间同步本地端设备.png" style="roundImage;image=/com/mxgraph/examples/swing/images/device/光纤时间同步本地端设备.png">
+        <port attr="fiber" location="up" direction="in" x="0.5" y="0.1"/>
+        <port attr="fiber" location="up" direction="in" x="0.1" y="0.5"/>
+        <port attr="fiber" location="up" direction="in" x="0.5" y="0.9"/>
+        <port attr="fiber" location="up" direction="in" x="0.9" y="0.5"/>
+   </cell>
+  <cell name="光纤时间同步远程端设备" type="光纤时间同步远程端设备" width="100" height="100" icon="/com/mxgraph/examples/swing/images/device/光纤时间同步远程端设备.png" style="roundImage;image=/com/mxgraph/examples/swing/images/device/光纤时间同步远程端设备.png">
+           <port attr="fiber" location="up" direction="in" x="0.5" y="0.1"/>
+           <port attr="fiber" location="up" direction="in" x="0.1" y="0.5"/>
+           <port attr="fiber" location="up" direction="in" x="0.5" y="0.9"/>
+           <port attr="fiber" location="up" direction="in" x="0.9" y="0.5"/>
+  </cell>
 </Template>
