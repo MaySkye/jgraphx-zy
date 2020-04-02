@@ -97,4 +97,22 @@
            <port attr="fiber" location="up" direction="in" x="0.5" y="0.9"/>
            <port attr="fiber" location="up" direction="in" x="0.9" y="0.5"/>
   </cell>
+  <cell name="同步参考源驯服设备" type="同步参考源驯服设备" width="100" height="100" icon="/com/mxgraph/examples/swing/images/device/同步参考源驯服设备.png" style="roundImage;image=/com/mxgraph/examples/swing/images/device/同步参考源驯服设备.png">
+             <port attr="fiber" location="up" direction="in" x="0.5" y="0.1"/>
+             <port attr="fiber" location="up" direction="in" x="0.1" y="0.5"/>
+             <port attr="fiber" location="up" direction="in" x="0.5" y="0.9"/>
+             <port attr="fiber" location="up" direction="in" x="0.9" y="0.5"/>
+  </cell>
+  <cell name="铷原子钟" type="铷原子钟" width="100" height="100" icon="/com/mxgraph/examples/swing/images/device/铷原子钟.png" style="roundImage;image=/com/mxgraph/examples/swing/images/device/铷原子钟.png">
+             <port attr="fiber" location="up" direction="in" x="0.5" y="0.1"/>
+             <port attr="fiber" location="up" direction="in" x="0.1" y="0.5"/>
+             <port attr="fiber" location="up" direction="in" x="0.5" y="0.9"/>
+             <port attr="fiber" location="up" direction="in" x="0.9" y="0.5"/>
+  </cell>
+  <cell name="光纤时间同步中继及下载设备" type="光纤时间同步中继及下载设备" width="100" height="100" icon="/com/mxgraph/examples/swing/images/device/光纤时间同步中继及下载设备.png" style="roundImage;image=/com/mxgraph/examples/swing/images/device/光纤时间同步中继及下载设备.png">
+             <port attr="fiber" location="up" direction="in" x="0.5" y="0.1"/>
+             <port attr="fiber" location="up" direction="in" x="0.1" y="0.5"/>
+             <port attr="fiber" location="up" direction="in" x="0.5" y="0.9"/>
+             <port attr="fiber" location="up" direction="in" x="0.9" y="0.5"/>
+  </cell>
 </Template>

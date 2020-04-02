@@ -2152,8 +2152,8 @@ public class EditorActions {
                 return;
             }
 
-            new UploadMxeFileFrame(editor);
             new QuanzhouUploadMxeFileFrame(editor);
+//            new UploadMxeFileFrame(editor);
         }
     }
 
