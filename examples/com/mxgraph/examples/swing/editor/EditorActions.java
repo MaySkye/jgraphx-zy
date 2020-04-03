@@ -2153,7 +2153,7 @@ public class EditorActions {
             }
 
             new QuanzhouUploadMxeFileFrame(editor);
-//            new UploadMxeFileFrame(editor);
+            new UploadMxeFileFrame(editor);
         }
     }
 
