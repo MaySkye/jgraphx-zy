@@ -17,12 +17,10 @@ import org.dom4j.Element;
 import org.dom4j.io.OutputFormat;
 import org.dom4j.io.SAXReader;
 import org.dom4j.io.XMLWriter;
-import sun.swing.table.DefaultTableCellHeaderRenderer;
 import com.mxgraph.examples.swing.frame.CellEditorFrame.CustomGraphComponent;
 
 import javax.swing.*;
 import javax.swing.border.Border;
-import javax.swing.table.DefaultTableCellRenderer;
 import javax.xml.parsers.ParserConfigurationException;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -61,7 +59,7 @@ public class CellManagerFrame extends JFrame {
     private static final int height = 600;
     private static final int DEFAULT_SIZE = 24;
     private static String appPath = FileUtil.getRootPath().substring(1);
-    private static String cell_template=appPath+"/examples/com/mxgraph/examples/swing/config_files/cell_template";
+    private static String opticalDeviceTemplate =appPath+"/examples/com/mxgraph/examples/swing/config_files/opticalDeviceTemplate";
     private static String edge_template=appPath+"/examples/com/mxgraph/examples/swing/config_files/edge_template";
     private static String noimagePic=appPath+"/examples/com/mxgraph/examples/swing/images/cell_manage/backpic.png";
     private static String imagedir=appPath+"/examples/com/mxgraph/examples/swing/images/cell_manage";
@@ -171,7 +169,7 @@ public class CellManagerFrame extends JFrame {
         label1.setBorder(BorderFactory.createLineBorder(Color.black, 2));
         label2.setBorder(BorderFactory.createLineBorder(Color.lightGray, 1));
         try {
-            showDeviceCell(imagePanel,cell_template);
+            showDeviceCell(imagePanel, opticalDeviceTemplate);
         } catch (ParserConfigurationException e) {
             e.printStackTrace();
         } catch (DocumentException e) {
@@ -185,7 +183,7 @@ public class CellManagerFrame extends JFrame {
                 label1.setBorder(BorderFactory.createLineBorder(Color.black, 2));
                 label2.setBorder(BorderFactory.createLineBorder(Color.lightGray, 1));
                 try {
-                    showDeviceCell(imagePanel,cell_template);
+                    showDeviceCell(imagePanel, opticalDeviceTemplate);
                 } catch (ParserConfigurationException e1) {
                     e1.printStackTrace();
                 } catch (DocumentException e1) {
@@ -551,11 +549,11 @@ public class CellManagerFrame extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                File file1 = new File(cell_template);
+                File file1 = new File(opticalDeviceTemplate);
                 SAXReader reader=new SAXReader();
                 Document doc = null;
                 try {
-                    doc = reader.read(cell_template);
+                    doc = reader.read(opticalDeviceTemplate);
                 } catch (DocumentException e1) {
                     e1.printStackTrace();
                 }
@@ -1760,7 +1758,7 @@ public class CellManagerFrame extends JFrame {
 		// add cell and pipe node
         List<CellEle> cellList = null;
         try {
-            cellList = new CellNewDecoder(cell_template).decodeDoc();
+            cellList = new CellNewDecoder(opticalDeviceTemplate).decodeDoc();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }

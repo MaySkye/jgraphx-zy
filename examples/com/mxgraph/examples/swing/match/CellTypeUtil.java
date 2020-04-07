@@ -8,7 +8,7 @@ import java.util.*;
 
 public class CellTypeUtil {
 
-    private static List<CellEle> fiberDeviceData = CellDecoder.fiberDeviceCellList;
+    private static List<CellEle> opticalDeviceData = CellDecoder.opticalDeviceCellList;
     private static List<CellEle> networkDeviceData = CellDecoder.networkDeviceCellList;
     private static Map<String, List<CellEle>> cellMap = null;
     private static Map<String, List<String>> typeMap = null;
@@ -56,11 +56,11 @@ public class CellTypeUtil {
     }
 
     private static void loadData() {
-        cellMap = new HashMap<>(fiberDeviceData.size());
-        typeMap = new HashMap<>(fiberDeviceData.size());
-        typeSet = new HashSet<>(fiberDeviceData.size());
-        typeList = new ArrayList<>(fiberDeviceData.size());
-        fiberDeviceData.forEach(cellEle -> {
+        cellMap = new HashMap<>(opticalDeviceData.size());
+        typeMap = new HashMap<>(opticalDeviceData.size());
+        typeSet = new HashSet<>(opticalDeviceData.size());
+        typeList = new ArrayList<>(opticalDeviceData.size());
+        opticalDeviceData.forEach(cellEle -> {
             if (typeSet.add(cellEle.getType())) {
                 typeList.add(cellEle.getType());
                 typeMap.put(cellEle.getType(), new ArrayList<>());
@@ -71,6 +71,8 @@ public class CellTypeUtil {
             List<CellEle> list2 = cellMap.get(cellEle.getType());
             list2.add(cellEle);
         });
+
+
 
 
         cellMap = new HashMap<>(networkDeviceData.size());

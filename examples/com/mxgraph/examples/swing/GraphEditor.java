@@ -10,13 +10,11 @@ import java.text.NumberFormat;
 import java.util.Iterator;
 import java.util.List;
 import javax.swing.ImageIcon;
-import javax.swing.UIManager;
 
 import com.mxgraph.examples.swing.decode.*;
 import org.w3c.dom.Document;
 
 import com.mxgraph.examples.swing.editor.BasicGraphEditor;
-import com.mxgraph.examples.swing.editor.EditorMenuBar;
 import com.mxgraph.examples.swing.editor.EditorPalette;
 import com.mxgraph.io.mxCodec;
 import com.mxgraph.model.mxCell;
@@ -25,8 +23,6 @@ import com.mxgraph.model.mxICell;
 import com.mxgraph.model.mxIGraphModel;
 import com.mxgraph.swing.mxGraphComponent;
 import com.mxgraph.swing.util.mxGraphTransferable;
-import com.mxgraph.swing.util.mxSwingConstants;
-import com.mxgraph.util.mxConstants;
 import com.mxgraph.util.mxEvent;
 import com.mxgraph.util.mxEventObject;
 import com.mxgraph.util.mxEventSource.mxIEventListener;
@@ -77,7 +73,7 @@ public class GraphEditor extends BasicGraphEditor {
 		EditorPalette imagesPalette = insertPalette(mxResources.get("images"));
 		EditorPalette symbolsPalette = insertPalette(mxResources.get("symbols"));
 		王伟注解 */
-        EditorPalette fiberDevicesPalette = insertPalette("光频设备");
+        EditorPalette opticalDevicesPalette = insertPalette("光频设备");
         EditorPalette networkDevicesPalette = insertPalette("网络设备");
         //EditorPalette time_devicesPalette = insertPalette("时间设备");
         //EditorPalette micro_devicesPalette = insertPalette("微波设备");
@@ -249,8 +245,8 @@ public class GraphEditor extends BasicGraphEditor {
     }
 
         // 王伟：向面板添加光频、网络设备
-        List<CellEle> fiberCellList = CellDecoder.fiberDeviceCellList;
-        addCellsToPalette(fiberDevicesPalette, fiberCellList);
+        List<CellEle> fiberCellList = CellDecoder.opticalDeviceCellList;
+        addCellsToPalette(opticalDevicesPalette, fiberCellList);
         List<CellEle> networkCellList = CellDecoder.networkDeviceCellList;
         addCellsToPalette(networkDevicesPalette, networkCellList);
 
