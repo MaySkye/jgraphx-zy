@@ -1989,7 +1989,7 @@ public class mxUtils
 	}
 
 	/**
-	 * Loads an image from the local filesystem, a edgeList URI or any other URL.
+	 * Loads an image from the local filesystem, a data URI or any other URL.
 	 */
 	public static BufferedImage loadImage(String url)
 	{
@@ -1997,8 +1997,8 @@ public class mxUtils
 
 		if (url != null)
 		{
-			// Parses edgeList URIs of the form edgeList:image/format;base64,xxx
-			if (url.startsWith("edgeList:image/"))
+			// Parses data URIs of the form data:image/format;base64,xxx
+			if (url.startsWith("data:image/"))
 			{
 				try
 				{
@@ -2009,7 +2009,7 @@ public class mxUtils
 				}
 				catch (Exception e)
 				{
-					log.log(Level.SEVERE, "Failed to load a edgeList URI image", e);
+					log.log(Level.SEVERE, "Failed to load a data URI image", e);
 				}
 			}
 			else
@@ -2378,7 +2378,7 @@ public class mxUtils
 	 * Returns a new document for the given XML string.
 	 * 
 	 * @param xml
-	 *            String that represents the XML edgeList.
+	 *            String that represents the XML data.
 	 * @return Returns a new XML document.
 	 * @deprecated Use <code>mxXmlUtils.parseXml</code> (Jan 2012)
 	 */

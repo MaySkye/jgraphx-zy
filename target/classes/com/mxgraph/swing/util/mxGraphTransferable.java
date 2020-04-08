@@ -207,12 +207,12 @@ public class mxGraphTransferable implements Transferable, UIResource,
 	}
 
 	/**
-	 * Returns whether or not the specified edgeList flavor is supported for this
+	 * Returns whether or not the specified data flavor is supported for this
 	 * object.
 	 * 
 	 * @param flavor
-	 *            the requested flavor for the edgeList
-	 * @return boolean indicating whether or not the edgeList flavor is supported
+	 *            the requested flavor for the data
+	 * @return boolean indicating whether or not the data flavor is supported
 	 */
 	public boolean isDataFlavorSupported(DataFlavor flavor)
 	{
@@ -230,18 +230,18 @@ public class mxGraphTransferable implements Transferable, UIResource,
 	}
 
 	/**
-	 * Returns an object which represents the edgeList to be transferred. The class
+	 * Returns an object which represents the data to be transferred. The class
 	 * of the object returned is defined by the representation class of the
 	 * flavor.
 	 * 
 	 * @param flavor
-	 *            the requested flavor for the edgeList
+	 *            the requested flavor for the data
 	 * @see DataFlavor#getRepresentationClass
 	 * @exception IOException
-	 *                if the edgeList is no longer available in the requested
+	 *                if the data is no longer available in the requested
 	 *                flavor.
 	 * @exception UnsupportedFlavorException
-	 *                if the requested edgeList flavor is not supported.
+	 *                if the requested data flavor is not supported.
 	 */
 	public Object getTransferData(DataFlavor flavor)
 			throws UnsupportedFlavorException, IOException
@@ -343,7 +343,7 @@ public class mxGraphTransferable implements Transferable, UIResource,
 	/**
 	 * 
 	 * @param flavor
-	 * @return the richer edgeList flavor of this and the specified
+	 * @return the richer data flavor of this and the specified
 	 * @throws UnsupportedFlavorException
 	 */
 	public Object getRicherData(DataFlavor flavor)
@@ -360,12 +360,12 @@ public class mxGraphTransferable implements Transferable, UIResource,
 	}
 
 	/**
-	 * Returns whether or not the specified edgeList flavor is an HTML flavor that
+	 * Returns whether or not the specified data flavor is an HTML flavor that
 	 * is supported.
 	 * 
 	 * @param flavor
-	 *            the requested flavor for the edgeList
-	 * @return boolean indicating whether or not the edgeList flavor is supported
+	 *            the requested flavor for the data
+	 * @return boolean indicating whether or not the data flavor is supported
 	 */
 	protected boolean isHtmlFlavor(DataFlavor flavor)
 	{
@@ -392,7 +392,7 @@ public class mxGraphTransferable implements Transferable, UIResource,
 	}
 
 	/**
-	 * Fetch the edgeList in a text/html format
+	 * Fetch the data in a text/html format
 	 */
 	protected String getHtmlData()
 	{
@@ -429,12 +429,12 @@ public class mxGraphTransferable implements Transferable, UIResource,
 	}
 
 	/**
-	 * Returns whether or not the specified edgeList flavor is an plain flavor that
+	 * Returns whether or not the specified data flavor is an plain flavor that
 	 * is supported.
 	 * 
 	 * @param flavor
-	 *            the requested flavor for the edgeList
-	 * @return boolean indicating whether or not the edgeList flavor is supported
+	 *            the requested flavor for the data
+	 * @return boolean indicating whether or not the data flavor is supported
 	 */
 	protected boolean isPlainFlavor(DataFlavor flavor)
 	{
@@ -461,7 +461,7 @@ public class mxGraphTransferable implements Transferable, UIResource,
 	}
 
 	/**
-	 * Fetch the edgeList in a text/plain format.
+	 * Fetch the data in a text/plain format.
 	 */
 	protected String getPlainData()
 	{
@@ -469,12 +469,12 @@ public class mxGraphTransferable implements Transferable, UIResource,
 	}
 
 	/**
-	 * Returns whether or not the specified edgeList flavor is a String flavor that
+	 * Returns whether or not the specified data flavor is a String flavor that
 	 * is supported.
 	 * 
 	 * @param flavor
-	 *            the requested flavor for the edgeList
-	 * @return boolean indicating whether or not the edgeList flavor is supported
+	 *            the requested flavor for the data
+	 * @return boolean indicating whether or not the data flavor is supported
 	 */
 	protected boolean isStringFlavor(DataFlavor flavor)
 	{

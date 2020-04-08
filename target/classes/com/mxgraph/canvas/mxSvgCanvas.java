@@ -321,7 +321,7 @@ public class mxSvgCanvas extends mxBasicCanvas
 				format = src.substring(dot + 1);
 			}
 
-			result = "edgeList:image/"
+			result = "data:image/"
 					+ format
 					+ ";base64,"
 					+ mxBase64
@@ -351,7 +351,7 @@ public class mxSvgCanvas extends mxBasicCanvas
 			// Store before transforming to DataURL
 			images.put(src, img);
 
-			if (!src.startsWith("edgeList:image/"))
+			if (!src.startsWith("data:image/"))
 			{
 				try
 				{
@@ -364,7 +364,7 @@ public class mxSvgCanvas extends mxBasicCanvas
 				}
 				catch (IOException e)
 				{
-					log.log(Level.SEVERE, "Failed to create image edgeList URL", e);
+					log.log(Level.SEVERE, "Failed to create image data URL", e);
 				}
 			}
 

@@ -1239,7 +1239,7 @@ public class mxGraphModel extends mxEventSource implements mxIGraphModel,
 	/**
 	 * Returns the number of incoming or outgoing edges.
 	 * 
-	 * @param model Graph model that contains the connection edgeList.
+	 * @param model Graph model that contains the connection data.
 	 * @param cell Cell whose edges should be counted.
 	 * @param outgoing Boolean that specifies if the number of outgoing or
 	 * incoming edges should be returned.
@@ -1255,7 +1255,7 @@ public class mxGraphModel extends mxEventSource implements mxIGraphModel,
 	 * Returns the number of incoming or outgoing edges, ignoring the given
 	 * edge.
 	 *
-	 * @param model Graph model that contains the connection edgeList.
+	 * @param model Graph model that contains the connection data.
 	 * @param cell Cell whose edges should be counted.
 	 * @param outgoing Boolean that specifies if the number of outgoing or
 	 * incoming edges should be returned.

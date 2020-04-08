@@ -583,7 +583,7 @@ public class mxGraph extends mxEventSource
 	 * specified, then a new, empty {@link com.mxgraph.model.mxGraphModel} is
 	 * used.
 	 * 
-	 * @param model Model that contains the graph edgeList
+	 * @param model Model that contains the graph data
 	 */
 	public mxGraph(mxIGraphModel model)
 	{
@@ -607,7 +607,7 @@ public class mxGraph extends mxEventSource
 	 * specified, then a new, empty {@link com.mxgraph.model.mxGraphModel} is
 	 * used.
 	 * 
-	 * @param model Model that contains the graph edgeList
+	 * @param model Model that contains the graph data
 	 */
 	public mxGraph(mxIGraphModel model, mxStylesheet stylesheet)
 	{
@@ -642,9 +642,9 @@ public class mxGraph extends mxEventSource
 	}
 
 	/**
-	 * Returns the graph model that contains the graph edgeList.
+	 * Returns the graph model that contains the graph data.
 	 * 
-	 * @return Returns the model that contains the graph edgeList
+	 * @return Returns the model that contains the graph data
 	 */
 	public mxIGraphModel getModel()
 	{
@@ -652,10 +652,10 @@ public class mxGraph extends mxEventSource
 	}
 
 	/**
-	 * Sets the graph model that contains the edgeList, and fires an
+	 * Sets the graph model that contains the data, and fires an
 	 * mxEvent.CHANGE followed by an mxEvent.REPAINT event.
 	 * 
-	 * @param value Model that contains the graph edgeList
+	 * @param value Model that contains the graph data
 	 */
 	public void setModel(mxIGraphModel value)
 	{
@@ -958,7 +958,7 @@ public class mxGraph extends mxEventSource
 	}
 
 	/**
-	 * Processes the given change and invalidates the respective cached edgeList
+	 * Processes the given change and invalidates the respective cached data
 	 * in <view>. This fires a <root> event if the root has changed in the
 	 * model.
 	 */
@@ -1195,7 +1195,7 @@ public class mxGraph extends mxEventSource
 
 	/**
 	 * Tries to resolve the value for the image style in the image bundles and
-	 * turns short edgeList URIs as defined in mxImageBundle to edgeList URIs as
+	 * turns short data URIs as defined in mxImageBundle to data URIs as
 	 * defined in RFC 2397 of the IETF.
 	 */
 	protected Map<String, Object> postProcessCellStyle(Map<String, Object> style)
@@ -1214,8 +1214,8 @@ public class mxGraph extends mxEventSource
 				image = key;
 			}
 
-			// Converts short edgeList uris to normal edgeList uris
-			if (image != null && image.startsWith("edgeList:image/"))
+			// Converts short data uris to normal data uris
+			if (image != null && image.startsWith("data:image/"))
 			{
 				int comma = image.indexOf(',');
 

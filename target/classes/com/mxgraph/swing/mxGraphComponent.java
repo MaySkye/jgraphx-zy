@@ -430,7 +430,7 @@ public class mxGraphComponent extends JScrollPane implements Printable
 	protected boolean escapeEnabled = true;
 
 	/**
-	 * If true, when editing is to be stopped by way of selection changing, edgeList
+	 * If true, when editing is to be stopped by way of selection changing, data
 	 * in diagram changing or other means stopCellEditing is invoked, and
 	 * changes are saved. This is implemented in a mouse listener in this class.
 	 * Default is true.

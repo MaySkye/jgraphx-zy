@@ -9,6 +9,7 @@ import org.w3c.dom.NodeList;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,7 +21,7 @@ public class CellDecoder {
     // 读取图元xml，并解析成List<CellEle>
     static {
         try {
-            opticalDeviceCellList = decodeDoc(CellDecoder.class.getResourceAsStream("/com/mxgraph/examples/swing/config_files/cell_template"));
+            opticalDeviceCellList = decodeDoc(CellDecoder.class.getResourceAsStream("/com/mxgraph/examples/swing/config_files/cell_template_optical_device"));
             networkDeviceCellList = decodeDoc(CellDecoder.class.getResourceAsStream("/com/mxgraph/examples/swing/config_files/cell_template_network"));
         } catch (IOException e) {
             e.printStackTrace();
@@ -64,14 +65,29 @@ public class CellDecoder {
             ele = new CellEle();
         }
 
-        // 添加基本属性name、type、icon、style
+        // 反射原理添加所有属性name、type、icon、style
         NamedNodeMap attrMap = node.getAttributes();
-        ele.setName(attrMap.getNamedItem("name").getNodeValue());
-        ele.setType(attrMap.getNamedItem("type").getNodeValue());
-        ele.setIcon(attrMap.getNamedItem("icon").getNodeValue());
-        ele.setStyle(attrMap.getNamedItem("style").getNodeValue());
-        ele.setWidth(Integer.parseInt(attrMap.getNamedItem("width").getNodeValue()));
-        ele.setHeight(Integer.parseInt(attrMap.getNamedItem("height").getNodeValue()));
+        for(int i =0;i<attrMap.getLength();i++)
+        {
+            try {
+                Node item = attrMap.item(i);
+                String fieldName = item.getNodeName();
+                String value = item.getNodeValue();
+                String methodName = "set" + fieldName.substring(0, 1).toUpperCase() + fieldName.substring(1);
+                Class fieldClass = CellEle.class.getDeclaredField(fieldName).getType();
+                Method setter = CellEle.class.getMethod(methodName,fieldClass);
+                if(fieldClass == int.class)
+                {
+                    setter.invoke(ele, Integer.parseInt(value));
+                }
+                else
+                {
+                    setter.invoke(ele,value);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
 
         // 其他属性
         Node multiValueNode = attrMap.getNamedItem("multiValue");

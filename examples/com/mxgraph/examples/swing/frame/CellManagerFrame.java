@@ -59,7 +59,7 @@ public class CellManagerFrame extends JFrame {
     private static final int height = 600;
     private static final int DEFAULT_SIZE = 24;
     private static String appPath = FileUtil.getRootPath().substring(1);
-    private static String opticalDeviceTemplate =appPath+"/examples/com/mxgraph/examples/swing/config_files/opticalDeviceTemplate";
+    private static String opticalDeviceTemplate =appPath+"/examples/com/mxgraph/examples/swing/config_files/cell_template_optical_device";
     private static String edge_template=appPath+"/examples/com/mxgraph/examples/swing/config_files/edge_template";
     private static String noimagePic=appPath+"/examples/com/mxgraph/examples/swing/images/cell_manage/backpic.png";
     private static String imagedir=appPath+"/examples/com/mxgraph/examples/swing/images/cell_manage";

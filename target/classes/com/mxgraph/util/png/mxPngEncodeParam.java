@@ -766,7 +766,7 @@ public abstract class mxPngEncodeParam
 	 * CIE (x, y) space.
 	 *
 	 * <p> See the documentation for the <code>setChromaticity</code>
-	 * method for the format of the returned edgeList.
+	 * method for the format of the returned data.
 	 *
 	 * <p> If the chromaticity has not previously been set, or has been
 	 * unset, an <code>IllegalStateException</code> will be thrown.
@@ -909,7 +909,7 @@ public abstract class mxPngEncodeParam
 	private boolean ICCProfileDataSet = false;
 
 	/**
-	 * Sets the ICC profile edgeList to be stored with this image.
+	 * Sets the ICC profile data to be stored with this image.
 	 * The profile is represented in raw binary form.
 	 *
 	 * <p> The 'iCCP' chunk will encode this information.
@@ -921,7 +921,7 @@ public abstract class mxPngEncodeParam
 	}
 
 	/**
-	 * Returns the ICC profile edgeList to be stored with this image.
+	 * Returns the ICC profile data to be stored with this image.
 	 *
 	 * <p> If the ICC profile has not previously been set, or has been
 	 * unset, an <code>IllegalStateException</code> will be thrown.
@@ -1200,8 +1200,8 @@ public abstract class mxPngEncodeParam
 	private boolean textSet = false;
 
 	/**
-	 * Sets the textual edgeList to be stored in uncompressed form with this
-	 * image.  The edgeList is passed to this method as an array of
+	 * Sets the textual data to be stored in uncompressed form with this
+	 * image.  The data is passed to this method as an array of
 	 * <code>String</code>s.
 	 *
 	 * <p> The 'tEXt' chunk will encode this information.
@@ -1329,7 +1329,7 @@ public abstract class mxPngEncodeParam
 
 	/**
 	 * Sets the text strings to be stored in compressed form with this
-	 * image.  The edgeList is passed to this method as an array of
+	 * image.  The data is passed to this method as an array of
 	 * <code>String</code>s.
 	 *
 	 * <p> The 'zTXt' chunk will encode this information.
@@ -1389,7 +1389,7 @@ public abstract class mxPngEncodeParam
 	 *
 	 * @param type a 4-character String giving the chunk type name.
 	 * @param data an array of <code>byte</code>s containing the
-	 *        chunk edgeList.
+	 *        chunk data.
 	 */
 	public synchronized void addPrivateChunk(String type, byte[] data)
 	{
@@ -1417,7 +1417,7 @@ public abstract class mxPngEncodeParam
 	}
 
 	/**
-	 * Returns the edgeList associated of the private chunk at a given
+	 * Returns the data associated of the private chunk at a given
 	 * index, as an array of <code>byte</code>s.  The index must be
 	 * smaller than the return value of
 	 * <code>getNumPrivateChunks</code>.
@@ -1509,7 +1509,7 @@ public abstract class mxPngEncodeParam
 	 * <p> The method is also supplied with five scratch arrays.
 	 * These arrays may be used within the method for any purpose.
 	 * At method exit, the array at the index given by the return
-	 * value of the method should contain the filtered edgeList.  The
+	 * value of the method should contain the filtered data.  The
 	 * return value will also be used as the filter type.
 	 *
 	 * <p> The default implementation of the method performs a trial
@@ -1532,16 +1532,16 @@ public abstract class mxPngEncodeParam
 	 *
 	 * @param currRow The current row as an array of <code>byte</code>s
 	 *        of length at least <code>bytesPerRow + bytesPerPixel</code>.
-	 *        The pixel edgeList starts at index <code>bytesPerPixel</code>;
+	 *        The pixel data starts at index <code>bytesPerPixel</code>;
 	 *        the initial <code>bytesPerPixel</code> bytes are zero.
 	 * @param prevRow The current row as an array of <code>byte</code>s
-	 *        The pixel edgeList starts at index <code>bytesPerPixel</code>;
+	 *        The pixel data starts at index <code>bytesPerPixel</code>;
 	 *        the initial <code>bytesPerPixel</code> bytes are zero.
 	 * @param scratchRows An array of 5 <code>byte</code> arrays of
 	 *        length at least <code>bytesPerRow +
 	 *        bytesPerPixel</code>, useable to hold temporary results.
 	 *        The filtered row will be returned as one of the entries
-	 *        of this array.  The returned filtered edgeList should start
+	 *        of this array.  The returned filtered data should start
 	 *        at index <code>bytesPerPixel</code>; The initial
 	 *        <code>bytesPerPixel</code> bytes are not used.
 	 * @param bytesPerRow The number of bytes in the image row.
@@ -1552,7 +1552,7 @@ public abstract class mxPngEncodeParam
 	 *
 	 * @return The filter type to be used.  The entry of
 	 *         <code>scratchRows[]</code> at this index holds the
-	 *         filtered edgeList.  */
+	 *         filtered data.  */
 	public int filterRow(byte[] currRow, byte[] prevRow, byte[][] scratchRows,
 			int bytesPerRow, int bytesPerPixel)
 	{

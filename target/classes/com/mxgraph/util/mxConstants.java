@@ -506,7 +506,7 @@ public class mxConstants
 
 	/**
 	 * Defines the key for the image style. Possible values are any image URL,
-	 * registered key in mxImageResources or short edgeList URI as defined in
+	 * registered key in mxImageResources or short data URI as defined in
 	 * mxImageBundle.
 	 * The type of the value is <code>String</code>. This is the path to the
 	 * image to image that is to be displayed within the label of a vertex. See

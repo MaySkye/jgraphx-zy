@@ -9,31 +9,33 @@
     <list default="true" id="4e7cafa5-c7d9-45f4-8d2c-d4ffeb63a9ec" name="Default" comment="EdgeDecoder代码重构">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/examples/com/mxgraph/examples/swing/GraphEditor.java" beforeDir="false" afterPath="$PROJECT_DIR$/examples/com/mxgraph/examples/swing/GraphEditor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/examples/com/mxgraph/examples/swing/decode/EdgeDecoder.java" beforeDir="false" afterPath="$PROJECT_DIR$/examples/com/mxgraph/examples/swing/decode/EdgeDecoder.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/config/http_url.properties" beforeDir="false" afterPath="$PROJECT_DIR$/resources/config/http_url.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/mxgraph/analysis/mxTraversal.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/mxgraph/analysis/mxTraversal.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/examples/com/mxgraph/examples/swing/config_files/cell_template" beforeDir="false" afterPath="$PROJECT_DIR$/examples/com/mxgraph/examples/swing/config_files/cell_template_optical_device" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/examples/com/mxgraph/examples/swing/decode/CellDecoder.java" beforeDir="false" afterPath="$PROJECT_DIR$/examples/com/mxgraph/examples/swing/decode/CellDecoder.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/examples/com/mxgraph/examples/swing/frame/CellManagerFrame.java" beforeDir="false" afterPath="$PROJECT_DIR$/examples/com/mxgraph/examples/swing/frame/CellManagerFrame.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/examples/com/mxgraph/examples/swing/match/CellTypeUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/examples/com/mxgraph/examples/swing/match/CellTypeUtil.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/mxgraph/swing/handler/mxGraphHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/mxgraph/swing/handler/mxGraphHandler.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/mxgraph/analysis/mxAnalysisGraph.java" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/mxgraph/analysis/mxAnalysisGraph.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/mxgraph/analysis/mxFibonacciHeap.java" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/mxgraph/analysis/mxFibonacciHeap.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/mxgraph/analysis/mxGraphStructure.java" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/mxgraph/analysis/mxGraphStructure.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/mxgraph/analysis/mxTraversal.java" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/mxgraph/analysis/mxTraversal.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/mxgraph/canvas/mxSvgCanvas.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/mxgraph/canvas/mxSvgCanvas.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/mxgraph/canvas/mxSvgCanvas.java" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/mxgraph/canvas/mxSvgCanvas.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/mxgraph/examples/swing/GraphEditor$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/mxgraph/examples/swing/GraphEditor$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/mxgraph/examples/swing/config_files/cell_template" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/mxgraph/examples/swing/config_files/cell_template" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/mxgraph/examples/swing/config_files/cell_template" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/mxgraph/examples/swing/decode/CellDecoder.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/mxgraph/examples/swing/decode/CellDecoder.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/mxgraph/examples/swing/decode/EdgeDecoder.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/mxgraph/examples/swing/decode/EdgeDecoder.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/mxgraph/examples/swing/editor/EditorActions$GenerateDiagramAction$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/mxgraph/examples/swing/editor/EditorActions$GenerateDiagramAction$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/mxgraph/examples/swing/editor/EditorActions$OpenAction$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/mxgraph/examples/swing/editor/EditorActions$OpenAction$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/mxgraph/examples/swing/editor/EditorActions$ViewSchemaAction$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/mxgraph/examples/swing/editor/EditorActions$ViewSchemaAction$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/mxgraph/examples/swing/editor/SchemaEditorMenuBar$4.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/mxgraph/examples/swing/editor/SchemaEditorMenuBar$4.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/mxgraph/examples/swing/match/CellTypeUtil.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/mxgraph/examples/swing/match/CellTypeUtil.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/mxgraph/examples/swing/owl/OwlResourceUtil.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/mxgraph/examples/swing/owl/OwlResourceUtil.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/mxgraph/examples/swing/util/FileUtil.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/mxgraph/examples/swing/util/FileUtil.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/mxgraph/io/mxCodec.java" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/mxgraph/io/mxCodec.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/mxgraph/model/mxGraphModel$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/mxgraph/model/mxGraphModel$1.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/mxgraph/model/mxGraphModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/mxgraph/model/mxGraphModel.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/mxgraph/reader/mxGraphViewImageReader.java" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/mxgraph/reader/mxGraphViewImageReader.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/mxgraph/reader/mxGraphViewReader.java" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/mxgraph/reader/mxGraphViewReader.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/mxgraph/swing/handler/mxGraphHandler$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/mxgraph/swing/handler/mxGraphHandler$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/mxgraph/swing/handler/mxGraphHandler$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/mxgraph/swing/handler/mxGraphHandler$2.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/mxgraph/swing/handler/mxGraphHandler$3$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/mxgraph/swing/handler/mxGraphHandler$3$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/mxgraph/swing/handler/mxGraphHandler$3.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/mxgraph/swing/handler/mxGraphHandler$3.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/mxgraph/swing/handler/mxGraphHandler$4.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/mxgraph/swing/handler/mxGraphHandler$4.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/mxgraph/swing/handler/mxGraphHandler.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/mxgraph/swing/handler/mxGraphHandler.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/mxgraph/swing/handler/mxGraphHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/mxgraph/swing/handler/mxGraphHandler.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/mxgraph/swing/handler/mxGraphTransferHandler.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/mxgraph/swing/handler/mxGraphTransferHandler.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/mxgraph/swing/handler/mxGraphTransferHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/mxgraph/swing/handler/mxGraphTransferHandler.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/mxgraph/swing/mxGraphComponent.java" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/mxgraph/swing/mxGraphComponent.java" afterDir="false" />
@@ -48,7 +50,6 @@
       <change beforePath="$PROJECT_DIR$/target/classes/com/mxgraph/util/svg/AbstractParser.java" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/mxgraph/util/svg/AbstractParser.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/mxgraph/view/mxGraph.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/mxgraph/view/mxGraph.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/mxgraph/view/mxGraph.java" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/mxgraph/view/mxGraph.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/config/http_url.properties" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/config/http_url.properties" afterDir="false" />
     </list>
     <ignored path="target/" />
     <ignored path="$PROJECT_DIR$/target/" />
@@ -96,19 +97,10 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/examples/com/mxgraph/examples/swing/config_files/edge_template">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="337">
-              <caret line="19" column="9" selection-start-line="19" selection-start-column="9" selection-end-line="19" selection-end-column="9" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/examples/com/mxgraph/examples/swing/decode/CellDecoder.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-475">
-              <caret line="39" column="33" selection-start-line="39" selection-start-column="33" selection-end-line="39" selection-end-column="33" />
+            <state relative-caret-position="152">
+              <caret line="17" column="43" selection-start-line="17" selection-start-column="43" selection-end-line="17" selection-end-column="43" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -116,20 +108,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/examples/com/mxgraph/examples/swing/decode/EdgeDecoder.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="171">
-              <caret line="19" column="27" lean-forward="true" selection-start-line="19" selection-start-column="27" selection-end-line="19" selection-end-column="27" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/examples/com/mxgraph/examples/swing/GraphEditor.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="655">
-              <caret line="250" column="53" selection-start-line="250" selection-start-column="53" selection-end-line="250" selection-end-column="53" />
+            <state relative-caret-position="142">
+              <caret line="115" column="60" lean-forward="true" selection-start-line="115" selection-start-column="60" selection-end-line="115" selection-end-column="60" />
             </state>
           </provider>
         </entry>
@@ -137,10 +120,29 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/examples/com/mxgraph/examples/swing/match/CellTypeUtil.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="133">
-              <caret line="10" column="65" selection-start-line="10" selection-start-column="65" selection-end-line="10" selection-end-column="65" />
+            <state relative-caret-position="-447">
+              <caret line="10" column="50" selection-start-line="10" selection-start-column="50" selection-end-line="10" selection-end-column="50" />
               <folding>
                 <element signature="imports" expanded="true" />
+                <element signature="e#1240#1241#0" expanded="true" />
+                <element signature="e#1290#1291#0" expanded="true" />
+                <element signature="e#976#977#0" expanded="true" />
+                <element signature="e#1016#1017#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/examples/com/mxgraph/examples/swing/GraphEditor.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="345">
+              <caret line="114" selection-start-line="114" selection-end-line="114" />
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="method#addShapesToPalette#0;class#GraphEditor#0" />
+                <element signature="method#addImagesToPalette#0;class#GraphEditor#0" />
+                <element signature="method#addSymbolsToPalette#0;class#GraphEditor#0" />
               </folding>
             </state>
           </provider>
@@ -149,20 +151,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/examples/com/mxgraph/examples/swing/editor/BasicGraphEditor.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="6289">
-              <caret line="387" column="25" selection-start-line="387" selection-start-column="25" selection-end-line="387" selection-end-column="25" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/examples/com/mxgraph/examples/swing/frame/CellManagerFrame.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="399">
-              <caret line="61" column="47" selection-start-line="61" selection-start-column="26" selection-end-line="61" selection-end-column="47" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
+            <state relative-caret-position="163">
+              <caret line="51" column="38" selection-start-line="51" selection-start-column="38" selection-end-line="51" selection-end-column="38" />
             </state>
           </provider>
         </entry>
@@ -181,18 +171,11 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>getResourceAs</find>
-      <find>getResource(</find>
-      <find>fiber</find>
-      <find>strokeColor=</find>
-      <find>strokeColor=#</find>
-      <find>strokeColor=#[a-zA-Z]{3,6}</find>
       <find>同步本地端设备</find>
       <find>监测</find>
       <find>模板X</find>
       <find>网络模板</find>
       <find>网络模板1</find>
-      <find>icon</find>
       <find>x-45</find>
       <find>new mxGeometry(</find>
       <find>x - 45</find>
@@ -211,6 +194,13 @@
       <find>光频传递系统发送和接收设备</find>
       <find>time_devicesPalette</find>
       <find>(//.* )edgeList</find>
+      <find>opticalDeviceCellList</find>
+      <find>/com/mxgraph/examples/swing/config_files/cell_template</find>
+      <find>/com/mxgraph/examples/swing/config_files/edge_template</find>
+      <find>config_files/cell_template_optical_device</find>
+      <find>m/mxgraph/examples/swing/config_files/cell_template_network</find>
+      <find>mxgraph/examples/swing/config_files/edge_templa</find>
+      <find>icon</find>
     </findStrings>
     <replaceStrings>
       <replace>时间同步模板1</replace>
@@ -228,7 +218,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/examples/com/mxgraph/examples/swing/map/Liulanqi.java" />
         <option value="$PROJECT_DIR$/examples/com/mxgraph/examples/swing/frame/MyTableReander.java" />
         <option value="$PROJECT_DIR$/examples/com/mxgraph/examples/swing/frame/MyTableCellEditor.java" />
         <option value="$PROJECT_DIR$/examples/com/mxgraph/examples/swing/frame/MyTableModel.java" />
@@ -272,13 +261,14 @@
         <option value="$PROJECT_DIR$/examples/com/mxgraph/examples/swing/frame/UploadMxeFileFrame.java" />
         <option value="$PROJECT_DIR$/examples/com/mxgraph/examples/swing/config_files/cell_template_network" />
         <option value="$PROJECT_DIR$/examples/com/mxgraph/examples/swing/editor/EditorActions.java" />
-        <option value="$PROJECT_DIR$/examples/com/mxgraph/examples/swing/frame/CellManagerFrame.java" />
-        <option value="$PROJECT_DIR$/examples/com/mxgraph/examples/swing/match/CellTypeUtil.java" />
         <option value="$PROJECT_DIR$/examples/com/mxgraph/examples/swing/config_files/cell_template" />
-        <option value="$PROJECT_DIR$/examples/com/mxgraph/examples/swing/decode/CellDecoder.java" />
-        <option value="$PROJECT_DIR$/examples/com/mxgraph/examples/swing/GraphEditor.java" />
         <option value="$PROJECT_DIR$/resources/config/http_url.properties" />
         <option value="$PROJECT_DIR$/examples/com/mxgraph/examples/swing/decode/EdgeDecoder.java" />
+        <option value="$PROJECT_DIR$/src/com/mxgraph/swing/handler/mxGraphHandler.java" />
+        <option value="$PROJECT_DIR$/examples/com/mxgraph/examples/swing/frame/CellManagerFrame.java" />
+        <option value="$PROJECT_DIR$/examples/com/mxgraph/examples/swing/decode/CellDecoder.java" />
+        <option value="$PROJECT_DIR$/examples/com/mxgraph/examples/swing/match/CellTypeUtil.java" />
+        <option value="$PROJECT_DIR$/examples/com/mxgraph/examples/swing/GraphEditor.java" />
       </list>
     </option>
   </component>
@@ -832,7 +822,7 @@
       <workItem from="1586254514281" duration="29000" />
       <workItem from="1586312032903" duration="118000" />
       <workItem from="1586313252128" duration="14000" />
-      <workItem from="1586355761119" duration="2831000" />
+      <workItem from="1586355761119" duration="5531000" />
     </task>
     <task id="LOCAL-00001" summary="none">
       <created>1577249350834</created>
@@ -960,11 +950,18 @@
       <option name="project" value="LOCAL" />
       <updated>1586241891821</updated>
     </task>
-    <option name="localTasksCounter" value="19" />
+    <task id="LOCAL-00019" summary="EdgeDecoder代码重构">
+      <created>1586358687970</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1586358687970</updated>
+    </task>
+    <option name="localTasksCounter" value="20" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="419464000" />
+    <option name="totallyTimeSpent" value="422164000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -979,16 +976,15 @@
     <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.66088635" visible="true" weight="0.18900804" />
-      <window_info id="Structure" order="1" sideWeight="0.33911368" side_tool="true" visible="true" weight="0.18900804" />
-      <window_info id="Designer" order="2" />
-      <window_info id="Image Layers" order="3" />
-      <window_info id="Capture Tool" order="4" />
-      <window_info id="UI Designer" order="5" />
-      <window_info id="Favorites" order="6" side_tool="true" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.66023165" visible="true" weight="0.26340482" />
+      <window_info id="Designer" order="1" />
+      <window_info id="Image Layers" order="2" />
+      <window_info id="Capture Tool" order="3" />
+      <window_info id="UI Designer" order="4" />
+      <window_info id="Favorites" order="5" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" sideWeight="0.4966488" weight="0.40509915" />
-      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.48659518" weight="0.26628897" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.48592493" visible="true" weight="0.26628897" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.398017" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -996,7 +992,7 @@
       <window_info anchor="bottom" id="Application Servers" order="7" sideWeight="0.8264075" weight="0.3286119" />
       <window_info anchor="bottom" id="Terminal" order="8" sideWeight="0.49932975" weight="0.3286119" />
       <window_info anchor="bottom" id="Docker" order="9" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Event Log" order="10" sideWeight="0.5033512" side_tool="true" visible="true" weight="0.26487252" />
+      <window_info anchor="bottom" id="Event Log" order="10" sideWeight="0.51407504" side_tool="true" weight="0.26628897" />
       <window_info anchor="bottom" id="Messages" order="11" sideWeight="0.49865952" weight="0.26487252" />
       <window_info anchor="bottom" id="Java Enterprise" order="12" sideWeight="0.49932975" weight="0.3286119" />
       <window_info anchor="bottom" id="Database Changes" order="13" />
@@ -1007,10 +1003,11 @@
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
       <window_info anchor="right" id="Palette" order="3" />
       <window_info anchor="right" id="Capture Analysis" order="4" />
-      <window_info anchor="right" id="Maven" order="5" visible="true" weight="0.1313673" />
+      <window_info anchor="right" id="Maven" order="5" weight="0.1313673" />
       <window_info anchor="right" id="Database" order="6" />
       <window_info anchor="right" id="Palette&#9;" order="7" />
       <window_info anchor="right" id="Theme Preview" order="8" />
+      <window_info anchor="right" id="Structure" order="9" sideWeight="0.51407504" visible="true" weight="0.117292225" />
     </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -1105,16 +1102,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/examples/com/mxgraph/examples/swing/config_files/时间同步模板1.mxe">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/examples/com/mxgraph/examples/swing/owl/OwlObjectAttribute.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="133">
-          <caret line="10" column="13" selection-start-line="10" selection-start-column="13" selection-end-line="10" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/examples/com/mxgraph/examples/swing/owl/OwlObject.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="266">
@@ -1318,13 +1305,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/examples/com/mxgraph/examples/swing/config_files/cell_template_network">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="427">
-          <caret line="75" column="75" selection-start-line="75" selection-start-column="75" selection-end-line="75" selection-end-column="75" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/examples/com/mxgraph/examples/swing/decode/CellEle.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="133">
@@ -1357,75 +1337,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/examples/com/mxgraph/examples/swing/match/CellTypeUtil.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="133">
-          <caret line="10" column="65" selection-start-line="10" selection-start-column="65" selection-end-line="10" selection-end-column="65" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/examples/com/mxgraph/examples/swing/editor/BasicGraphEditor.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="6289">
-          <caret line="387" column="25" selection-start-line="387" selection-start-column="25" selection-end-line="387" selection-end-column="25" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/examples/com/mxgraph/examples/swing/frame/CellManagerFrame.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="399">
-          <caret line="61" column="47" selection-start-line="61" selection-start-column="26" selection-end-line="61" selection-end-column="47" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/resources/config/http_url.properties">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="190">
           <caret line="10" column="38" selection-start-line="10" selection-start-column="38" selection-end-line="10" selection-end-column="38" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/examples/com/mxgraph/examples/swing/GraphEditor.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="655">
-          <caret line="250" column="53" selection-start-line="250" selection-start-column="53" selection-end-line="250" selection-end-column="53" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/examples/com/mxgraph/examples/swing/config_files/cell_template">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="247">
-          <caret line="13" column="8" selection-start-line="13" selection-start-column="8" selection-end-line="13" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/examples/com/mxgraph/examples/swing/config_files/edge_template">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="337">
-          <caret line="19" column="9" selection-start-line="19" selection-start-column="9" selection-end-line="19" selection-end-column="9" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/examples/com/mxgraph/examples/swing/decode/CellDecoder.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-475">
-          <caret line="39" column="33" selection-start-line="39" selection-start-column="33" selection-end-line="39" selection-end-column="33" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://C:/Program Files/Java/jdk1.8.0_241/src.zip!/java/lang/Class.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="163">
-          <caret line="1780" column="18" selection-start-line="1780" selection-start-column="18" selection-end-line="1780" selection-end-column="18" />
         </state>
       </provider>
     </entry>
@@ -1443,10 +1358,106 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/mxgraph/swing/handler/mxGraphHandler.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="532">
+          <caret line="35" column="31" selection-start-line="35" selection-start-column="31" selection-end-line="35" selection-end-column="31" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files/Java/jdk1.8.0_241/src.zip!/java/lang/Class.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="163">
+          <caret line="2215" column="24" selection-start-line="2215" selection-start-column="24" selection-end-line="2215" selection-end-column="24" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/examples/com/mxgraph/examples/swing/frame/CellManagerFrame.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="156">
+          <caret line="313" column="11" selection-start-line="313" selection-start-column="11" selection-end-line="313" selection-end-column="11" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/examples/com/mxgraph/examples/swing/config_files/cell_template_network">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="427">
+          <caret line="75" column="75" selection-start-line="75" selection-start-column="75" selection-end-line="75" selection-end-column="75" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/examples/com/mxgraph/examples/swing/decode/EdgeDecoder.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="171">
-          <caret line="19" column="27" lean-forward="true" selection-start-line="19" selection-start-column="27" selection-end-line="19" selection-end-column="27" />
+        <state relative-caret-position="142">
+          <caret line="115" column="60" lean-forward="true" selection-start-line="115" selection-start-column="60" selection-end-line="115" selection-end-column="60" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/examples/com/mxgraph/examples/swing/config_files/edge_template">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="337">
+          <caret line="19" column="9" selection-start-line="19" selection-start-column="9" selection-end-line="19" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/examples/com/mxgraph/examples/swing/config_files/cell_template_optical_device">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="247">
+          <caret line="13" column="8" selection-start-line="13" selection-start-column="8" selection-end-line="13" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/examples/com/mxgraph/examples/swing/match/ModifyTemplateCore.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="163">
+          <caret line="464" column="42" selection-start-line="464" selection-start-column="42" selection-end-line="464" selection-end-column="42" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/examples/com/mxgraph/examples/swing/match/CellTypeUtil.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-447">
+          <caret line="10" column="50" selection-start-line="10" selection-start-column="50" selection-end-line="10" selection-end-column="50" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#1240#1241#0" expanded="true" />
+            <element signature="e#1290#1291#0" expanded="true" />
+            <element signature="e#976#977#0" expanded="true" />
+            <element signature="e#1016#1017#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/examples/com/mxgraph/examples/swing/decode/CellDecoder.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="152">
+          <caret line="17" column="43" selection-start-line="17" selection-start-column="43" selection-end-line="17" selection-end-column="43" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/examples/com/mxgraph/examples/swing/editor/BasicGraphEditor.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="163">
+          <caret line="51" column="38" selection-start-line="51" selection-start-column="38" selection-end-line="51" selection-end-column="38" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/examples/com/mxgraph/examples/swing/GraphEditor.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="345">
+          <caret line="114" selection-start-line="114" selection-end-line="114" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="method#addShapesToPalette#0;class#GraphEditor#0" />
+            <element signature="method#addImagesToPalette#0;class#GraphEditor#0" />
+            <element signature="method#addSymbolsToPalette#0;class#GraphEditor#0" />
+          </folding>
         </state>
       </provider>
     </entry>

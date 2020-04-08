@@ -19,7 +19,7 @@ import com.mxgraph.util.mxUtils;
 import com.mxgraph.view.mxCellState;
 
 /**
- * An abstract converter that renders display XML edgeList onto a canvas.
+ * An abstract converter that renders display XML data onto a canvas.
  */
 public abstract class mxGraphViewReader extends DefaultHandler
 {

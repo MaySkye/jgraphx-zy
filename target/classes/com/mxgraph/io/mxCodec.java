@@ -19,7 +19,7 @@ import com.mxgraph.util.mxDomUtils;
 
 /**
  * XML codec for Java object graphs. In order to resolve forward references
- * when reading files the XML document that contains the edgeList must be passed
+ * when reading files the XML document that contains the data must be passed
  * to the constructor.
  */
 public class mxCodec
@@ -58,7 +58,7 @@ public class mxCodec
 	/**
 	 * Constructs an XML encoder/decoder for the specified owner document.
 	 * 
-	 * @param document Optional XML document that contains the edgeList. If no document
+	 * @param document Optional XML document that contains the data. If no document
 	 * is specified then a new document is created using mxUtils.createDocument
 	 */
 	public mxCodec(Document document)
@@ -387,7 +387,7 @@ public class mxCodec
 	 * and graph structure in the cells. Returns a new <mxCell> instance
 	 * that represents the given node.
 	 * 
-	 * @param node XML node that contains the cell edgeList.
+	 * @param node XML node that contains the cell data.
 	 * @param restoreStructures Boolean indicating whether the graph
 	 * structure should be restored by calling insert and insertEdge on the
 	 * parent and terminals, respectively.
