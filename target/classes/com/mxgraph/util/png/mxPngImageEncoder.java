@@ -991,7 +991,7 @@ public class mxPngImageEncoder
 	 * Analyzes a set of palettes and determines if it can be expressed
 	 * as a standard set of gray values, with zero or one values being
 	 * fully transparent and the rest being fully opaque.  If it
-	 * is possible to express the data thusly, the method returns
+	 * is possible to express the edgeList thusly, the method returns
 	 * a suitable instance of PNGEncodeParam.Gray; otherwise it
 	 * returns null.
 	 */

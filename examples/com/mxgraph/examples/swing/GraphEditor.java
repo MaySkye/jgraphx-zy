@@ -69,14 +69,12 @@ public class GraphEditor extends BasicGraphEditor {
 
         // Creates the shapes palette
         EditorPalette shapesPalette = insertPalette(mxResources.get("shapes"));
-		/* 王伟注解
 		EditorPalette imagesPalette = insertPalette(mxResources.get("images"));
 		EditorPalette symbolsPalette = insertPalette(mxResources.get("symbols"));
-		王伟注解 */
         EditorPalette opticalDevicesPalette = insertPalette("光频设备");
         EditorPalette networkDevicesPalette = insertPalette("网络设备");
-        //EditorPalette time_devicesPalette = insertPalette("时间设备");
-        //EditorPalette micro_devicesPalette = insertPalette("微波设备");
+        EditorPalette time_devicesPalette = insertPalette("时间设备");
+        EditorPalette micro_devicesPalette = insertPalette("微波设备");
         EditorPalette linksPalette = insertPalette(mxResources.get("links"));  // 王伟注解
 
         // Sets the edge template to be used for creating new edges if an edge
@@ -94,7 +92,6 @@ public class GraphEditor extends BasicGraphEditor {
                     }
                 }
             }
-
         });
 
         // Adds some template cells for dropping into the graph
@@ -251,7 +248,7 @@ public class GraphEditor extends BasicGraphEditor {
         addCellsToPalette(networkDevicesPalette, networkCellList);
 
         // 王伟：添加边
-        List<EdgeEle> edgeList = EdgeDecoder.decodeDoc();
+        List<EdgeEle> edgeList = EdgeDecoder.egdeList;
         for (EdgeEle edgeEle : edgeList) {
             mxCell cell = linksPalette.addEdgeTemplate(edgeEle.getName(),
                     new ImageIcon(GraphEditor.class.getResource(edgeEle.getIcon())),
@@ -274,7 +271,6 @@ public class GraphEditor extends BasicGraphEditor {
 										.getResource("/com/mxgraph/examples/swing/images/hline.png")),
 						"line", 160, 10, "");
 		赵艺注解 */
-		/* 王伟注解
 		imagesPalette
 				.addTemplate(
 						"Bell",
@@ -468,7 +464,6 @@ public class GraphEditor extends BasicGraphEditor {
 										.getResource("/com/mxgraph/examples/swing/images/timer.png")),
 						"roundImage;image=/com/mxgraph/examples/swing/images/timer.png",
 						80, 80, "Timer");
-		 王伟注解 */
     }
 
     private void addCellsToPalette(EditorPalette palette, List<CellEle> cellList) {

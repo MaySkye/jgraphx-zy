@@ -46,7 +46,7 @@ public class mxGraphStructure
 			throw new IllegalArgumentException();
 		}
 
-		//data preparation
+		//edgeList preparation
 		int connectedVertices = 1;
 		int[] visited = new int[vertexNum];
 		visited[0] = 1;

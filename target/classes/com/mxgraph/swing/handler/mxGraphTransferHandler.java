@@ -306,7 +306,7 @@ public class mxGraphTransferHandler extends TransferHandler
 	}
 
 	/**
-	 * Checks if the mxGraphTransferable data flavour is supported and calls
+	 * Checks if the mxGraphTransferable edgeList flavour is supported and calls
 	 * importGraphTransferable if possible.
 	 */
 	public boolean importData(JComponent c, Transferable t)
@@ -344,7 +344,7 @@ public class mxGraphTransferHandler extends TransferHandler
 			}
 			catch (Exception ex)
 			{
-				log.log(Level.SEVERE, "Failed to import data", ex);
+				log.log(Level.SEVERE, "Failed to import edgeList", ex);
 			}
 		}
 

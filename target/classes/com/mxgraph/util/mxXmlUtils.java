@@ -75,7 +75,7 @@ public class mxXmlUtils
 	 * Returns a new document for the given XML string. External entities and DTDs are ignored.
 	 * 
 	 * @param xml
-	 *            String that represents the XML data.
+	 *            String that represents the XML edgeList.
 	 * @return Returns a new XML document.
 	 */
 	public static Document parseXml(String xml)

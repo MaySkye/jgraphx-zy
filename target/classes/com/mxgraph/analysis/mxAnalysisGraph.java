@@ -21,7 +21,7 @@ public class mxAnalysisGraph
 	// contains various filters, like visibility and direction
 	protected Map<String, Object> properties = new HashMap<String, Object>();
 
-	// contains various data that is used for graph generation and analysis
+	// contains various edgeList that is used for graph generation and analysis
 	protected mxGraphGenerator generator;
 
 	protected mxGraph graph;

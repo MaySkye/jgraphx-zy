@@ -24,7 +24,7 @@ import com.mxgraph.util.mxRectangle;
 import com.mxgraph.util.mxUtils;
 
 /**
- * A converter that renders display XML data onto a graphics canvas. This
+ * A converter that renders display XML edgeList onto a graphics canvas. This
  * reader can only be used to generate images for encoded graph views.
  */
 public class mxGraphViewImageReader extends mxGraphViewReader

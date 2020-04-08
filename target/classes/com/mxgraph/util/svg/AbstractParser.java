@@ -93,7 +93,7 @@ public abstract class AbstractParser implements Parser
 	}
 
 	/**
-	 * Method responsible for actually parsing data after AbstractParser
+	 * Method responsible for actually parsing edgeList after AbstractParser
 	 * has initialized itself.
 	 */
 	protected abstract void doParse() throws ParseException, IOException;

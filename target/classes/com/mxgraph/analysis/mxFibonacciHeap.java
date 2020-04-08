@@ -115,7 +115,7 @@ public class mxFibonacciHeap
 	}
 
 	/**
-	 * Inserts a new data element into the heap. No heap consolidation is
+	 * Inserts a new edgeList element into the heap. No heap consolidation is
 	 * performed at this time, the new node is simply inserted into the root
 	 * list of this heap.
 	 * 
@@ -126,7 +126,7 @@ public class mxFibonacciHeap
 	 * @param node
 	 *            new node to insert into heap
 	 * @param key
-	 *            key value associated with data object
+	 *            key value associated with edgeList object
 	 */
 	public void insert(Node node, double key)
 	{
@@ -171,7 +171,7 @@ public class mxFibonacciHeap
 	/**
 	 * Removes the smallest element from the heap. This will cause the trees in
 	 * the heap to be consolidated, if necessary.
-	 * Does not remove the data node so that the current key remains stored.
+	 * Does not remove the edgeList node so that the current key remains stored.
 	 * 
 	 * <p>
 	 * Running time: O(log n) amortized
@@ -519,7 +519,7 @@ public class mxFibonacciHeap
 	 * Implements a node of the Fibonacci heap. It holds the information
 	 * necessary for maintaining the structure of the heap. It also holds the
 	 * reference to the key value (which is used to determine the heap
-	 * structure). Additional Node data should be stored in a subclass.
+	 * structure). Additional Node edgeList should be stored in a subclass.
 	 */
 	public static class Node
 	{
