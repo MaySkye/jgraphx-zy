@@ -4,51 +4,46 @@ import com.mxgraph.examples.swing.util.FileUtil;
 import com.mxgraph.util.mxXmlUtils;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
 public class EdgeDecoder {
 
-    private static final InputStream inputStream = EdgeDecoder.class.getResourceAsStream("/com/mxgraph/examples/swing/config_files/edge_template");
-    private static List<EdgeEle> data;
+    public static List<EdgeEle> egdeList;
 
 
     private EdgeDecoder() {
         // static class, decode edge cell, eg: pipe
     }
 
-    public static List<EdgeEle> decodeDoc() {
-
-        if (data == null) {
-            try {
-                data = decodeDoc(inputStream);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+    static {
+        try {
+            egdeList = decodeDoc(EdgeDecoder.class.getResourceAsStream("/com/mxgraph/examples/swing/config_files/edge_template"));
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-        return data;
     }
 
     private static List<EdgeEle> decodeDoc(InputStream inputStream) throws IOException {
-
-        List<EdgeEle> list = new ArrayList<>();
-
+        // 将xml解析为Document实例
         String content = FileUtil.readFile(inputStream);
         Document document = mxXmlUtils.parseXml(content);
-
+        // 遍历节点并转换为CellEle实例，并放入List
         Node root = document.getFirstChild();
-        Node child = root.getFirstChild();
-        while (child != null) {
-            EdgeEle ele = decodeCell(child);
-            if (ele != null) {
-                list.add(ele);
+        NodeList childNodes = root.getChildNodes();
+        ArrayList<EdgeEle> list = new ArrayList<>();
+        for (int i = 0; i < childNodes.getLength(); i++) {
+            Node child = childNodes.item(i);
+            EdgeEle cellEle = decodeCell(child);
+            if (cellEle != null) {
+                list.add(cellEle);
             }
-            child = child.getNextSibling();
         }
-
         return list;
     }
 
@@ -67,10 +62,8 @@ public class EdgeDecoder {
         if (node == null || node.getNodeType() != Node.ELEMENT_NODE) {// "[#text:\n\t]"
             return null;
         }
-
         EdgeEle ele = decodeAttrs(node, null);
         ele = decodeChildren(node, ele);
-
         return ele;
     }
 
@@ -96,55 +89,38 @@ public class EdgeDecoder {
             <style></style>
         </edge>
          */
-
-        Node child = node.getFirstChild();
-        while (child != null) {
-            Pair<String, String> par = decodeChild(child);
-            if (par != null) {
-                switch (par.getFirst()) {
-                    case "name":
-                        ele.setName(par.getSecond());
-                        break;
-                    case "type":
-                        ele.setType(par.getSecond());
-                        break;
-                    case "width":
-                        ele.setWidth(Integer.parseInt(par.getSecond()));
-                        break;
-                    case "height":
-                        ele.setHeight(Integer.parseInt(par.getSecond()));
-                        break;
-                    case "icon":
-                        ele.setIcon(par.getSecond());
-                        break;
-                    case "style":
-                        ele.setStyle(par.getSecond());
-                        break;
-                    default:
-                        System.out.println("Error: " + par);
-                        break;
-                }
-            }
-            child = child.getNextSibling();
+        NodeList childNodes = node.getChildNodes();
+        for (int i = 0; i < childNodes.getLength(); i++) {
+            Node child = childNodes.item(i);
+            decodeChild(ele, child);
         }
-
         return ele;
     }
 
-    private static Pair<String, String> decodeChild(Node node) {
+    private static void decodeChild(EdgeEle ele, Node node) {
         /*
         <name>pipe_horizontal</name>
          */
 
         if (node == null || node.getNodeType() != Node.ELEMENT_NODE) {// "[#text:\n\t]"
-            return null;
+            return;
         }
-
-        Pair<String, String> par = new Pair<>(node.getNodeName(), node.getFirstChild().getNodeValue());
-        //System.out.println(node.getNodeName());
-        //System.out.println(node.getFirstChild().getNodeValue());
-        //System.out.println();
-        return par;
+        String fieldName = node.getNodeName();
+        String value = node.getFirstChild().getNodeValue();
+        try {
+            String methodName = "set" + fieldName.substring(0, 1).toUpperCase() + fieldName.substring(1);
+            Class fieldClass = EdgeEle.class.getDeclaredField(fieldName).getType();
+            Method setter = EdgeEle.class.getMethod(methodName,fieldClass);
+            if(fieldClass == int.class)
+            {
+                setter.invoke(ele, Integer.parseInt(value));
+            }
+            else
+            {
+                setter.invoke(ele,value);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
-
 }
