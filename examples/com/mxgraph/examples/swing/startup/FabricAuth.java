@@ -27,15 +27,7 @@ public class FabricAuth {
     private static String appPath = FileUtil.getAppPath();
     //kong 的配置文件流
     private static InputStream in = FabricAuth.class.getResourceAsStream("/config/kong_conf.properties");
-    private static InputStream _in = null;
 
-    static {
-        try {
-            _in = new FileInputStream(new File(appPath + "/config/kong_conf.properties"));
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-    }
 
     private static String directoryPath;
     private static String modelPath;
@@ -44,7 +36,7 @@ public class FabricAuth {
     static {
         Properties properties = new Properties();
         try {
-            properties.load(_in);
+            properties.load(in);
             directoryPath = appPath + properties.getProperty("PolicyDirectoryPath");
             modelPath = appPath + properties.getProperty("CasbinModelPath");
             policyPath = appPath + properties.getProperty("CasbinPolicyPath");
