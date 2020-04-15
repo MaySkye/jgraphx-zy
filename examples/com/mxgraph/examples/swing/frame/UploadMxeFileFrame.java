@@ -14,6 +14,7 @@ import com.mxgraph.examples.swing.editor.BasicGraphEditor;
 import com.mxgraph.examples.swing.owl.Site;
 import com.mxgraph.examples.swing.util.FileUtil;
 import com.mxgraph.examples.swing.util.PortStyleUpdate;
+import com.mxgraph.examples.swing.util.UTF8FileWriter;
 import com.mxgraph.io.mxCodec;
 import com.mxgraph.model.mxCell;
 import com.mxgraph.swing.mxGraphComponent;
@@ -301,17 +302,12 @@ public class UploadMxeFileFrame extends JFrame {
 
 
                 try {
-                    mxUtils.writeFile(xml, filename); //把xml写到filename
-                } catch (IOException e1) {
-                    e1.printStackTrace();
-                }
-
-                try {
                     filename = URLDecoder.decode(filename, "UTF-8");
                 } catch (UnsupportedEncodingException e1) {
                     e1.printStackTrace();
                 }
                 File file = new File(filename);
+                UTF8FileWriter.write(xml,file);
                 System.out.println("mongodb  uploadFileUrl:"+uploadFileUrl);
                 System.out.println("mongodb  filename:"+filename);
                 uploadFile(uploadFileUrl, file);

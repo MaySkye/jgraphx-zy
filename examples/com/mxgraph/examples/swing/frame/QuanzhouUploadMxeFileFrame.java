@@ -2,6 +2,7 @@ package com.mxgraph.examples.swing.frame;
 
 import com.alibaba.fastjson.JSONObject;
 import com.mxgraph.examples.swing.editor.BasicGraphEditor;
+import com.mxgraph.examples.swing.util.UTF8FileWriter;
 import com.mxgraph.examples.swing.util.PortStyleUpdate;
 import com.mxgraph.io.mxCodec;
 import com.mxgraph.model.mxCell;
@@ -148,19 +149,14 @@ public class QuanzhouUploadMxeFileFrame extends JFrame {
 
                 String filename = System.getProperty("java.io.tmpdir") + "/" + nameField.getText() + ".mxe";
 
-
-                try {
-                    mxUtils.writeFile(xml, filename); //把xml写到filename
-                } catch (IOException e1) {
-                    e1.printStackTrace();
-                }
-
                 try {
                     filename = URLDecoder.decode(filename, "UTF-8");
                 } catch (UnsupportedEncodingException e1) {
                     e1.printStackTrace();
                 }
+
                 File file = new File(filename);
+                UTF8FileWriter.write(xml,file);
                 System.out.println("mongodb  uploadFileUrl:" + uploadFileUrl);
                 System.out.println("mongodb  filename:" + filename);
                 uploadFile(uploadFileUrl, file);
