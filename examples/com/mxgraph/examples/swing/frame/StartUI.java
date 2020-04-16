@@ -21,9 +21,9 @@ public class StartUI extends JFrame {
         // System.out.println("loading resource");
         Container container = getContentPane(); //得到容器
         setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));  //设置光标
-        this.setIconImage(new ImageIcon(this.getClass().getResource("/com/mxgraph/examples/swing/images/icon.png")).getImage());
+        this.setIconImage(new ImageIcon(this.getClass().getResource("/com/mxgraph/examples/swing/images/others/icon.png")).getImage());
         this.setTitle("欢迎使用");
-        container.add(new JLabel(new ImageIcon(this.getClass().getResource("/com/mxgraph/examples/swing/images/back.jpg"))), BorderLayout.CENTER);  //增加图片
+        container.add(new JLabel(new ImageIcon(this.getClass().getResource("/com/mxgraph/examples/swing/images/others/back.jpg"))), BorderLayout.CENTER);  //增加图片
         progress = new JProgressBar(1, 100); //实例化进度条
         progress.setStringPainted(true); //描绘文字
         progress.setString("加载配置文件");  //设置显示文字

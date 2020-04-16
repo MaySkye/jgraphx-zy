@@ -7,12 +7,8 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
 import com.alibaba.fastjson.JSONObject;
-import com.mxgraph.examples.swing.db.DBConfig;
 import com.mxgraph.examples.swing.db.SiteDTO;
-import com.mxgraph.examples.swing.db.TelemetryDTO;
 import com.mxgraph.examples.swing.editor.BasicGraphEditor;
-import com.mxgraph.examples.swing.owl.Site;
-import com.mxgraph.examples.swing.util.FileUtil;
 import com.mxgraph.examples.swing.util.PortStyleUpdate;
 import com.mxgraph.examples.swing.util.UTF8FileWriter;
 import com.mxgraph.io.mxCodec;
@@ -28,8 +24,6 @@ import org.apache.commons.httpclient.methods.PostMethod;
 import org.apache.commons.httpclient.methods.multipart.FilePart;
 import org.apache.commons.httpclient.methods.multipart.MultipartRequestEntity;
 import org.apache.commons.httpclient.methods.multipart.Part;
-import org.ini4j.Profile.Section;
-import org.ini4j.Wini;
 
 import java.awt.event.ItemListener;
 import java.awt.event.ItemEvent;
@@ -352,7 +346,7 @@ public class UploadMxeFileFrame extends JFrame {
         btnSubmit.requestFocus();
 
         //设置图标
-        this.setIconImage(new ImageIcon(this.getClass().getResource("/com/mxgraph/examples/swing/images/icon.png")).getImage());
+        this.setIconImage(new ImageIcon(this.getClass().getResource("/com/mxgraph/examples/swing/images/others/icon.png")).getImage());
         //居中
         this.toCenter();
         this.setVisible(true);

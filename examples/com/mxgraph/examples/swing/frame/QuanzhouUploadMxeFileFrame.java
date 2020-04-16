@@ -98,7 +98,7 @@ public class QuanzhouUploadMxeFileFrame extends JFrame {
         setTitle("发布组态图——泉州项目");
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         //设置图标
-        this.setIconImage(new ImageIcon(this.getClass().getResource("/com/mxgraph/examples/swing/images/icon.png")).getImage());
+        this.setIconImage(new ImageIcon(this.getClass().getResource("/com/mxgraph/examples/swing/images/others/icon.png")).getImage());
         setBounds(100, 100, 600, 430);
         contentPane = new JPanel();
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));

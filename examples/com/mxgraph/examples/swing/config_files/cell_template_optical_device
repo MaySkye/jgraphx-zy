@@ -1,110 +1,85 @@
-<Template>
-  <cell name="光纤稳频激光器单元" type="光纤稳频激光器单元" width="100" height="100" icon="/com/mxgraph/examples/swing/images/device/device_11.png" style="roundImage;image=/com/mxgraph/examples/swing/images/device/device_11.png">
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Template> 
+  <cell name="光纤稳频激光器单元" type="光纤稳频激光器单元" width="100" height="100" icon="/com/mxgraph/examples/swing/images/device/腔稳激光器设备.png" style="roundImage;image=/com/mxgraph/examples/swing/images/device/腔稳激光器设备.png">
     <port attr="fiber" location="up" direction="out" x="0.5" y="0.1"/>  
     <port attr="fiber" location="left" direction="out" x="0.1" y="0.5"/>  
     <port attr="fiber" location="down" direction="out" x="0.5" y="0.9"/>  
     <port attr="fiber" location="right" direction="out" x="0.9" y="0.5"/> 
-  </cell>  
-  <cell name="EDFA中继器" type="EDFA中继器" width="100" height="100" icon="/com/mxgraph/examples/swing/images/device/device_21.png" style="roundImage;image=/com/mxgraph/examples/swing/images/device/device_21.png"> 
-    <port attr="fiber" location="up" direction="in" x="0.5" y="0.2"/>  
-    <port attr="fiber" location="left" direction="in" x="0.05" y="0.5"/>  
-    <port attr="fiber" location="down" direction="in" x="0.5" y="0.75"/>  
-    <port attr="fiber" location="right" direction="in" x="0.9" y="0.5"/> 
-  </cell>  
-  <cell name="参考腔稳频激光器单元" type="参考腔稳频激光器单元" width="100" height="100" icon="/com/mxgraph/examples/swing/images/device/device_31.png" style="roundImage;image=/com/mxgraph/examples/swing/images/device/device_31.png"> 
-    <port attr="fiber" location="up" direction="in" x="0.5" y="0.25"/>  
-    <port attr="fiber" location="left" direction="in" x="0.1" y="0.5"/>  
-    <port attr="fiber" location="down" direction="in" x="0.5" y="0.8"/>  
-    <port attr="fiber" location="right" direction="in" x="0.9" y="0.5"/> 
-  </cell>  
-  <cell name="三通道无缝切换设备" type="三通道无缝切换设备" width="100" height="100" icon="/com/mxgraph/examples/swing/images/device/device_41.png" style="roundImage;image=/com/mxgraph/examples/swing/images/device/device_41.png"> 
-    <port attr="fiber" location="up" direction="in" x="0.5" y="0.1"/>  
-    <port attr="fiber" location="left" direction="in" x="0.2" y="0.5"/>  
-    <port attr="fiber" location="down" direction="in" x="0.5" y="0.89"/>  
-    <port attr="fiber" location="right" direction="in" x="0.79" y="0.5"/> 
   </cell>
-  <cell name="光频传递系统接收设备" type="光频传递系统接收设备" width="100" height="100" icon="/com/mxgraph/examples/swing/images/device/device_receive.png" style="roundImage;image=/com/mxgraph/examples/swing/images/device/device_receive.png">
-    <port attr="fiber" location="up" direction="in" x="0.5" y="0.1"/>  
-    <port attr="fiber" location="left" direction="in" x="0.1" y="0.5"/>  
-    <port attr="fiber" location="down" direction="in" x="0.5" y="0.9"/>  
-    <port attr="fiber" location="right" direction="in" x="0.9" y="0.5"/> 
-  </cell>  
-  <cell name="光频传递系统发送设备" type="光频传递系统发送设备" width="100" height="100" icon="/com/mxgraph/examples/swing/images/device/device_send.png" style="roundImage;image=/com/mxgraph/examples/swing/images/device/device_send.png"> 
-    <port attr="fiber" location="up" direction="in" x="0.5" y="0.2"/>  
-    <port attr="fiber" location="left" direction="in" x="0.1" y="0.5"/>  
-    <port attr="fiber" location="down" direction="in" x="0.5" y="0.8"/>  
-    <port attr="fiber" location="right" direction="in" x="0.9" y="0.5"/> 
-  </cell>  
-  <cell name="监控单元" type="监控单元" width="100" height="100" icon="/com/mxgraph/examples/swing/images/device/device_61.png" style="roundImage;image=/com/mxgraph/examples/swing/images/device/device_61.png"> 
-    <port attr="fiber" location="up" direction="in" x="0.5" y="0.2"/>  
-    <port attr="fiber" location="left" direction="in" x="0.15" y="0.5"/>  
-    <port attr="fiber" location="down" direction="in" x="0.5" y="0.8"/>  
-    <port attr="fiber" location="right" direction="in" x="0.85" y="0.5"/> 
-  </cell>  
-  <cell name="拍频比对设备" type="拍频比对设备" width="100" height="100" icon="/com/mxgraph/examples/swing/images/device/device_71.png" style="roundImage;image=/com/mxgraph/examples/swing/images/device/device_71.png"> 
-    <port attr="fiber" location="up" direction="in" x="0.5" y="0.1"/>  
-    <port attr="fiber" location="left" direction="in" x="0.1" y="0.5"/>  
-    <port attr="fiber" location="down" direction="in" x="0.5" y="0.9"/>  
-    <port attr="fiber" location="right" direction="in" x="0.9" y="0.5"/> 
-  </cell>  
-  <cell name="参考腔稳频激光器净化单元" type="参考腔稳频激光器净化单元" width="100" height="100" icon="/com/mxgraph/examples/swing/images/device/device_81.png" style="roundImage;image=/com/mxgraph/examples/swing/images/device/device_81.png"> 
-    <port attr="fiber" location="up" direction="in" x="0.5" y="0.1"/>  
-    <port attr="fiber" location="left" direction="in" x="0.1" y="0.5"/>  
-    <port attr="fiber" location="down" direction="in" x="0.5" y="0.9"/>  
-    <port attr="fiber" location="right" direction="in" x="0.9" y="0.5"/> 
-  </cell>  
-  <cell name="双向EDFA设备" type="双向EDFA设备" width="100" height="100" icon="/com/mxgraph/examples/swing/images/device/device_91.png" style="roundImage;image=/com/mxgraph/examples/swing/images/device/device_91.png"> 
-    <port attr="fiber" location="up" direction="in" x="0.5" y="0.1"/>  
-    <port attr="fiber" location="left" direction="in" x="0.1" y="0.5"/>  
-    <port attr="fiber" location="down" direction="in" x="0.5" y="0.9"/>  
-    <port attr="fiber" location="right" direction="in" x="0.9" y="0.5"/> 
-  </cell>  
-  <cell name="路由切换单元" type="路由切换单元" width="100" height="100" icon="/com/mxgraph/examples/swing/images/device/device_101.png" style="roundImage;image=/com/mxgraph/examples/swing/images/device/device_101.png"> 
-    <port attr="fiber" location="up" direction="in" x="0.5" y="0.1"/>  
-    <port attr="fiber" location="left" direction="in" x="0.1" y="0.5"/>  
-    <port attr="fiber" location="down" direction="in" x="0.5" y="0.9"/>  
-    <port attr="fiber" location="right" direction="in" x="0.9" y="0.5"/> 
-  </cell>  
-  <cell name="仪表盘" type="仪表盘" width="100" height="100" icon="/com/mxgraph/examples/swing/images/cell_manage/test.png" style="roundImage;image=/com/mxgraph/examples/swing/images/cell_manage/test.png"> 
-    <port attr="fiber" location="up" direction="in" x="0.5" y="0.1"/>  
-    <port attr="fiber" location="up" direction="in" x="0.1" y="0.5"/>  
-    <port attr="fiber" location="up" direction="in" x="0.5" y="0.9"/>  
-    <port attr="fiber" location="up" direction="in" x="0.9" y="0.5"/> 
+  <cell name="EDFA中继器" type="EDFA中继器" width="100" height="100" icon="/com/mxgraph/examples/swing/images/device/EDFA中继设备.png" style="roundImage;image=/com/mxgraph/examples/swing/images/device/EDFA中继设备.png">
+    <port attr="fiber" location="up" direction="in" x="0.5" y="0.2"/>
+    <port attr="fiber" location="left" direction="in" x="0.05" y="0.5"/>
+    <port attr="fiber" location="down" direction="in" x="0.5" y="0.75"/>
+    <port attr="fiber" location="right" direction="in" x="0.9" y="0.5"/>
   </cell>
-  <cell name="信号评估设备" type="信号评估设备" width="100" height="100" icon="/com/mxgraph/examples/swing/images/device/信号评估设备.png" style="roundImage;image=/com/mxgraph/examples/swing/images/device/信号评估设备.png">
-      <port attr="fiber" location="up" direction="in" x="0.5" y="0.1"/>
-      <port attr="fiber" location="up" direction="in" x="0.1" y="0.5"/>
-      <port attr="fiber" location="up" direction="in" x="0.5" y="0.9"/>
-      <port attr="fiber" location="up" direction="in" x="0.9" y="0.5"/>
+  <cell name="参考腔稳频激光器单元" type="参考腔稳频激光器单元" width="100" height="100" icon="/com/mxgraph/examples/swing/images/device/腔稳激光器设备.png" style="roundImage;image=/com/mxgraph/examples/swing/images/device/腔稳激光器设备.png">
+    <port attr="fiber" location="up" direction="in" x="0.5" y="0.25"/>
+    <port attr="fiber" location="left" direction="in" x="0.1" y="0.5"/>
+    <port attr="fiber" location="down" direction="in" x="0.5" y="0.8"/>
+    <port attr="fiber" location="right" direction="in" x="0.9" y="0.5"/>
   </cell>
-  <cell name="光纤时间同步本地端设备" type="光纤时间同步本地端设备" width="100" height="100" icon="/com/mxgraph/examples/swing/images/device/光纤时间同步本地端设备.png" style="roundImage;image=/com/mxgraph/examples/swing/images/device/光纤时间同步本地端设备.png">
-        <port attr="fiber" location="up" direction="in" x="0.5" y="0.1"/>
-        <port attr="fiber" location="up" direction="in" x="0.1" y="0.5"/>
-        <port attr="fiber" location="up" direction="in" x="0.5" y="0.9"/>
-        <port attr="fiber" location="up" direction="in" x="0.9" y="0.5"/>
-   </cell>
-  <cell name="光纤时间同步远程端设备" type="光纤时间同步远程端设备" width="100" height="100" icon="/com/mxgraph/examples/swing/images/device/光纤时间同步远程端设备.png" style="roundImage;image=/com/mxgraph/examples/swing/images/device/光纤时间同步远程端设备.png">
-           <port attr="fiber" location="up" direction="in" x="0.5" y="0.1"/>
-           <port attr="fiber" location="up" direction="in" x="0.1" y="0.5"/>
-           <port attr="fiber" location="up" direction="in" x="0.5" y="0.9"/>
-           <port attr="fiber" location="up" direction="in" x="0.9" y="0.5"/>
+  <cell name="光频传递系统接收设备" type="光频传递系统接收设备" width="100" height="100" icon="/com/mxgraph/examples/swing/images/device/光频传递发送接收设备.png" style="roundImage;image=/com/mxgraph/examples/swing/images/device/光频传递发送接收设备.png">
+    <port attr="fiber" location="up" direction="in" x="0.5" y="0.1"/>
+    <port attr="fiber" location="left" direction="in" x="0.1" y="0.5"/>
+    <port attr="fiber" location="down" direction="in" x="0.5" y="0.9"/>
+    <port attr="fiber" location="right" direction="in" x="0.9" y="0.5"/>
   </cell>
-  <cell name="同步参考源驯服设备" type="同步参考源驯服设备" width="100" height="100" icon="/com/mxgraph/examples/swing/images/device/同步参考源驯服设备.png" style="roundImage;image=/com/mxgraph/examples/swing/images/device/同步参考源驯服设备.png">
-             <port attr="fiber" location="up" direction="in" x="0.5" y="0.1"/>
-             <port attr="fiber" location="up" direction="in" x="0.1" y="0.5"/>
-             <port attr="fiber" location="up" direction="in" x="0.5" y="0.9"/>
-             <port attr="fiber" location="up" direction="in" x="0.9" y="0.5"/>
+  <cell name="光频传递系统发送设备" type="光频传递系统发送设备" width="100" height="100" icon="/com/mxgraph/examples/swing/images/device/光频传递发送接收设备.png" style="roundImage;image=/com/mxgraph/examples/swing/images/device/光频传递发送接收设备.png">
+    <port attr="fiber" location="up" direction="in" x="0.5" y="0.2"/>
+    <port attr="fiber" location="left" direction="in" x="0.1" y="0.5"/>
+    <port attr="fiber" location="down" direction="in" x="0.5" y="0.8"/>
+    <port attr="fiber" location="right" direction="in" x="0.9" y="0.5"/>
   </cell>
-  <cell name="铷原子钟" type="铷原子钟" width="100" height="100" icon="/com/mxgraph/examples/swing/images/device/铷原子钟.png" style="roundImage;image=/com/mxgraph/examples/swing/images/device/铷原子钟.png">
-             <port attr="fiber" location="up" direction="in" x="0.5" y="0.1"/>
-             <port attr="fiber" location="up" direction="in" x="0.1" y="0.5"/>
-             <port attr="fiber" location="up" direction="in" x="0.5" y="0.9"/>
-             <port attr="fiber" location="up" direction="in" x="0.9" y="0.5"/>
+  <cell name="拍频比对设备" type="拍频比对设备" width="100" height="100" icon="/com/mxgraph/examples/swing/images/device/拍频比对设备.png" style="roundImage;image=/com/mxgraph/examples/swing/images/device/拍频比对设备.png">
+    <port attr="fiber" location="up" direction="in" x="0.5" y="0.1"/>
+    <port attr="fiber" location="left" direction="in" x="0.1" y="0.5"/>
+    <port attr="fiber" location="down" direction="in" x="0.5" y="0.9"/>
+    <port attr="fiber" location="right" direction="in" x="0.9" y="0.5"/>
   </cell>
-  <cell name="光纤时间同步中继及下载设备" type="光纤时间同步中继及下载设备" width="100" height="100" icon="/com/mxgraph/examples/swing/images/device/光纤时间同步中继及下载设备.png" style="roundImage;image=/com/mxgraph/examples/swing/images/device/光纤时间同步中继及下载设备.png">
-             <port attr="fiber" location="up" direction="in" x="0.5" y="0.1"/>
-             <port attr="fiber" location="up" direction="in" x="0.1" y="0.5"/>
-             <port attr="fiber" location="up" direction="in" x="0.5" y="0.9"/>
-             <port attr="fiber" location="up" direction="in" x="0.9" y="0.5"/>
+  <cell name="参考腔稳频激光器净化单元" type="参考腔稳频激光器净化单元" width="100" height="100" icon="/com/mxgraph/examples/swing/images/device/腔稳激光器设备.png" style="roundImage;image=/com/mxgraph/examples/swing/images/device/腔稳激光器设备.png">
+    <port attr="fiber" location="up" direction="in" x="0.5" y="0.1"/>
+    <port attr="fiber" location="left" direction="in" x="0.1" y="0.5"/>
+    <port attr="fiber" location="down" direction="in" x="0.5" y="0.9"/>
+    <port attr="fiber" location="right" direction="in" x="0.9" y="0.5"/>
   </cell>
+  <cell name="双向EDFA设备" type="双向EDFA设备" width="100" height="100" icon="/com/mxgraph/examples/swing/images/device/EDFA中继设备.png" style="roundImage;image=/com/mxgraph/examples/swing/images/device/EDFA中继设备.png">
+    <port attr="fiber" location="up" direction="in" x="0.5" y="0.1"/>
+    <port attr="fiber" location="left" direction="in" x="0.1" y="0.5"/>
+    <port attr="fiber" location="down" direction="in" x="0.5" y="0.9"/>
+    <port attr="fiber" location="right" direction="in" x="0.9" y="0.5"/>
+  </cell>
+  <cell name="路由切换单元" type="路由切换单元" width="100" height="100" icon="/com/mxgraph/examples/swing/images/device/device1.png" style="roundImage;image=/com/mxgraph/examples/swing/images/device/device1.png">
+    <port attr="fiber" location="up" direction="in" x="0.5" y="0.1"/>
+    <port attr="fiber" location="left" direction="in" x="0.1" y="0.5"/>
+    <port attr="fiber" location="down" direction="in" x="0.5" y="0.9"/>
+    <port attr="fiber" location="right" direction="in" x="0.9" y="0.5"/>
+  </cell>
+  <cell name="三通道无缝切换设备" type="三通道无缝切换设备" width="100" height="100" icon="/com/mxgraph/examples/swing/images/device/device2.png" style="roundImage;image=/com/mxgraph/examples/swing/images/device/device2.png">
+    <port attr="fiber" location="up" direction="in" x="0.5" y="0.1"/>
+    <port attr="fiber" location="left" direction="in" x="0.2" y="0.5"/>
+    <port attr="fiber" location="down" direction="in" x="0.5" y="0.89"/>
+    <port attr="fiber" location="right" direction="in" x="0.79" y="0.5"/>
+  </cell>
+  <cell name="监控单元" type="监控单元" width="100" height="100" icon="/com/mxgraph/examples/swing/images/device/device3.png" style="roundImage;image=/com/mxgraph/examples/swing/images/device/device3.png">
+    <port attr="fiber" location="up" direction="in" x="0.5" y="0.2"/>
+    <port attr="fiber" location="left" direction="in" x="0.15" y="0.5"/>
+    <port attr="fiber" location="down" direction="in" x="0.5" y="0.8"/>
+    <port attr="fiber" location="right" direction="in" x="0.85" y="0.5"/>
+  </cell>
+
+    <cell name="地基授时时钟设备" type="地基授时时钟设备" width="100" height="100" icon="/com/mxgraph/examples/swing/images/device/new.png" style="roundImage;image=/com/mxgraph/examples/swing/images/device/new.png">
+      <port attr="fiber" location="up" direction="in" x="0.5" y="0.2"/>
+      <port attr="fiber" location="left" direction="in" x="0.15" y="0.5"/>
+      <port attr="fiber" location="down" direction="in" x="0.5" y="0.8"/>
+      <port attr="fiber" location="right" direction="in" x="0.85" y="0.5"/>
+    </cell>
+
+      <cell name="Keithley_2000型多用万用表" type="Keithley_2000型多用万用表" width="100" height="100" icon="/com/mxgraph/examples/swing/images/device/device2.png" style="roundImage;image=/com/mxgraph/examples/swing/images/device/device2.png">
+        <port attr="fiber" location="up" direction="in" x="0.5" y="0.2"/>
+        <port attr="fiber" location="left" direction="in" x="0.15" y="0.5"/>
+        <port attr="fiber" location="down" direction="in" x="0.5" y="0.8"/>
+        <port attr="fiber" location="right" direction="in" x="0.85" y="0.5"/>
+      </cell>
+
 </Template>

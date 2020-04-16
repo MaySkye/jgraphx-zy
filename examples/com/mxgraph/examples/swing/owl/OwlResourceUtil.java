@@ -20,7 +20,7 @@ public class OwlResourceUtil {
      * @param model
      * @return uri -> cls
      */
-    public static Map<String, OwlClass> parseOwlClass(Model model) {
+    public static Map<String, OwlClass> getOwlClass(Model model) {
 
         Map<String, OwlClass> classMap = new HashMap<>((int) model.size());
         Map<String, equivalent_class> all_equivalentClass= new HashMap<>((int) model.size());
@@ -194,7 +194,7 @@ public class OwlResourceUtil {
      * ObjectAttr.uri=subjectStr;
      * ObjectAttr.id = subjectName;
      */
-    public static Map<String, OwlObjectAttribute> parseOwlObjectAttribute(Model model, Map<String, OwlClass> classMap) {
+    public static Map<String, OwlObjectAttribute> getOwlObjectAttribute(Model model, Map<String, OwlClass> classMap) {
 
         Map<String, OwlObjectAttribute> attrMap = new HashMap<>((int) model.size());
 
@@ -282,7 +282,7 @@ public class OwlResourceUtil {
      * dataAttr.uri= subjectStr;
      * dataAttr.id = subjectName;
      */
-    public static Map<String, OwlDataAttribute> parseOwlDataAttribute(Model model, Map<String, OwlClass> classMap) {
+    public static Map<String, OwlDataAttribute> getOwlDataAttribute(Model model, Map<String, OwlClass> classMap) {
 
         Map<String, OwlDataAttribute> attrMap = new HashMap<>((int) model.size());
 
@@ -381,7 +381,7 @@ public class OwlResourceUtil {
      * @return uri -> obj
      *
      */
-    public static Map<String, OwlObject> parseOwlObject(Model model, Map<String, OwlClass> classMap,
+    public static Map<String, OwlObject> getOwlObject(Model model, Map<String, OwlClass> classMap,
                                                         Map<String, OwlObjectAttribute> objAttrMap,
                                                         Map<String, OwlDataAttribute> dataAttrMap) {
         Map<String, OwlObject> objMap = new HashMap<>((int) model.size());
@@ -389,16 +389,13 @@ public class OwlResourceUtil {
         StmtIterator stmtIterator = model.listStatements();
         while (stmtIterator.hasNext()) {
             Statement statement = stmtIterator.next();
-
             Resource subject = statement.getSubject(); //主语
             Property predicate = statement.getPredicate();//谓语
             RDFNode object = statement.getObject();//宾语
-
             String subjectStr = subject.toString();
             String subjectName = subject.getLocalName();
             String predicateName = predicate.getLocalName();
             String objectStr = object.toString();
-
             if (!subject.isLiteral() && !object.isLiteral() && objectStr.endsWith("NamedIndividual")
                     && predicateName.equals("type") && !objMap.containsKey(subjectStr)) {
                 OwlObject obj = new OwlObject();
@@ -470,7 +467,6 @@ public class OwlResourceUtil {
                 valueSet.add(simplifyValue(objectStr));
             }
         }
-
         return objMap;
     }
 
@@ -479,13 +475,13 @@ public class OwlResourceUtil {
         // 调用Jena提供的API，获取Model数据
         Model model = getModel(filePath);
         // 解析出Model数据中的Classes资源
-        Map<String, OwlClass> classMap = parseOwlClass(model);
+        Map<String, OwlClass> classMap = getOwlClass(model);
         // 解析出Model数据中的Object Properties资源
-        Map<String, OwlObjectAttribute> objAttrMap = parseOwlObjectAttribute(model, classMap);
+        Map<String, OwlObjectAttribute> objAttrMap = getOwlObjectAttribute(model, classMap);
         // 解析出Model数据中的Data properties资源
-        Map<String, OwlDataAttribute> dataAttrMap = parseOwlDataAttribute(model, classMap);
+        Map<String, OwlDataAttribute> dataAttrMap = getOwlDataAttribute(model, classMap);
         // 解析出Model数据中的Individuals资源
-        Map<String, OwlObject> objMap = parseOwlObject(model, classMap, objAttrMap, dataAttrMap);
+        Map<String, OwlObject> objMap = getOwlObject(model, classMap, objAttrMap, dataAttrMap);
         // 打包所有资源信息，并返回
         OwlResourceData owlResourceData = new OwlResourceData();
         owlResourceData.model = model;

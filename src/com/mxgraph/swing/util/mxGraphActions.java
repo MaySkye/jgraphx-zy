@@ -147,7 +147,9 @@ public class mxGraphActions
 	 */
 	static final Action toFrontAction = new LayerAction("toFront");
 
-	public  static  Action getresInfoAction=null;
+	static final Action mxCellInfoAction = new mxCellInfoAction("mxCellInfo");
+	static final Action setSensitivePointAction = new setSensitivePointAction("setSensitivePoint");
+	static final Action bindDataFieldAction = new bindDataFieldAction("bindDataField");
 	/**
 	 * 
 	 * @return the delete action
@@ -364,11 +366,20 @@ public class mxGraphActions
 		return toFrontAction;
 	}
 
-	public static Action getresInfoAction(BasicGraphEditor editor)
+	//图元信息
+	public static Action getMxCellInfoAction()
 	{
-
-		getresInfoAction = new getresInfoAction(editor, "getresInfo");
-		return getresInfoAction;
+		return mxCellInfoAction;
+	}
+	//建立敏感点
+	public static Action getSetSensitivePointAction()
+	{
+		return setSensitivePointAction;
+	}
+	//绑定数据域
+	public static Action getBindDataFieldAction()
+	{
+		return bindDataFieldAction;
 	}
 
 	/**
@@ -853,15 +864,86 @@ public class mxGraphActions
 
 	}
 
-	public static class getresInfoAction extends AbstractAction
+	public static class mxCellInfoAction extends AbstractAction
 	{
 
 		private static final long serialVersionUID = 6501585024845668188L;
-		private BasicGraphEditor editor;
-		public getresInfoAction(BasicGraphEditor editor, String name)
+		public mxCellInfoAction(String name)
 		{
 			super(name);
-			this.editor = editor;
+		}
+		public void actionPerformed(ActionEvent e)
+		{
+			BasicGraphEditor editor = getEditor(e);
+			mxGraph graph = getGraph(e);
+
+			Object obj = graph.getSelectionCell();
+			if (!(obj instanceof mxCell)) {
+				return;
+			}
+			mxCell cell = (mxCell) obj;//得到选中的图元对象
+
+			if(cell.getV()!=null){
+				//输出数据属性信息
+				Map<String,String> data_info=cell.getV().getData_info();
+				Map<String,String> link_info=cell.getV().getLink_info();
+
+				Iterator<Map.Entry<String, String>> data1 = data_info.entrySet().iterator();
+				while (data1.hasNext()) {
+					Map.Entry<String, String> entry = data1.next();
+					String val=entry.getValue();
+					System.out.println(entry.getKey()+":"+val);
+				}
+
+				Iterator<Map.Entry<String, String>> link1 = link_info.entrySet().iterator();
+				while (link1.hasNext()) {
+					Map.Entry<String, String> entry = link1.next();
+					String val=entry.getValue();
+					System.out.println(entry.getKey()+":"+val);
+				}
+			}
+
+			new ResourceShowFrame(editor,graph,cell);
+
+		}
+
+	}
+
+	public static class setSensitivePointAction extends AbstractAction
+	{
+
+		private static final long serialVersionUID = 6501585024845668188L;
+
+		public setSensitivePointAction(String name)
+		{
+			super(name);
+
+		}
+		public void actionPerformed(ActionEvent e)
+		{
+			BasicGraphEditor editor = getEditor(e);
+			mxGraph graph = getGraph(e);
+
+			Object obj = graph.getSelectionCell();
+			if (!(obj instanceof mxCell)) {
+				return;
+			}
+			mxCell cell = (mxCell) obj;//得到选中的图元对象
+
+            //先获取mxe文件信息
+
+		}
+
+	}
+
+	public static class bindDataFieldAction extends AbstractAction
+	{
+
+		private static final long serialVersionUID = 6501585024845668188L;
+
+		public bindDataFieldAction(String name)
+		{
+			super(name);
 		}
 		public void actionPerformed(ActionEvent e)
 		{

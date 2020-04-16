@@ -44,10 +44,8 @@ public class mxCell implements mxICell, Cloneable, Serializable
 	 */
 	private static final long serialVersionUID = 910211337632342672L;
 
-	protected String name;
-	protected String type;
 
-	VertexInterface<String> v;
+	protected VertexInterface<String> v;
 
 	public VertexInterface<String> getV() {
 		return v;
@@ -67,6 +65,9 @@ public class mxCell implements mxICell, Cloneable, Serializable
 		this.edgeLink = edgeLink;
 	}
 
+	protected String name;
+	protected String type;
+
 	public String getName() {
 		return name;
 	}
@@ -81,6 +82,16 @@ public class mxCell implements mxICell, Cloneable, Serializable
 
 	public void setType(String type) {
 		this.type = type;
+	}
+
+	protected String deviceid;
+
+	public String getDeviceid() {
+		return deviceid;
+	}
+
+	public void setDeviceid(String deviceid) {
+		this.deviceid = deviceid;
 	}
 
 	//存储的has_property和connect信息
@@ -103,7 +114,7 @@ public class mxCell implements mxICell, Cloneable, Serializable
 		this.hasconnect = hasconnect;
 	}
 
-	//存储的是port连接点的信息
+	//如果一个图元的类型为Port，则用到以下字段，存储的是port连接点的信息，否则为空
 	protected String attr;
 	protected String location;
 	protected String direction;
@@ -130,6 +141,89 @@ public class mxCell implements mxICell, Cloneable, Serializable
 
 	public void setDirection(String direction) {
 		this.direction = direction;
+	}
+
+	//描述监测图元的，设备图元以下字段为空
+	protected String monitor_device_name;
+	protected String monitor_property_name;
+	protected String monitor_property_type;
+	protected String monitor_unit;
+
+	public String getMonitor_device_name() {
+		return monitor_device_name;
+	}
+
+	public void setMonitor_device_name(String monitor_device_name) {
+		this.monitor_device_name = monitor_device_name;
+	}
+
+	public String getMonitor_property_name() {
+		return monitor_property_name;
+	}
+
+	public void setMonitor_property_name(String monitor_property_name) {
+		this.monitor_property_name = monitor_property_name;
+	}
+
+	public String getMonitor_property_type() {
+		return monitor_property_type;
+	}
+
+	public void setMonitor_property_type(String monitor_property_type) {
+		this.monitor_property_type = monitor_property_type;
+	}
+
+	public String getMonitor_unit() {
+		return monitor_unit;
+	}
+
+	public void setMonitor_unit(String monitor_unit) {
+		this.monitor_unit = monitor_unit;
+	}
+
+    //原始资源文件，初始情况下两个字段内容相同
+	//如果为组态图重新绑定资源文件，则bindResourceFile值改变
+	protected String originalResourceFile;
+
+	public String getOriginalResourceFile() {
+		return originalResourceFile;
+	}
+
+	public void setOriginalResourceFile(String originalResourceFile) {
+		this.originalResourceFile = originalResourceFile;
+	}
+
+	//绑定资源文件
+	protected String bindResourceFile;
+
+	public String getBindResourceFile() {
+		return bindResourceFile;
+	}
+
+	public void setBindResourceFile(String bindResourceFile) {
+		this.bindResourceFile = bindResourceFile;
+	}
+
+	//设备图元敏感点，存储跳转组态图的文件名称
+	protected String sensitivePoint;
+
+	public String getSensitivePoint() {
+		return sensitivePoint;
+	}
+
+	public void setSensitivePoint(String sensitivePoint) {
+		this.sensitivePoint = sensitivePoint;
+	}
+
+	//设备绑定的数据域，默认为 monitor_device_name + monitor_property_name
+    protected  String bindDataField;
+
+	public String getBindDataField() {
+		return bindDataField;
+	}
+
+	public void setBindDataField(String bindDataField) {
+		this.bindDataField = bindDataField;
 	}
 
 	/**
@@ -745,25 +839,6 @@ public class mxCell implements mxICell, Cloneable, Serializable
 		return builder.toString();
 	}
 
-	protected String originalResourceFile;
-
-	public String getOriginalResourceFile() {
-		return originalResourceFile;
-	}
-
-	public void setOriginalResourceFile(String originalResourceFile) {
-		this.originalResourceFile = originalResourceFile;
-	}
-
-	protected String bindResourceFile;
-
-	public String getBindResourceFile() {
-		return bindResourceFile;
-	}
-
-	public void setBindResourceFile(String bindResourceFile) {
-		this.bindResourceFile = bindResourceFile;
-	}
 
 	private String multiValue;
 	/* (non-Javadoc)
@@ -780,15 +855,7 @@ public class mxCell implements mxICell, Cloneable, Serializable
 		this.multiValue = multiValue;
 	}
 
-	protected String deviceid;
 
-	public String getDeviceid() {
-		return deviceid;
-	}
-
-	public void setDeviceid(String deviceid) {
-		this.deviceid = deviceid;
-	}
 
 	protected String originStyle;
 
@@ -806,51 +873,4 @@ public class mxCell implements mxICell, Cloneable, Serializable
 		this.originStyle = originStyle;
 	}
 
-	/*protected String has_property;
-
-	public String getHas_property() {
-		return has_property;
-	}
-
-	public void setHas_property(String has_property) {
-		this.has_property = has_property;
-	}*/
-
-	//描述monitor图元的
-	protected String monitor_device_name;
-	protected String monitor_property_name;
-	protected String monitor_property_type;
-	protected String monitor_unit;
-
-	public String getMonitor_device_name() {
-		return monitor_device_name;
-	}
-
-	public void setMonitor_device_name(String monitor_device_name) {
-		this.monitor_device_name = monitor_device_name;
-	}
-
-	public String getMonitor_property_name() {
-		return monitor_property_name;
-	}
-
-	public void setMonitor_property_name(String monitor_property_name) {
-		this.monitor_property_name = monitor_property_name;
-	}
-
-	public String getMonitor_property_type() {
-		return monitor_property_type;
-	}
-
-	public void setMonitor_property_type(String monitor_property_type) {
-		this.monitor_property_type = monitor_property_type;
-	}
-
-	public String getMonitor_unit() {
-		return monitor_unit;
-	}
-
-	public void setMonitor_unit(String monitor_unit) {
-		this.monitor_unit = monitor_unit;
-	}
 }

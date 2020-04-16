@@ -35,12 +35,12 @@ public class showGraph {
         //System.out.println("Adding vertexs...");
         System.out.println("---------------------------- graph info ---------------------------");
         saveResourceVerties(graph,owlResourceData);
-        System.out.println("Number of graph's vertex="+graph.getNumberOfVertices());
+        //System.out.println("Number of graph's vertex="+graph.getNumberOfVertices());
 
         //循环找出设备的边，存入graph
         //System.out.println("Adding edges......");
         saveResourceEdges(graph,owlResourceData);
-        System.out.println("Number of graph's edge="+graph.getNumberOfEdges());
+        //System.out.println("Number of graph's edge="+graph.getNumberOfEdges());
         System.out.println("--------------------------- graph info end ---------------------------");
         return  graph;
     }
@@ -346,8 +346,7 @@ public class showGraph {
     //循环找出设备顶点，存入graph
     public static void saveResourceVerties(GraphInterface<String> graph,OwlResourceData owlResourceData){
         owlResourceData.objMap.forEach((uri, obj) -> {
-            if(( findKind(obj.type).equals("FeatureOfInterest")
-                    ||findKind(obj.type).equals("ControlRoom")||findKind(obj.type).equals("Site") )
+            if(( findKind(obj.type).equals("FeatureOfInterest"))
                     &&obj.visible==true){
                 //graph.addVertex(obj.id);  //添加顶点
                 VertexInterface<String> v=new Vertex<>(obj.id);
@@ -360,8 +359,9 @@ public class showGraph {
                 link_info_map.clear();
                 obj.objAttrs.forEach((objAttr, objSet) -> {
                     objSet.forEach(obj2 -> {
-                        System.out.println(obj.id+"->" + objAttr.id + "->"+obj2.id);
+
                         if(obj2.visible==true){
+                            System.out.println(obj.id+"->" + objAttr.id + "->"+obj2.id);
                             if(link_info_map.get(objAttr.id )!=null){
                                 String str=link_info_map.get(objAttr.id );
                                 str=str+"; "+obj2.id;
@@ -398,8 +398,7 @@ public class showGraph {
     public static void saveResourceEdges(GraphInterface<String> graph,OwlResourceData owlResourceData){
         owlResourceData.objMap.forEach((uri, obj) -> {
             String id=obj.id;
-            if(obj.visible==true&&(findKind(obj.type).equals("FeatureOfInterest")
-                    ||findKind(obj.type).equals("ControlRoom"))
+            if(obj.visible==true&&(findKind(obj.type).equals("FeatureOfInterest"))
             ){
             obj.objAttrs.forEach((objAttr, objSet) -> {
                 if(objAttr.id.equals("connect")||objAttr.id.equals("data_trans")){
@@ -408,7 +407,7 @@ public class showGraph {
                             EdgeLink edgelink=new EdgeLink();
                             edgelink.setName(objAttr.id);
                             edgelink.setId(id+"--"+objAttr.id+"--"+obj2.id);
-                            System.out.println(id+"->" + objAttr.id + "->"+obj2.id);
+                            //System.out.println(id+"->" + objAttr.id + "->"+obj2.id);
                             graph.addEdge(id,obj2.id,edgelink);
                         }
                     });

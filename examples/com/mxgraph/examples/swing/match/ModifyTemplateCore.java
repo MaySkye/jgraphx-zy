@@ -438,7 +438,7 @@ public class ModifyTemplateCore {
         }
         return res;
     }
-    public    int   getMaxId(mxCell root) {
+    public  int  getMaxId(mxCell root) {
         int maxId = 0;
         if (root == null) {
             return maxId;
@@ -467,7 +467,6 @@ public class ModifyTemplateCore {
             return res;
         }
         String cellName = cells.get(0);
-
         mxCell originCell = editor.AllCellMap.get(cellName);
         mxGraph graph = editor.getGraphComponent().getGraph();
         Object[] cloneCells = graph.cloneCells(new mxCell[]{originCell});
@@ -497,7 +496,6 @@ public class ModifyTemplateCore {
     }
 
     /********************************************************************************************/
-
     // 第六步：重新进行自动化资源绑定(包括资源文件和资源ID以及设备ID)
     // 若有两个相同的设备，则应该根据连接关系来绑定
     private void autoBindResource(GraphInterface<String> res_graph, Map<String, Integer> cellMap,

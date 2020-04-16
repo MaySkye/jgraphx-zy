@@ -6,7 +6,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.UnsupportedEncodingException;
 
 public class LoginFrame2 extends JFrame {
 
@@ -27,7 +26,7 @@ public class LoginFrame2 extends JFrame {
     private static final int height = 400;
 
     //设置界面的图标
-    private Image img = new ImageIcon("com/mxgraph/examples/swing/images/icon.png").getImage();
+    private Image img = new ImageIcon("com/mxgraph/examples/swing/images/others/icon.png").getImage();
 
 
     //初始化主框架

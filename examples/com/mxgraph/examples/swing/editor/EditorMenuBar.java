@@ -490,7 +490,7 @@ public class EditorMenuBar extends JMenuBar {
         });
 
         // Creates the chart menu
-        menu = add(new JMenu("设计资源组态图"));
+        menu = add(new JMenu("组态图操作"));
         //System.out.println(username);
 
 

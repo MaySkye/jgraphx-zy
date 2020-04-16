@@ -166,16 +166,12 @@ public class ResSelectFrame5 extends Frame{
         diagram_btn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //System.out.println("生成组态图......");
-
-                //--------------------------------------
                 //匹配模板图时使用如下方法
                 //为graph匹配相似度最高的match_graph,得到对应模板图的文件名
                 String TemplatePath= ResMatchCore.getTemplatePath(new_owlResourceData);
                 System.out.println("TemplatePath:"+TemplatePath);
-
                 /*此段代码可以显示出模板mxe文件*/
-                if (TemplatePath == null) {
+               if (TemplatePath == null) {
                     return;
                 }
                 Document document = null;
@@ -186,25 +182,17 @@ public class ResSelectFrame5 extends Frame{
                 }
                 mxCodec codec = new mxCodec(document);
                 codec.decode(document.getDocumentElement(), editor.getGraphComponent().getGraph().getModel());
-
                 // 根据资源模型文件，对模板组态图进行调整,
                 // 则可以显示出调整好的组态图，图元没有绑定资源信息
                 GraphInterface<String> graph= showGraph.createGraph(new_owlResourceData);
-
                 new ModifyTemplateCore(TemplatePath).postProcess(graph,editor,filepath);
-
                 //添加标题
                 showTitle(sitename,editor);
                 editor.getGraphComponent().getGraph().refresh();
-
                 editor.getOrigin_owlResourceData().title=sitename.substring(0,sitename.length()-4);
                 editor.getNew_owlResourceData().title=sitename.substring(0,sitename.length()-4);
-
-               // editor.getOrigin_owlResourceData().title=EncodeUtil.GBKTOUTF8(sitename.substring(0,sitename.length()-4));
-               // editor.getNew_owlResourceData().title=EncodeUtil.GBKTOUTF8(sitename.substring(0,sitename.length()-4));
                 dispose();
             }
-
         });
 
         refresh_btn.addActionListener(new ActionListener() {
@@ -711,15 +699,9 @@ public class ResSelectFrame5 extends Frame{
 
         //为info(introduction面板赋值)
         info="Name:"+owlObject.id+"  Type:"+owlObject.type.id;
-
-        jrbtn_list.clear();
-        //if(findKind(owlObject.type).equals("FeatureOfInterest")){
+         jrbtn_list.clear();
          jRadioButton.setVisible(true);
          jRadioButton.setSelected(owlObject.visible);
-        //}else{
-        //    jRadioButton.setVisible(false);
-        //}
-
         //用表格显示它的信息
         attrListModel = null;
         attrListModel = new AttrListModel(owlObject);
@@ -794,12 +776,10 @@ public class ResSelectFrame5 extends Frame{
                                 obj.objAttrs.forEach((objAttr, objSet) -> {
                                     if(objAttr.id.equals("connect")||objAttr.id.equals("data_trans")){
 
-
                                         if(objSet.contains(last_obj)){
                                             if(!entry1.getValue().isSelected()){
                                                 System.out.println(last_obj.id+"被移除");
                                                 objSet.remove(last_obj);
-
                                             }
                                         }else{
                                             if(entry1.getValue().isSelected()){

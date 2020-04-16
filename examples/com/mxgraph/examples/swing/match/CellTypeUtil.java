@@ -8,12 +8,12 @@ import java.util.*;
 
 public class CellTypeUtil {
 
-    private static List<CellEle> opticalDeviceCellList = CellDecoder.opticalDeviceCellList;
-    private static List<CellEle> networkDeviceData = CellDecoder.networkDeviceCellList;
-    private static Map<String, List<CellEle>> cellMap = null;
-    private static Map<String, List<String>> typeMap = null;
-    private static Set<String> typeSet = null;
-    private static List<String> typeList = null;
+    public static List<CellEle> opticalDeviceCellList = CellDecoder.opticalDeviceCellList;
+    public static List<CellEle> networkDeviceData = CellDecoder.networkDeviceCellList;
+    public static Map<String, List<CellEle>> cellMap = null;
+    public static Map<String, List<String>> typeMap = null;
+    public static Set<String> typeSet = null;
+    public static List<String> typeList = null;
 
     static {
         loadData();
@@ -45,20 +45,22 @@ public class CellTypeUtil {
                 typeMap.put(cellEle.getType(), new ArrayList<>());
                 cellMap.put(cellEle.getType(), new ArrayList<>());
             }
+            List<String> list1 = typeMap.get(cellEle.getType());
+            list1.add(cellEle.getName());
+            List<CellEle> list2 = cellMap.get(cellEle.getType());
+            list2.add(cellEle);
         });
 
-
-
-        cellMap = new HashMap<>(networkDeviceData.size());
-        typeMap = new HashMap<>(networkDeviceData.size());
-        typeSet = new HashSet<>(networkDeviceData.size());
-        typeList = new ArrayList<>(networkDeviceData.size());
         networkDeviceData.forEach(cellEle -> {
             if (typeSet.add(cellEle.getType())) {
                 typeList.add(cellEle.getType());
                 typeMap.put(cellEle.getType(), new ArrayList<>());
                 cellMap.put(cellEle.getType(), new ArrayList<>());
             }
+            List<String> list1 = typeMap.get(cellEle.getType());
+            list1.add(cellEle.getName());
+            List<CellEle> list2 = cellMap.get(cellEle.getType());
+            list2.add(cellEle);
         });
     }
 }

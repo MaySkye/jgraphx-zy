@@ -2,9 +2,7 @@ package com.mxgraph.examples.swing.decode;
 
 import java.util.List;
 
-/**
- * Created by QiboLee on 2017/4/25 0025.
- */
+
 public class CellEle {
 
     private String name;

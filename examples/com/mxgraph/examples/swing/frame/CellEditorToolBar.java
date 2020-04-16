@@ -47,7 +47,7 @@ public class CellEditorToolBar extends JToolBar {
                 "/com/mxgraph/examples/swing/images/open.gif"));
        /* add(editor.bind("Save", new CellSaveAction(false),
                 "/com/mxgraph/examples/swing/images/save.gif"));*/
-        add(editor.bind("Save", new OpenAction(),
+        add(editor.bind("Save", new SaveAction(true),
                 "/com/mxgraph/examples/swing/images/save.gif"));
         addSeparator();
 

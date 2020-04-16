@@ -24,7 +24,7 @@ public class RegisterFrame extends JFrame {
     private static final int height = 400;
 
     //设置界面的图标
-    private Image img = new ImageIcon("com/mxgraph/examples/swing/images/icon.png").getImage();
+    private Image img = new ImageIcon("com/mxgraph/examples/swing/images/others/icon.png").getImage();
 
 
     //初始化主框架

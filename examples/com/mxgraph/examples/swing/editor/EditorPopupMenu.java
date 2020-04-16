@@ -73,11 +73,14 @@ public class EditorPopupMenu extends JPopupMenu
 		add(editor.bind(mxResources.get("selectEdges"), mxGraphActions
 				.getSelectEdgesAction()));
 
-		addSeparator();
-
 		add(editor.bind(mxResources.get("selectAll"), mxGraphActions
 				.getSelectAllAction()));
-		add(editor.bind("resInfo", mxGraphActions.getresInfoAction(editor)));
+		addSeparator();
+
+		/*赵艺添加*/
+		add(editor.bind(mxResources.get("mxCellInfo"), mxGraphActions.getMxCellInfoAction()));
+		add(editor.bind(mxResources.get("setSensitivePoint"), mxGraphActions.getSetSensitivePointAction()));
+		add(editor.bind(mxResources.get("bindDataField"), mxGraphActions.getBindDataFieldAction()));
 	}
 
 }

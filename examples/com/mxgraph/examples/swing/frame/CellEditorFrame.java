@@ -1,11 +1,13 @@
 package com.mxgraph.examples.swing.frame;
 
 import com.mxgraph.examples.swing.GraphEditor;
+import com.mxgraph.examples.swing.decode.*;
 import com.mxgraph.examples.swing.editor.BasicGraphEditor;
 import com.mxgraph.examples.swing.editor.EditorPalette;
 import com.mxgraph.examples.swing.util.FileUtil;
 import com.mxgraph.io.mxCodec;
 import com.mxgraph.model.mxCell;
+import com.mxgraph.model.mxGeometry;
 import com.mxgraph.model.mxICell;
 import com.mxgraph.model.mxIGraphModel;
 import com.mxgraph.swing.mxGraphComponent;
@@ -19,6 +21,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
+import java.util.List;
 
 /**
  * @Author:zhoayi
@@ -28,7 +31,7 @@ import java.awt.event.ComponentListener;
  */
 public class CellEditorFrame extends BasicGraphEditor {
     public CellEditorFrame() {
-        this("图元编辑器", new CustomGraphComponent(new CustomGraph()));
+        this("组态图模板编辑器", new CustomGraphComponent(new CustomGraph()));
     }
 
     public CellEditorFrame(String appTitle, mxGraphComponent component) {
@@ -47,6 +50,8 @@ public class CellEditorFrame extends BasicGraphEditor {
         // Creates the shapes palette
         EditorPalette shapesPalette = insertPalette("基础图形");
         EditorPalette imagesPalette = insertPalette("领域图形");
+        EditorPalette linkPalette = insertPalette("设备连线");
+
         //new NewPicPopupMenu(imagesPalette);
 
         shapesPalette.addListener(mxEvent.SELECT, new mxEventSource.mxIEventListener() {
@@ -226,15 +231,20 @@ public class CellEditorFrame extends BasicGraphEditor {
                                         .getResource("/com/mxgraph/examples/swing/images/arrow.png")),
                         "arrow", 120, 120, "");
 
+        List<CellEle> fiberCellList = CellDecoder.opticalDeviceCellList;
+        addCellsToPalette(imagesPalette, fiberCellList);
 
-        imagesPalette.addTemplate("device_11", new ImageIcon(GraphEditor.class
-                        .getResource("/com/mxgraph/examples/swing/images/device/device_11.png")),
-                "image;image=/com/mxgraph/examples/swing/images/fire1.png", 50,
-                50, "");
-        imagesPalette.addTemplate("device_11", new ImageIcon(GraphEditor.class
-                        .getResource("/com/mxgraph/examples/swing/images/device/device_11.png")),
-                "image;image=/com/mxgraph/examples/swing/images/fire2.png", 50,
-                50, "");
+        List<EdgeEle> edgeList = EdgeDecoder.egdeList;
+        for (EdgeEle edgeEle : edgeList) {
+            mxCell cell = linkPalette.addEdgeTemplate(edgeEle.getName(),
+                    new ImageIcon(GraphEditor.class.getResource(edgeEle.getIcon())),
+                    edgeEle.getStyle(),
+                    //"straight;strokeWidth=20;endArrow=none;verticalLabelPosition=middle;verticalAlign=middle;fontFamily=微软雅黑 Light;fontSize=24;fontColor=#FF0000;labelBackgroundColor=#FFFFFF;labelBorderColor=#000000;strokeColor=#66FFFF",
+                    edgeEle.getWidth(), edgeEle.getHeight(), edgeEle.getName(), edgeEle.getType(), ""
+            );
+            AllCellMap.put(cell.getName(), cell);
+        }
+
 
         component.addComponentListener(new ComponentListener() {
 
@@ -292,7 +302,42 @@ public class CellEditorFrame extends BasicGraphEditor {
     protected void installToolBar() {
         add(new CellEditorToolBar(this, JToolBar.HORIZONTAL), BorderLayout.NORTH);
     }
+    private void addCellsToPalette(EditorPalette palette, List<CellEle> cellList) {
+        for (CellEle cellEle : cellList) {
+            mxCell cell = new mxCell();
+            cell.setGeometry(new mxGeometry(0, 0, cellEle.getWidth(), cellEle.getHeight()));
+            cell.setStyle(cellEle.getStyle());
+            cell.setType(cellEle.getType());
+            cell.setName(cellEle.getName());
+            cell.setVertex(true);
+            cell.setMultiValue(cellEle.getMultiValue());
 
+            if (cellEle.getPorts() != null && !cellEle.getPorts().isEmpty()) {
+                // has connect point, handle port cell
+                cell.setConnectable(true);
+                //遍历图元的磁力点
+                for (CellPort cellPort : cellEle.getPorts()) {
+                    mxGeometry geo = new mxGeometry(cellPort.getX(), cellPort.getY(), cellPort.getWidth(), cellPort.getHeight());
+                    geo.setOffset(new mxPoint(-geo.getWidth() / 2, -geo.getHeight() / 2));
+                    geo.setRelative(true);
+
+                    mxCell port = new mxCell();
+                    port.setStyle(cellPort.getStyle());
+                    port.setGeometry(geo);
+                    port.setName(cellPort.getName());
+                    port.setVertex(true);
+                    port.setType("Port");
+                    port.setAttr(cellPort.getAttr());
+                    port.setLocation(cellPort.getLocation());
+                    port.setDirection(cellPort.getDirection());
+                    cell.insert(port);
+                }
+            }
+            AllCellMap.put(cell.getName(), cell);  //添加的图元、连接点
+            palette.addTemplate(cellEle.getName(),
+                    new ImageIcon(GraphEditor.class.getResource(cellEle.getIcon())), cell);
+        }
+    }
     /**
      *
      */

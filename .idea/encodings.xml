@@ -1,13 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="Encoding" native2AsciiForPropertiesFiles="true" defaultCharsetForPropertiesFiles="UTF-8">
+  <component name="Encoding" native2AsciiForPropertiesFiles="true" defaultCharsetForPropertiesFiles="UTF-8" addBOMForNewFiles="with NO BOM">
     <file url="file://$PROJECT_DIR$" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/examples/com/mxgraph/examples/swing/GraphEditor.java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/examples/com/mxgraph/examples/swing/editor/EditorMenuBar.java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/examples/com/mxgraph/examples/swing/frame/LoginFrame2.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/examples/com/mxgraph/examples/swing/db/TelemetryDTO.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/examples/com/mxgraph/examples/swing/frame/CellEditorToolBar.java" charset="GBK" />
     <file url="file://$PROJECT_DIR$/examples/com/mxgraph/examples/swing/frame/StartFrame.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/examples/com/mxgraph/examples/swing/frame/StartUI.java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/examples/com/mxgraph/examples/swing/startup/LoginFrame.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/examples/com/mxgraph/examples/swing/frame/insertPic/AddPicFileChooser.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/examples/com/mxgraph/examples/swing/frame/insertPic/Cheer_EditorTest.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/examples/com/mxgraph/examples/swing/frame/insertPic/ImageFileView.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/examples/com/mxgraph/examples/swing/frame/insertPic/ImageFilter.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/examples/com/mxgraph/examples/swing/frame/insertPic/ImagePreview.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/examples/com/mxgraph/examples/swing/frame/insertPic/NewPicPopupMenu.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/examples/com/mxgraph/examples/swing/frame/insertPic/Utils.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/examples/com/mxgraph/examples/swing/frame/insertPic/addPicAction.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/examples/com/mxgraph/examples/swing/images/others/login_back.jpg" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/examples/com/mxgraph/examples/swing/util/HttpUtil.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/lib/animal-sniffer-annotations-1.17.jar" charset="GBK" />
     <file url="file://$PROJECT_DIR$/lib/apache-log4j-extras-1.2.17.jar" charset="GBK" />
     <file url="file://$PROJECT_DIR$/lib/apiguardian-api-1.0.0.jar" charset="GBK" />
@@ -93,6 +101,7 @@
     <file url="file://$PROJECT_DIR$/lib/tag-expressions-1.1.1.jar" charset="GBK" />
     <file url="file://$PROJECT_DIR$/lib/typetools-0.5.0.jar" charset="GBK" />
     <file url="file://$PROJECT_DIR$/lib/xml-apis-1.0.b2.jar" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/resources/config/connection.json" charset="GBK" />
     <file url="PROJECT" charset="UTF-8" />
   </component>
 </project>

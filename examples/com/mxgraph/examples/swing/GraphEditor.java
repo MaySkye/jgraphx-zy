@@ -67,13 +67,13 @@ public class GraphEditor extends BasicGraphEditor {
 
         // Creates the shapes palette
         EditorPalette shapesPalette = insertPalette(mxResources.get("shapes"));
-        EditorPalette imagesPalette = insertPalette(mxResources.get("images"));
-        EditorPalette symbolsPalette = insertPalette(mxResources.get("symbols"));
-        EditorPalette opticalDevicesPalette = insertPalette("光频设备");
+        //EditorPalette imagesPalette = insertPalette(mxResources.get("images"));
+       // EditorPalette symbolsPalette = insertPalette(mxResources.get("symbols"));
+        EditorPalette opticalDevicesPalette = insertPalette("授时设备");
         EditorPalette networkDevicesPalette = insertPalette("网络设备");
-        EditorPalette time_devicesPalette = insertPalette("时间设备");
-        EditorPalette micro_devicesPalette = insertPalette("微波设备");
-        EditorPalette linksPalette = insertPalette(mxResources.get("links"));
+       // EditorPalette time_devicesPalette = insertPalette("时间设备");
+      //  EditorPalette micro_devicesPalette = insertPalette("微波设备");
+        EditorPalette linksPalette = insertPalette("设备连线");
 
         // Sets the edge template to be used for creating new edges if an edge
         // is clicked in the shape palette
@@ -93,9 +93,9 @@ public class GraphEditor extends BasicGraphEditor {
         // 王伟：向面板添加形状
         addShapesToPalette(shapesPalette);
         // 王伟：向面板添加图片
-        addImagesToPalette(imagesPalette);
+       // addImagesToPalette(imagesPalette);
         // 王伟：向面板添加符号
-        addSymbolsToPalette(symbolsPalette);
+       // addSymbolsToPalette(symbolsPalette);
         // 王伟：向面板添加光频设备
         addCellsToPalette(opticalDevicesPalette, CellDecoder.opticalDeviceCellList);
         // 王伟：向面板添加网络设备

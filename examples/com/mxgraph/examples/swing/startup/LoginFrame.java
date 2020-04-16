@@ -28,7 +28,7 @@ public class LoginFrame extends JFrame {
     private JFileChooser jfc = new JFileChooser();//文件选择器
     private LoginAction loginAction = new LoginAction();
 
-    private JLabel labelBack = new JLabel(new ImageIcon(this.getClass().getResource("/com/mxgraph/examples/swing/images/login_back.jpg")));
+    private JLabel labelBack = new JLabel(new ImageIcon(this.getClass().getResource("/com/mxgraph/examples/swing/images/others/login_back.jpg")));
 
     public LoginFrame() {
 
@@ -70,7 +70,7 @@ public class LoginFrame extends JFrame {
             e.printStackTrace();
         }
 
-        this.setIconImage(new ImageIcon(this.getClass().getResource("/com/mxgraph/examples/swing/images/icon.png")).getImage());
+        this.setIconImage(new ImageIcon(this.getClass().getResource("/com/mxgraph/examples/swing/images/others/icon.png")).getImage());
         this.setVisible(true);//窗口可见
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);//使能关闭窗口，结束程序
     }
