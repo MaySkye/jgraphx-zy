@@ -778,9 +778,4 @@ public class OwlResourceUtil {
        return num;
     }
 
-    public static void main(String[] args) {
-        OwlResourceData owlResourceData = parseResourceFile("C:/Users/ASUS/Desktop/fibre.owl");
-        print(owlResourceData);
-
-    }
 }

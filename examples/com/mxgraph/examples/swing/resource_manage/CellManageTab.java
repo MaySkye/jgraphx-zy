@@ -14,8 +14,13 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+import org.dom4j.io.OutputFormat;
+import org.dom4j.io.XMLWriter;
 
 import javax.swing.*;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -35,7 +40,6 @@ public class CellManageTab extends Tab {
         setClosable(false);
         initTypeData();
         setContent(creatTabContent());
-
     }
 
     private void initTypeData() {
@@ -64,7 +68,6 @@ public class CellManageTab extends Tab {
     }
 
     private Node creatTabContent() {
-
         // TODO
         ListView<String> typeListView = new ListView<>(typeData);
         ListView<String> infoListView = new ListView<>(nameData);
@@ -81,7 +84,6 @@ public class CellManageTab extends Tab {
 
         typeListView.setOnMouseClicked(event -> {
             String type = typeListView.getSelectionModel().getSelectedItem();//type
-            System.out.println("type:" + type);
             if (type == null || type.equals(oldType)) {
                 return;
             }
@@ -95,7 +97,6 @@ public class CellManageTab extends Tab {
         });
         infoListView.setOnMouseClicked(event -> {
             String cell = infoListView.getSelectionModel().getSelectedItem();
-            System.out.println("cell:" + cell);
             if (cell == null || cell.equals(oldCell)) {
                 return;
             }
@@ -152,7 +153,7 @@ public class CellManageTab extends Tab {
         deleteCell.setFont(new Font(10));
         deleteCell.setAlignment(Pos.CENTER_LEFT);
         deleteCell.setPadding(new Insets(5, 5, 5, 10));
-        deleteCell.setOnMouseClicked(event -> deleteCellAction());
+        deleteCell.setOnMouseClicked(event -> deleteCellAction(oldCell,typeListView));
         GridPane deleteCellPane = new GridPane();
         deleteCellPane.setPadding(new Insets(5, 12.5, 5, 14.5));
         deleteCellPane.setAlignment(Pos.CENTER_RIGHT);
@@ -200,23 +201,29 @@ public class CellManageTab extends Tab {
     private void addCellAction() {
         new AddCellFrame().show();
     }
-    private void deleteCellAction() {
 
-       /* int result = JOptionPane.showConfirmDialog(null, "确定要删除 EDFA中继器 图元吗？" ,
-                AliasName.getAlias("提示"), JOptionPane.YES_NO_OPTION);
-        if (result != JOptionPane.YES_OPTION) {
-            return;
-        }*/
+    private void deleteCellAction(String cellName,ListView<String> typeListView) {
+
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("提示");
-        alert.setHeaderText("确定要删除 EDFA中继器 图元吗？");
+        alert.setHeaderText("确定要删除 "+cellName+" 图元吗？");
         alert.setContentText("");
 
         Optional result = alert.showAndWait();
         if (result.get() == ButtonType.OK) {
-            //info.setText(“btn6 点击了确定”);
+            //根据cellName完成删除操作
+           System.out.println("cellName: "+cellName);
+           XmlReader.init(cellName);
+           XmlReader.deleteCellImg();
+           XmlReader.deleteCellXml();
+            //刷新界面
+          /* typeData = getCellsByType(type);
+           typeListView.setItems(nameData);
+           typeListView.refresh();*/
+
         } else {
-           //info.setText(“btn6 点击了取消”);
+           //取消，退出
+            return;
         }
     }
 

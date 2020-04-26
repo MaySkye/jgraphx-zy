@@ -10,7 +10,6 @@ import java.lang.reflect.Modifier;
 import java.math.BigInteger;
 import java.util.Properties;
 
-
 import com.mxgraph.examples.swing.frame.UploadMxeFileFrame;
 import com.mxgraph.examples.swing.util.FileUtil;
 import com.teamdev.jxbrowser.chromium.Browser;
@@ -27,7 +26,7 @@ import static com.sun.deploy.uitoolkit.ToolkitStore.dispose;
  * @Data: Created in 10:11 2019/6/19
  * @Modify By:
  */
-public class BrowserFrame2 {
+public class BrowserFrame {
 
     static {
         try {

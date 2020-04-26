@@ -13,7 +13,7 @@ import java.util.List;
 
 public class AliasNameDecoder {
 
-    private static final InputStream inputStream = AliasNameDecoder.class.getResourceAsStream("/com/mxgraph/examples/swing/data/alias_name.xml");
+    private static final InputStream inputStream = AliasNameDecoder.class.getResourceAsStream("/com/mxgraph/examples/swing/config_files/alias_name");
 
     private static List<NameAliasEle> data = null;
 

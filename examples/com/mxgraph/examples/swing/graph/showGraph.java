@@ -417,8 +417,4 @@ public class showGraph {
         });
     }
 
-    public static void main(String[] args) {
-        OwlResourceData owlResourceData = parseResourceFile("C:/Users/ASUS/Desktop/fibre.owl");
-        createGraph(owlResourceData);
-    }
 }

@@ -50,13 +50,12 @@ public class DBDataAdaptor extends Thread {
 
     //使用静态代码块读取配置文件
     private static Properties properties = new Properties();
-    private static InputStream in = DBDataAdaptor.class.getResourceAsStream("/config/jdbc.properties");
-    private static InputStream _in = null;
+    private static InputStream in = null;
 
     static {
         try {
-            _in = new FileInputStream(new File(FileUtil.getAppPath()+"/config/jdbc.properties"));
-            properties.load(_in);
+            in = new FileInputStream(new File(FileUtil.getAppPath()+"/config/jdbc.properties"));
+            properties.load(in);
         } catch (IOException e) {
             e.printStackTrace();
         }

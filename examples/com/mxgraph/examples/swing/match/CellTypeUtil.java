@@ -39,6 +39,7 @@ public class CellTypeUtil {
         typeMap = new HashMap<>(opticalDeviceCellList.size());
         typeSet = new HashSet<>(opticalDeviceCellList.size());
         typeList = new ArrayList<>(opticalDeviceCellList.size());
+
         opticalDeviceCellList.forEach(cellEle -> {
             if (typeSet.add(cellEle.getType())) {
                 typeList.add(cellEle.getType());

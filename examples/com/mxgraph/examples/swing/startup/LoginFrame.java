@@ -1,5 +1,10 @@
 package com.mxgraph.examples.swing.startup;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
+import com.mxgraph.examples.swing.auth.Check;
+import com.mxgraph.examples.swing.auth.Md5;
+import com.mxgraph.examples.swing.auth.VerifyIdentity;
 import com.mxgraph.examples.swing.frame.StartUI;
 
 import javax.swing.*;
@@ -7,6 +12,10 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+import static javax.swing.JFileChooser.FILES_AND_DIRECTORIES;
 
 
 public class LoginFrame extends JFrame {
@@ -80,7 +89,7 @@ public class LoginFrame extends JFrame {
         @Override
         public void actionPerformed(ActionEvent e) {
             if (e.getSource().equals(button1)) {//判断触发方法的按钮是哪个
-                jfc.setFileSelectionMode(1);//设定只能选择到文件夹
+                jfc.setFileSelectionMode(FILES_AND_DIRECTORIES);//设定只能选择到文件夹
                 int state = jfc.showOpenDialog(null);//此句是打开文件选择器界面的触发语句
                 if (state == 1) {
                     return;//撤销则返回
@@ -93,10 +102,40 @@ public class LoginFrame extends JFrame {
                 path = text1.getText();
                 username = text2.getText();
                 try {
-                    if (FabricAuth.loginVerify(path, username)) {
-                        setVisible(false);
-                        dispose();
-                        new StartUI(username);
+                    //TODO: verifyIdentity
+                    String resp = VerifyIdentity.VerifyIdentity(username, path);
+                    JSONObject jsonRead = JSONObject.parseObject(resp);
+                    Integer code = (Integer)jsonRead.get("code");
+                    System.out.println(code);
+                    if (code == 0) {
+                        Check.SubAttr sa = new Check.SubAttr();
+                        sa.setName(username);
+                        //sa.setRole();
+
+                        Check.ObjAttr oa = new Check.ObjAttr();
+                        oa.setName("组态图设计工具");
+                        //oa.setOwner();
+
+                        Check.ActAttr aa = new Check.ActAttr();
+                        aa.setName("修改");
+
+                        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                        Check.EnvAttr ea = new Check.EnvAttr();
+                        ea.setTime(df.format(new Date()));
+
+                        String sastr = JSON.toJSONString(sa);
+                        String oastr = JSON.toJSONString(oa);
+                        String aastr = JSON.toJSONString(aa);
+                        String eastr = JSON.toJSONString(ea);
+                        String md5Sum = Md5.md5Map.get(username);
+                        String resp2 = Check.Check("运控系统", sastr, oastr, aastr, eastr,username, md5Sum);
+                        jsonRead = JSONObject.parseObject(resp2);
+                        code = (Integer)jsonRead.get("code");
+                        if (code == 0) {
+                            setVisible(false);
+                            dispose();
+                            new StartUI(username);
+                        }
                     } else {
                         //显示错误弹出框
                         JOptionPane.showMessageDialog(null,"登陆失败，请重新登陆");

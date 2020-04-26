@@ -2,9 +2,7 @@ package com.mxgraph.examples.swing.util;
 
 import java.time.LocalDateTime;
 
-/**
- * Created by QiboLee on 2017/10/20 0020.
- */
+
 public class MLog {
 
     public static String getTime() {

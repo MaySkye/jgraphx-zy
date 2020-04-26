@@ -28,6 +28,7 @@ public class FileUtil {
 
     public static String getAppPath(){
         String path = FileUtil.class.getProtectionDomain().getCodeSource().getLocation().getPath();
+        System.out.println("path:" + path);
         int lastIndex = path.lastIndexOf("/");
         path = path.substring(0, lastIndex);
         return path;
@@ -110,12 +111,13 @@ public class FileUtil {
     }
 
 
-//    public static void main(String[] args) throws IOException {
-//
-//        System.out.println("file:" + getRootPath() + "/data/img");
-//        System.out.println(System.getProperty("user.dir"));
-//
-////        System.out.println(readFile(FileUtil.getRootPath() + "/data/template"));
-//
-//    }
+    public static void main(String[] args) throws IOException {
+
+        System.out.println("file:" + getRootPath());
+        System.out.println("file:" + getAppPath());
+        System.out.println(System.getProperty("user.dir"));
+
+       //System.out.println(readFile(FileUtil.getRootPath() + "/data/template"));
+
+   }
 }

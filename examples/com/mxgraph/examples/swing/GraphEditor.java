@@ -508,7 +508,7 @@ public class GraphEditor extends BasicGraphEditor {
                 }
             }
             AllCellMap.put(cell.getName(), cell);  //添加的图元、连接点
-            //System.out.println(cellEle.getIcon());
+            System.out.println(cellEle.getIcon());
             //System.out.println(GraphEditor.class.getResource(cellEle.getIcon()));
             //System.out.println(cell);
             palette.addTemplate(cellEle.getName(),

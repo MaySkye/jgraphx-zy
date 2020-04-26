@@ -12,16 +12,6 @@ import java.nio.charset.UnsupportedCharsetException;
  */
 public class FileCharsetConverter {
 
-//    public static void main(String[] args) throws Exception {
-//        convert("D:\\stuff\\src\\main\\java\\com\\mikan\\stuff\\test.txt",
-//                "GBK", "UTF-8", new FilenameFilter() {
-//                    @Override
-//                    public boolean accept(File dir, String name) {
-//                        return name.endsWith("txt");
-//                    }
-//                });
-//    }
-
     /**
      * 把指定文件或目录转换成指定的编码
      *

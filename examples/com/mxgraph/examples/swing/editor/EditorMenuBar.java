@@ -405,18 +405,11 @@ public class EditorMenuBar extends JMenuBar {
 
         // Creates the window menu
         menu = add(new JMenu(mxResources.get("window")));
-
         UIManager.LookAndFeelInfo[] lafs = UIManager.getInstalledLookAndFeels();
-
         for (int i = 0; i < lafs.length; i++) {
             final String clazz = lafs[i].getClassName();
-
             menu.add(new AbstractAction(lafs[i].getName()) {
-                /**
-                 *
-                 */
                 private static final long serialVersionUID = 7588919504149148501L;
-
                 public void actionPerformed(ActionEvent e) {
                     editor.setLookAndFeel(clazz);
                 }
@@ -477,7 +470,6 @@ public class EditorMenuBar extends JMenuBar {
 
         // Creates the help menu
         menu = add(new JMenu(mxResources.get("help")));
-
         item = menu.add(new JMenuItem(mxResources.get("aboutGraphEditor")));
         item.addActionListener(new ActionListener() {
             /*
@@ -491,31 +483,9 @@ public class EditorMenuBar extends JMenuBar {
 
         // Creates the chart menu
         menu = add(new JMenu("组态图操作"));
-        //System.out.println(username);
+        System.out.println("username: "+username);
 
-
-       /* String resourceFile = "owl";
-        String prefix = username + "#" + resourceFile + "#";
-        String p1 = prefix + "数据修改";
-        String p2 = prefix + "数据查看";
-
-        try {
-            if (FabricAuth.Enforce(p1)) {
-                menu.add(editor.bind("选择文件资源", new EditorActions.ConfigureFileResAction()));
-                menu.add(editor.bind("生成组态图", new EditorActions.GenerateDiagramAction()));
-                menu.addSeparator();
-                menu.add(editor.bind("提交组态图", new EditorActions.SumbitDiagramAction()));
-                menu.add(editor.bind("运行组态图", new EditorActions.RunDiagramAction()));
-                menu.add(editor.bind("退出运行态", new EditorActions.QuitRunStateAction()));
-            }
-            if(FabricAuth.Enforce(p2)){
-                menu.addSeparator();
-                menu.add(editor.bind("查看关系图", new EditorActions.ViewSchemaAction()));
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }*/
-        menu.add(editor.bind("领域图元管理" ,new EditorActions.CellManagerAction()));
+        menu.add(editor.bind("资源管理" ,new EditorActions.ResourceManageAction()));
         menu.addSeparator();
         menu.add(editor.bind("构建组态图", new EditorActions.GenerateMxeFileAction()));
         menu.add(editor.bind("生成组态图", new EditorActions.GenerateDiagramAction()));

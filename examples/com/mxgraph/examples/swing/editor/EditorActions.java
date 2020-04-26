@@ -34,7 +34,7 @@ import javax.swing.text.html.HTMLEditorKit;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.mxgraph.examples.swing.browser.BrowserFrame2;
+import com.mxgraph.examples.swing.browser.BrowserFrame;
 import com.mxgraph.examples.swing.db.DBDataAdaptor;
 import com.mxgraph.examples.swing.frame.CellManagerFrame;
 import com.mxgraph.examples.swing.frame.QuanzhouUploadMxeFileFrame;
@@ -50,6 +50,7 @@ import com.mxgraph.examples.swing.match.ResMatchCore;
 import com.mxgraph.examples.swing.owl.OwlObject;
 import com.mxgraph.examples.swing.owl.OwlResourceData;
 import com.mxgraph.examples.swing.owl.OwlResourceUtil;
+import com.mxgraph.examples.swing.resource_manage.ResourceManageFrame;
 import com.mxgraph.examples.swing.select.ResSelectFrame4;
 import com.mxgraph.examples.swing.select.ResSelectFrame5;
 import com.mxgraph.examples.swing.util.*;
@@ -2339,7 +2340,7 @@ public class EditorActions {
                     String filePath = sFile.getAbsolutePath();
                     System.out.println("查看关系图filepath:" + filePath);
 
-                    BrowserFrame2.viewschema(filePath, sFile.getName());
+                    BrowserFrame.viewschema(filePath, sFile.getName());
                 }
             }
         }
@@ -2440,12 +2441,13 @@ public class EditorActions {
         }
     }
 
-    /*领域图元管理*/
-    public static class CellManagerAction extends AbstractAction {
+
+    /*资源管理*/
+    public static class ResourceManageAction extends AbstractAction {
         @Override
         public void actionPerformed(ActionEvent e) {
             BasicGraphEditor editor = getEditor(e);
-            new CellManagerFrame(editor);
+            new ResourceManageFrame().show();
         }
     }
 

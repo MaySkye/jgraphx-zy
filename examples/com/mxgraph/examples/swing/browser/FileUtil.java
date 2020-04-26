@@ -23,11 +23,6 @@ public class FileUtil {
                 e.printStackTrace();
             }
         }
-       /* if(fileNew.exists()){
-            System.out.println("filenew exist...");
-            fileNew.deleteOnExit();
-            //fileNew=new File(new_jsonfile);
-        }*/
         //给文件改名
         System.out.println("rename...");
         file.renameTo(fileNew);
@@ -65,7 +60,6 @@ public class FileUtil {
                 }
             }
         }
-
     }
 
     public static void cutFile(String sourceFile,String targetFile){
@@ -93,7 +87,6 @@ public class FileUtil {
             e.printStackTrace();
         }
         copyFile(file1, file2);
-        //file1.deleteOnExit();
     }
 
     public static boolean deleteFile(String fileName){
@@ -109,20 +102,8 @@ public class FileUtil {
                 return true;
             }
         }else{
-            //System.out.println("删除单个文件"+fileName+"失败！");
             return false;
         }
     }
 
-//    public static void main(String[] args) {
-//        /*String oldName="wuhan.json";
-//        String newName="foaf.json";
-//        String absolutePath="D:\\LearnedProject\\jgraphx-master\\jgraphx-master\\";
-//        renameFile(oldName,newName,absolutePath);*/
-//
-//        String sourceFile="D:\\LearnedProject\\jgraphx-master\\jgraphx-master\\foaf.json";
-//        String targetFile="D:\\software\\apache-tomcat-7.0.90\\webapps\\ROOT\\OwlView\\WebContent\\data\\foaf.json";
-//        cutFile(sourceFile,targetFile);
-//
-//    }
 }
