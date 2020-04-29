@@ -49,6 +49,27 @@
           <cell num="1" type="光纤时间同步远程端设备"/>
     </graph>
 
+    <graph image="/com/mxgraph/examples/swing/template_files/模板6.png"
+               mxe="/com/mxgraph/examples/swing/template_files/模板6.mxe"
+               name="模板6">
+              <cell num="1" type="地基授时时钟"/>
+              <cell num="1" type="Keithley_2000型多用万用表设备"/>
+              <cell num="1" type="双向EDFA设备"/>
+              <cell num="1" type="光频传递系统收发设备"/>
+              <cell num="1" type="监控单元"/>
+              <cell num="1" type="拍频比对设备"/>
+              <cell num="1" type="参考腔稳频激光器单元"/>
+              <cell num="1" type="地基授时时钟@data_trans@监控单元"/>
+              <cell num="1" type="Keithley_2000型多用万用表设备@data_trans@监控单元"/>
+              <cell num="1" type="双向EDFA设备@data_trans@监控单元"/>
+              <cell num="1" type="光频传递系统收发设备@data_trans@监控单元"/>
+              <cell num="1" type="拍频比对设备@data_trans@监控单元"/>
+              <cell num="1" type="参考腔稳频激光器单元@data_trans@监控单元"/>
+              <cell num="1" type="参考腔稳频激光器单元@data_trans@监控单元"/>
+              <cell num="1" type="拍频比对设备@connect@参考腔稳频激光器单元"/>
+              <cell num="1" type="光频传递系统收发设备@connect@参考腔稳频激光器单元"/>
+    </graph>
+
     <!-- 时间同步模板1 -->
     <graph image="/com/mxgraph/examples/swing/template_files/时间同步模板1.png"
            mxe="/com/mxgraph/examples/swing/template_files/时间同步模板1.mxe"

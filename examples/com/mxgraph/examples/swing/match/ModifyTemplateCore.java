@@ -461,6 +461,7 @@ public class ModifyTemplateCore {
         return maxId;
     }
     private  Pair<Double, Double> insertCell(String type, double baseX, double baseY, BasicGraphEditor editor) {
+        System.out.println("type: "+type);
         Pair<Double, Double> res = new Pair<>(0.0, 0.0);
         List<String> cells = CellTypeUtil.getCells(type);
         if (cells == null || cells.size() == 0) {
@@ -487,7 +488,7 @@ public class ModifyTemplateCore {
         }
         mxCell root = (mxCell) graph.getModel().getRoot();
         cell.setId((getMaxId(root) + 1) + "");
-
+        System.out.println("getMaxId(root): "+getMaxId(root));
         root.getChildAt(0).insert(cell);
         newCreateCell.add(cell);
 
@@ -707,18 +708,27 @@ public class ModifyTemplateCore {
         if (root == null||begin==null||end==null) {
             return false;
         }
-        if(root.isEdge()&&
-                (  (root.getSource().getParent().getId()==begin.getId()&&root.getTarget().getParent().getId()==end.getId())||
-                   (root.getSource().getParent().getId()==end.getId()&&root.getTarget().getParent().getId()==begin.getId())||
-                        (root.getSource().getId()==begin.getId()&&root.getTarget().getParent().getId()==end.getId())||
-                        (root.getSource().getId()==end.getId()&&root.getTarget().getParent().getId()==begin.getId())||
-                        (root.getSource().getParent().getId()==begin.getId()&&root.getTarget().getId()==end.getId())||
-                        (root.getSource().getParent().getId()==end.getId()&&root.getTarget().getId()==begin.getId())
-                )
-        ){
-            return true;
+        if(root.isEdge()){
+            if(root.getSource().getId()==begin.getId()&&root.getTarget().getId()==end.getId()){
+                return true;
+            }
+            if(root.getSource().getId()==end.getId()&&root.getTarget().getId()==begin.getId()){
+                return true;
+            }
+            if(root.getSource().getParent().getId()!=null&&root.getTarget().getParent().getId()!=null&&
+                    ((root.getSource().getParent().getId()==begin.getId()&&root.getTarget().getParent().getId()==end.getId())||
+                            (root.getSource().getParent().getId()==end.getId()&&root.getTarget().getParent().getId()==begin.getId()))){
+                return true;
+            }
+            if(root.getTarget().getParent().getId()!=null&&((root.getSource().getId()==begin.getId()&&root.getTarget().getParent().getId()==end.getId())||
+                    (root.getSource().getId()==end.getId()&&root.getTarget().getParent().getId()==begin.getId()))){
+                return true;
+            }
+            if(root.getSource().getParent().getId()!=null&&((root.getSource().getParent().getId()==begin.getId()&&root.getTarget().getId()==end.getId())||
+                    (root.getSource().getParent().getId()==end.getId()&&root.getTarget().getId()==begin.getId()))){
+                return true;
+            }
         }
-
         for (int i = 0; i < root.getChildCount(); ++i) {
             result=hasedge(begin,end,(mxCell) root.getChildAt(i));
             if(result){

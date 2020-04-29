@@ -5,7 +5,6 @@ import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.util.List;
 
 import javax.swing.*;
 
@@ -52,8 +51,6 @@ import com.mxgraph.examples.swing.editor.EditorActions.TogglePropertyItem;
 import com.mxgraph.examples.swing.editor.EditorActions.ToggleRulersItem;
 import com.mxgraph.examples.swing.editor.EditorActions.WarningAction;
 import com.mxgraph.examples.swing.editor.EditorActions.ZoomPolicyAction;
-import com.mxgraph.examples.swing.editor.EditorActions.MapChartAction;
-import com.mxgraph.examples.swing.startup.FabricAuth;
 import com.mxgraph.model.mxIGraphModel;
 import com.mxgraph.swing.mxGraphComponent;
 import com.mxgraph.swing.util.mxGraphActions;

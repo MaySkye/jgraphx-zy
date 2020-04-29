@@ -401,6 +401,7 @@ public class OwlResourceUtil {
                 OwlObject obj = new OwlObject();
                 obj.uri=subjectStr;
                 obj.id = subjectName;
+                System.out.println("subjectName: "+subjectName);
                 objMap.put(subjectStr, obj);
             }
         }
@@ -467,6 +468,8 @@ public class OwlResourceUtil {
                 valueSet.add(simplifyValue(objectStr));
             }
         }
+
+        System.out.println("objMap.size(): "+objMap.size());
         return objMap;
     }
 
@@ -769,7 +772,9 @@ public class OwlResourceUtil {
 
     public static int getFOINum(Map<String, OwlObject> objMap){
         int num=0;
+
         for (Map.Entry<String, OwlObject> entry : objMap.entrySet()) {
+
             if(findKind(entry.getValue().type).equals("FeatureOfInterest")
                     ||findKind(entry.getValue().type).equals("ControlRoom")){
                 num++;

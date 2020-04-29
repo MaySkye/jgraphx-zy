@@ -652,11 +652,12 @@ public class GraphEditor extends BasicGraphEditor {
 
                 tip += "}";
             } else {
-                if (c.getV() != null) {
+                tip += "type=[" + c.getType() + "]<br>";;
+                tip += "name=[" + c.getName() + "]<br>";;
+                /*if (c.getV() != null) {
                     tip += "id=[" + c.getV().getId() + "]<br>";
-                }
+                }*/
                 tip += "geo=[";
-
                 if (geo != null) {
                     tip += "x=" + numberFormat.format(geo.getX()) + ",y="
                             + numberFormat.format(geo.getY()) + ",width="

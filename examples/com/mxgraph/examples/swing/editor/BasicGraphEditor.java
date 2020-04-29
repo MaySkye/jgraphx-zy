@@ -124,10 +124,10 @@ public class BasicGraphEditor extends JPanel
 	private Map<String,mxCell> mxcell_device=new HashMap<>();
 
 	private static int MonitorHeight = 40;
-	private static int MonitorNameWidth = 150;
+	private static int MonitorNameWidth = 180;
 	private static int MonitorDataWidth = 60;
 	private static int MonitorUnitWidth = 40;
-	private static int DeviceWidth=250;
+	private static int DeviceWidth=280;
 	private static int DeviceHeight=30;
 
 
@@ -1218,7 +1218,8 @@ public class BasicGraphEditor extends JPanel
 							// 创建监控图元三元组--Name，插入到cell中
 							String nameStyle = AliasName.getAlias("monitor_name_style");
 							// monitorCell UI坐标偏移量是相对于父图元，而不再是相对于UI原点
-							mxCell nameMonitorCell = new mxCell(arr[r].trim(), owlObject.type.id,
+							//若显示设备属性名称  owlObject.id   若显示设备属性类型名称  owlObject.type.id
+							mxCell nameMonitorCell = new mxCell(arr[r].trim(), owlObject.id,
 									new mxGeometry(x - 45, (y + MonitorHeight * r + 30), MonitorNameWidth, MonitorHeight), nameStyle);
 							nameMonitorCell.setType("Property");
 							nameMonitorCell.setAttr("property_name");

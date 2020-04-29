@@ -577,7 +577,7 @@ public class ResSelectFrame5 extends Frame{
                     for (OwlObject obj : entry1.getValue()) {
                         if(obj.visible){
                             attr_str=attr_str+obj.id;
-                            System.out.println("attr_str:"+attr_str+"\n\r"+"<br/>");
+                            //System.out.println("attr_str:"+attr_str+"\n\r"+"<br/>");
                         }
                     }
                 }
@@ -624,7 +624,9 @@ public class ResSelectFrame5 extends Frame{
     }
 
     public Map<String, OwlObject> init_main_objMap(Map<String, OwlObject> objMap,Map<String, OwlObject> main_objMap){
+        System.out.println("main_objMap:"+main_objMap.size());
         for (Map.Entry<String, OwlObject> entry : objMap.entrySet()) {
+            System.out.println("name: "+entry.getValue().id+" type: "+entry.getValue().type+" kind: "+findKind(entry.getValue().type));
             if((findKind(entry.getValue().type).equals("FeatureOfInterest")
                     //||findKind(entry.getValue().type).equals("Site")
                     ||findKind(entry.getValue().type).equals("ControlRoom"))

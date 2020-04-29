@@ -31,6 +31,8 @@ public class CellTypeUtil {
     }
 
     public static List<String> getCells(String type) {
+        System.out.println("type1: "+type);
+        System.out.println("typeMap.get(type): "+typeMap.get(type));
         return typeMap.get(type);
     }
 

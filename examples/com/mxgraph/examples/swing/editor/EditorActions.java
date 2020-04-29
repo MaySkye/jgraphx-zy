@@ -2117,9 +2117,8 @@ public class EditorActions {
                     OwlResourceData new_owlResourceData = parseResourceFile(filePath);
                     editor.setNew_owlResourceData(new_owlResourceData);
                     editor.setOrigin_owlResourceData(origin_owlResourceData);
-                    OwlResourceUtil.print(new_owlResourceData);
-                    ResSelectFrame5 resSelectFrame5 = new ResSelectFrame5(editor, sFile.getName());
-
+                   // OwlResourceUtil.print(new_owlResourceData);
+                    new ResSelectFrame5(editor, sFile.getName());
 
                 }
             }

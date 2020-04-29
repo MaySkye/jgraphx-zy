@@ -22,10 +22,8 @@ public class LoginFrame extends JFrame {
 
     private String path;
     private String username;
-
     //private JTabbedPane tabPane = new JTabbedPane();//选项卡布局
     private Font font = new Font("宋体", Font.PLAIN, 16);
-
     private Container con = this.getContentPane();//布局1
     //private Container con1 = new Container();//布局2
     private JLabel label1 = new JLabel("卡路径");
@@ -69,9 +67,11 @@ public class LoginFrame extends JFrame {
         con.add(button2);
         con.add(jfc);
         con.add(labelBack);
-        //tabPane.add("登录信息", con);//添加布局1
-        //tabPane.add("暂无内容",con1);//添加布局2
-        //this.add(con);
+
+        //默认目录
+        String defaultDirectory = "d:/Graduation/kong";
+        //设置默认目录
+        jfc.setCurrentDirectory(new File(defaultDirectory));
         //优化一下界面
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
@@ -101,7 +101,17 @@ public class LoginFrame extends JFrame {
             if (e.getSource().equals(button2)) {
                 path = text1.getText();
                 username = text2.getText();
-                try {
+                /*
+                * 不进行身份验证时
+                * */
+                setVisible(false);
+                dispose();
+                new StartUI(username);
+
+                /*
+                * 进行身份验证时
+                * */
+                /*try {
                     //TODO: verifyIdentity
                     String resp = VerifyIdentity.VerifyIdentity(username, path);
                     JSONObject jsonRead = JSONObject.parseObject(resp);
@@ -128,7 +138,7 @@ public class LoginFrame extends JFrame {
                         String aastr = JSON.toJSONString(aa);
                         String eastr = JSON.toJSONString(ea);
                         String md5Sum = Md5.md5Map.get(username);
-                        String resp2 = Check.Check("运控系统", sastr, oastr, aastr, eastr,username, md5Sum);
+                        String resp2 = Check.Check("运控分系统访问控制策略集合", sastr, oastr, aastr, eastr,username, md5Sum);
                         jsonRead = JSONObject.parseObject(resp2);
                         code = (Integer)jsonRead.get("code");
                         if (code == 0) {
@@ -143,7 +153,7 @@ public class LoginFrame extends JFrame {
                     }
                 } catch (Exception ex) {
                     ex.printStackTrace();
-                }
+                }*/
             }
 
         }
