@@ -22,18 +22,22 @@ public class LoginFrame extends JFrame {
 
     private String path;
     private String username;
+    private String password;
     //private JTabbedPane tabPane = new JTabbedPane();//选项卡布局
     private Font font = new Font("宋体", Font.PLAIN, 16);
     private Container con = this.getContentPane();//布局1
     //private Container con1 = new Container();//布局2
     private JLabel label1 = new JLabel("卡路径");
     private JLabel label2 = new JLabel("用户名");
+    private JLabel label3 = new JLabel("密码");
     private JTextField text1 = new JTextField();
     private JTextField text2 = new JTextField();
-    private JButton button1 = new JButton("...");
-    private JButton button2 = new JButton("ok");
+    private JTextField text3 = new JTextField();
+    private JButton button1 = new JButton("选择");
+    private JButton button2 = new JButton("登录");
+    private JButton button3 = new JButton("取消");
     private JFileChooser jfc = new JFileChooser();//文件选择器
-    private LoginAction loginAction = new LoginAction();
+    private ButtonAction btnAction = new ButtonAction();
 
     private JLabel labelBack = new JLabel(new ImageIcon(this.getClass().getResource("/com/mxgraph/examples/swing/images/others/login_back.jpg")));
 
@@ -45,26 +49,36 @@ public class LoginFrame extends JFrame {
         this.setSize(600, 400);//设定窗口大小
         // this.setContentPane(tabPane);//设置布局
         //下面设定标签等的出现位置和高宽
-        label1.setBounds(40, 120, 200, 25);
+        label1.setBounds(60, 160, 200, 30);
         label1.setFont(font);
-        label2.setBounds(40, 40, 200, 25);
+        label2.setBounds(60, 60, 200, 30);
         label2.setFont(font);
-        text1.setBounds(150, 120, 240, 25);
+        label3.setBounds(60, 110, 200, 30);
+        label3.setFont(font);
+        text1.setBounds(160, 160, 240, 30);
         text1.setFont(font);
-        text2.setBounds(150, 40, 240, 25);
+        text2.setBounds(160, 60, 240, 30);
         text2.setFont(font);
-        button1.setBounds(450, 120, 100, 25);
-        button2.setBounds(220, 220, 80, 30);
+        text3.setBounds(160, 110, 240, 30);
+        text3.setFont(font);
+        button1.setBounds(450, 160, 80, 30);
+        button2.setBounds(180, 240, 80, 30);
+        button3.setBounds(280, 240, 80, 30);
         button1.setFont(font);
         button2.setFont(font);
-        button1.addActionListener(loginAction);//添加事件处理
-        button2.addActionListener(loginAction);//添加事件处理
+        button3.setFont(font);
+        button1.addActionListener(btnAction);//添加事件处理
+        button2.addActionListener(btnAction);//添加事件处理
+        button3.addActionListener(btnAction);//添加事件处理
         con.add(label1);
         con.add(label2);
+        con.add(label3);
         con.add(text1);
         con.add(text2);
+        con.add(text3);
         con.add(button1);
         con.add(button2);
+        con.add(button3);
         con.add(jfc);
         con.add(labelBack);
 
@@ -79,12 +93,13 @@ public class LoginFrame extends JFrame {
             e.printStackTrace();
         }
 
+        this.setTitle("用户登录");
         this.setIconImage(new ImageIcon(this.getClass().getResource("/com/mxgraph/examples/swing/images/others/icon.png")).getImage());
         this.setVisible(true);//窗口可见
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);//使能关闭窗口，结束程序
     }
 
-    private class LoginAction implements ActionListener {
+    private class ButtonAction implements ActionListener {
 
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -101,6 +116,7 @@ public class LoginFrame extends JFrame {
             if (e.getSource().equals(button2)) {
                 path = text1.getText();
                 username = text2.getText();
+                password = text3.getText();
                 /*
                 * 不进行身份验证时
                 * */
@@ -156,6 +172,9 @@ public class LoginFrame extends JFrame {
                 }*/
             }
 
+            if(e.getSource().equals(button3)){
+                System.exit(0);
+            }
         }
     }
 
