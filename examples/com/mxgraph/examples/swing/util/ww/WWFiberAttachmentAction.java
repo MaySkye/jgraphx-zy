@@ -15,10 +15,10 @@ import java.util.List;
 public class WWFiberAttachmentAction {
 
     // 默认光纤参数
-    private final static double fiberWidth = 10;  // 光纤宽度
-    private final static double turningWidth = 10;  // 拐角宽度度
-    private final static double turningHeight = 10;  // 拐角高度
-    private final static double halfDiffer = 15 - 10;  // 光纤顶层透明覆盖物宽度strokeWidth - 光纤宽度
+    private final static double fiberWidth = 15;  // 光纤宽度
+    private final static double turningWidth = fiberWidth;  // 拐角宽度度
+    private final static double turningHeight = fiberWidth;  // 拐角高度
+    private final static double halfDiffer = fiberWidth / 2;  // 插图像素差值
 
     // 默认图元类型样式
     private final static String commonStyle = "shape=image;imageAspect=0;movable=0;editable=0;resizable=0;";
@@ -175,10 +175,10 @@ public class WWFiberAttachmentAction {
 
     private mxCell addRotationLine(double x, double y, double length, double rotation) {
         /* 不会记录在history中的方法 */
-        double xOffset = Math.cos(Math.toRadians(rotation)) * length/2;
-        double yOffset = Math.sin(Math.toRadians(rotation)) * length/2;
+        double xOffset = Math.cos(Math.toRadians(rotation)) * length / 2;
+        double yOffset = Math.sin(Math.toRadians(rotation)) * length / 2;
         // 向图中添加图元
-        mxGeometry geometry = new mxGeometry(x +xOffset - length/2, y + yOffset, length, fiberWidth);
+        mxGeometry geometry = new mxGeometry(x + xOffset - length / 2, y + yOffset, length, fiberWidth);
         mxCell cell = new mxCell(null, geometry, HORIZONTAL);
         cell.setVertex(true);
         mxCell parentCell = (mxCell) graph.getDefaultParent();
