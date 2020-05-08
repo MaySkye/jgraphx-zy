@@ -423,13 +423,22 @@ public class WWFiberAttachmentAction {
         }
     }
 
+    /**
+     * 删除所有光纤美化图图元
+     * @param graph
+     */
     public static void deleteAllFiberImage(mxGraph graph) {
-        imageCellsOfFiberEdge.forEach((key, set) -> {
-            for (mxCell imageCell : set) {
-                imageCell.setParent((mxICell) graph.getDefaultParent());
-                imageCell.getParent().remove(imageCell);
+        Object[] childCells = graph.getChildCells(graph.getDefaultParent());
+        mxCell defaultParent = (mxCell)graph.getDefaultParent();
+        for (Object childCell : childCells) {
+            mxCell cell = (mxCell)childCell;
+            if("fiber_image".equals(cell.getType()))
+            {
+                cell.setParent(defaultParent);
+                defaultParent.remove(cell);
             }
-        });
+        }
+
     }
 
     private mxCell[] getTurningImageCell(mxPoint sourcePoint, mxPoint targetPoint, mxPoint sourceTurningPoint, mxPoint targetTurningPoint, mxPoint changePoint) {

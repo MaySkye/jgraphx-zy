@@ -53,10 +53,10 @@ public class WWFiberManager {
      * @param graph
      */
     public static void doHandleForGraph(mxGraph graph) {
+        WWFiberAttachmentAction.deleteAllFiberImage(graph);
         mxCell parentCell = (mxCell) graph.getDefaultParent();
         Object[] selectionbjs = graph.getChildCells(parentCell);
         mxCell[] selectionCells = new mxCell[selectionbjs.length];
-        WWFiberAttachmentAction.deleteAllFiberImage(graph);
         for (int i = 0; i < selectionbjs.length; i++) {
             selectionCells[i] = (mxCell) selectionbjs[i];
         }

@@ -1528,6 +1528,7 @@ public class EditorActions {
                     }
                 }
             }
+            WWFiberManager.doHandleForGraph(editor.getGraphComponent().getGraph());
         }
     }
 
