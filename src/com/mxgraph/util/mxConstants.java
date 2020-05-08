@@ -180,7 +180,7 @@ public class mxConstants
 	/**
 	 * Defines the default value for the connect handle. Default is false.
 	 */
-	public static boolean CONNECT_HANDLE_ENABLED = false;
+	public static boolean CONNECT_HANDLE_ENABLED = true;
 
 	/**
 	 * Defines the connect handle size. Default is 8.

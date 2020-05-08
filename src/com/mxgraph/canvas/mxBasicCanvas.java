@@ -14,7 +14,7 @@ public abstract class mxBasicCanvas implements mxICanvas
 	/**
 	 * Specifies if image aspect should be preserved in drawImage. Default is true.
 	 */
-	public static boolean PRESERVE_IMAGE_ASPECT = true;
+	public static boolean PRESERVE_IMAGE_ASPECT = false;
 
 	/**
 	 * Defines the default value for the imageBasePath in all GDI canvases.

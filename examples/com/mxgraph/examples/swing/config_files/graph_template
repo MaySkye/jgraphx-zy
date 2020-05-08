@@ -70,10 +70,10 @@
               <cell num="1" type="光频传递系统收发设备@connect@参考腔稳频激光器单元"/>
     </graph>
 
-    <!-- 时间同步模板1 -->
-    <graph image="/com/mxgraph/examples/swing/template_files/时间同步模板1.png"
-           mxe="/com/mxgraph/examples/swing/template_files/时间同步模板1.mxe"
-           name="时间同步模板1">
+    <!-- 网络拓扑模板1 -->
+    <graph image="/com/mxgraph/examples/swing/template_files/网络拓扑模板1.png"
+           mxe="/com/mxgraph/examples/swing/template_files/网络拓扑模板1.mxe"
+           name="网络拓扑模板1">
           <cell num="1" type="路由器设备"/>
           <cell num="2" type="客户端设备"/>
           <cell num="2" type="路由器设备@connect@客户端设备"/>

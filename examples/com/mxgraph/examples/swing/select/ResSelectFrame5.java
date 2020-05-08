@@ -12,6 +12,8 @@ import com.mxgraph.examples.swing.owl.*;
 import com.mxgraph.examples.swing.util.AliasName;
 import com.mxgraph.examples.swing.util.EncodeUtil;
 import com.mxgraph.examples.swing.util.FileUtil;
+import com.mxgraph.examples.swing.util.ww.WWFiberManager;
+import com.mxgraph.examples.swing.util.ww.WWLogger;
 import com.mxgraph.io.mxCodec;
 import com.mxgraph.model.mxCell;
 import com.mxgraph.swing.mxGraphComponent;
@@ -191,6 +193,10 @@ public class ResSelectFrame5 extends Frame{
                 editor.getGraphComponent().getGraph().refresh();
                 editor.getOrigin_owlResourceData().title=sitename.substring(0,sitename.length()-4);
                 editor.getNew_owlResourceData().title=sitename.substring(0,sitename.length()-4);
+
+                // 王伟：todo
+                WWFiberManager.doHandleForGraph(editor.getGraphComponent().getGraph());
+
                 dispose();
             }
         });

@@ -12,6 +12,7 @@ import javax.swing.Action;
 
 import com.mxgraph.examples.swing.editor.BasicGraphEditor;
 import com.mxgraph.examples.swing.frame.ResourceShowFrame;
+import com.mxgraph.examples.swing.util.ww.WWFiberManager;
 import com.mxgraph.model.mxCell;
 import com.mxgraph.swing.mxGraphComponent;
 import com.mxgraph.view.mxGraph;
@@ -463,8 +464,8 @@ public class mxGraphActions
 			{
 				graph.removeCells();
 			}
+			WWFiberManager.doHandleForGraph(graph);
 		}
-
 	}
 
 	/**

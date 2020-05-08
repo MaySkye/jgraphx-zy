@@ -54,6 +54,7 @@ import com.mxgraph.examples.swing.resource_manage.ResourceManageFrame;
 import com.mxgraph.examples.swing.select.ResSelectFrame4;
 import com.mxgraph.examples.swing.select.ResSelectFrame5;
 import com.mxgraph.examples.swing.util.*;
+import com.mxgraph.examples.swing.util.ww.WWFiberManager;
 import com.mxgraph.model.mxGeometry;
 import com.mxgraph.util.*;
 import com.mxgraph.view.mxCellState;
@@ -1117,6 +1118,7 @@ public class EditorActions {
                     editor.getUndoManager().redo();
                 }
             }
+            WWFiberManager.doHandleForGraph(editor.getGraphComponent().getGraph());
         }
     }
 
@@ -2049,6 +2051,8 @@ public class EditorActions {
                     //editor.getNew_owlResourceData().title=EncodeUtil.GBKTOUTF8(sFile.getName().substring(0,sFile.getName().length()-4));
                 }
             }
+            // 王伟：todo
+            WWFiberManager.doHandleForGraph(getEditor(e).getGraphComponent().getGraph());
         }
     }
 
@@ -2152,8 +2156,8 @@ public class EditorActions {
                 return;
             }
 
-            //new QuanzhouUploadMxeFileFrame(editor);
-            new UploadMxeFileFrame(editor);
+            new QuanzhouUploadMxeFileFrame(editor);
+//            new UploadMxeFileFrame(editor);
         }
     }
 
