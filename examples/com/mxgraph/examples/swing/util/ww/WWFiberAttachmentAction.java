@@ -174,7 +174,7 @@ public class WWFiberAttachmentAction {
     }
 
     /**
-     * 添加旋转直线
+     * 根据左上起点添加旋转直线
      *
      * @param x
      * @param y
@@ -184,15 +184,15 @@ public class WWFiberAttachmentAction {
      */
     private mxCell addRotationLine(double x, double y, double length, double rotation) {
         WWLogger.error(Math.toRadians(rotation));
-        /* 不会记录在history中的方法 */
+        // 转换为旋转中心
         double radians = Math.toRadians(rotation);
-        double xOffset = Math.cos(radians) * length / 2;
-        double yOffset = Math.sin(radians) * length / 2;
-        double xOffsetForFiberWidth = Math.sin(radians) * fiberWidth /2;
-        double yOffsetForFiberWidth = -Math.abs(Math.cos(radians) * fiberWidth /2);
+        x = x + Math.cos(radians) * length / 2 - (length / 2);
+        y = y + Math.sin(radians) * length / 2;
+        // 计算偏移
+        double xOffsetForFiberWidth = 0;
+        double yOffsetForFiberWidth = - fiberWidth / 2;
         // 向图中添加图元
-        mxGeometry geometry = new mxGeometry(x + xOffset - (length / 2) + xOffsetForFiberWidth, y + yOffset + yOffsetForFiberWidth, length, fiberWidth);
-//        mxGeometry geometry = new mxGeometry(x,y,length,fiberWidth);
+        mxGeometry geometry = new mxGeometry(x+xOffsetForFiberWidth, y + yOffsetForFiberWidth, length, fiberWidth);
         mxCell cell = new mxCell(null, geometry, HORIZONTAL);
         cell.setVertex(true);
         mxCell parentCell = (mxCell) graph.getDefaultParent();
