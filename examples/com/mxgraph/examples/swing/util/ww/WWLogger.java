@@ -16,7 +16,7 @@ public class WWLogger {
         NONE
     }
 
-    public static final LogLevel logLevel = LogLevel.ERROR;
+    public static final LogLevel logLevel = LogLevel.NONE;
 
     private static void printCurrentMethod() {
         StackTraceElement[] stacks = Thread.currentThread().getStackTrace();
