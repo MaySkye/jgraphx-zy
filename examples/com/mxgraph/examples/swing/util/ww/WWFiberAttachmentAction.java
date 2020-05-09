@@ -173,12 +173,26 @@ public class WWFiberAttachmentAction {
         return mxCell;
     }
 
+    /**
+     * 添加旋转直线
+     *
+     * @param x
+     * @param y
+     * @param length
+     * @param rotation
+     * @return
+     */
     private mxCell addRotationLine(double x, double y, double length, double rotation) {
+        WWLogger.error(Math.toRadians(rotation));
         /* 不会记录在history中的方法 */
-        double xOffset = Math.cos(Math.toRadians(rotation)) * length / 2;
-        double yOffset = Math.sin(Math.toRadians(rotation)) * length / 2;
+        double radians = Math.toRadians(rotation);
+        double xOffset = Math.cos(radians) * length / 2;
+        double yOffset = Math.sin(radians) * length / 2;
+        double xOffsetForFiberWidth = Math.sin(radians) * fiberWidth /2;
+        double yOffsetForFiberWidth = -Math.abs(Math.cos(radians) * fiberWidth /2);
         // 向图中添加图元
-        mxGeometry geometry = new mxGeometry(x + xOffset - length / 2, y + yOffset, length, fiberWidth);
+        mxGeometry geometry = new mxGeometry(x + xOffset - (length / 2) + xOffsetForFiberWidth, y + yOffset + yOffsetForFiberWidth, length, fiberWidth);
+//        mxGeometry geometry = new mxGeometry(x,y,length,fiberWidth);
         mxCell cell = new mxCell(null, geometry, HORIZONTAL);
         cell.setVertex(true);
         mxCell parentCell = (mxCell) graph.getDefaultParent();
@@ -309,6 +323,12 @@ public class WWFiberAttachmentAction {
         graph.refresh();
     }
 
+    /**
+     * 计算连接点
+     *
+     * @param source 是否为起始端连接点
+     * @return
+     */
     private mxPoint getConnectPoint(boolean source) {
         // 直线型光纤
         List<mxPoint> absolutePoints = graph.getView().getState(fiberCell).getAbsolutePoints();
@@ -425,15 +445,15 @@ public class WWFiberAttachmentAction {
 
     /**
      * 删除所有光纤美化图图元
+     *
      * @param graph
      */
     public static void deleteAllFiberImage(mxGraph graph) {
         Object[] childCells = graph.getChildCells(graph.getDefaultParent());
-        mxCell defaultParent = (mxCell)graph.getDefaultParent();
+        mxCell defaultParent = (mxCell) graph.getDefaultParent();
         for (Object childCell : childCells) {
-            mxCell cell = (mxCell)childCell;
-            if("fiber_image".equals(cell.getType()))
-            {
+            mxCell cell = (mxCell) childCell;
+            if ("fiber_image".equals(cell.getType())) {
                 cell.setParent(defaultParent);
                 defaultParent.remove(cell);
             }
@@ -452,20 +472,6 @@ public class WWFiberAttachmentAction {
         // 方向
         String sourceChoice = "", targetChoice = "";
         if ("fiber_horizontal".equals(fiberCell.getName())) {
-//            if (targetPoint.getY() > sourcePoint.getY()) {
-//                sourceChoice += "top";
-//                targetChoice += "bottom";
-//            } else if (targetPoint.getY() < sourcePoint.getY()) {
-//                sourceChoice += "bottom";
-//                targetChoice += "top";
-//            }
-//            if (targetPoint.getX() > sourcePoint.getX()) {
-//                sourceChoice += "right";
-//                targetChoice += "left";
-//            } else if (targetPoint.getX() < sourcePoint.getX()) {
-//                sourceChoice += "left";
-//                targetChoice += "right";
-//            }
             if (changePoint.getY() > sourcePoint.getY()) {
                 sourceChoice += "top";
             } else if (changePoint.getY() < sourcePoint.getY()) {
@@ -487,8 +493,6 @@ public class WWFiberAttachmentAction {
             } else if (changePoint.getX() < targetPoint.getX()) {
                 targetChoice += "left";
             }
-
-
         } else if ("fiber_vertical".equals(fiberCell.getName())) {
             if (changePoint.getY() > sourcePoint.getY()) {
                 sourceChoice += "bottom";
