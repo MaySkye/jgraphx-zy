@@ -83,7 +83,7 @@ public class LoginFrame extends JFrame {
         con.add(labelBack);
 
         //默认目录
-        String defaultDirectory = "d:/Graduation/kong";
+        String defaultDirectory = "c";
         //设置默认目录
         jfc.setCurrentDirectory(new File(defaultDirectory));
         //优化一下界面
@@ -127,7 +127,7 @@ public class LoginFrame extends JFrame {
                 /*
                 * 进行身份验证时
                 * */
-                /*try {
+               /* try {
                     //TODO: verifyIdentity
                     String resp = VerifyIdentity.VerifyIdentity(username, path);
                     JSONObject jsonRead = JSONObject.parseObject(resp);
