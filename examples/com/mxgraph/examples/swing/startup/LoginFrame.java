@@ -8,6 +8,7 @@ import com.mxgraph.examples.swing.auth.VerifyIdentity;
 import com.mxgraph.examples.swing.frame.StartUI;
 
 import javax.swing.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -86,6 +87,10 @@ public class LoginFrame extends JFrame {
         String defaultDirectory = "c";
         //设置默认目录
         jfc.setCurrentDirectory(new File(defaultDirectory));
+        //设置选择文件后缀名
+        String saveType[] = {"pem"};
+        jfc.setFileFilter(new FileNameExtensionFilter("PEM", saveType));
+
         //优化一下界面
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
@@ -118,14 +123,14 @@ public class LoginFrame extends JFrame {
                 username = text2.getText();
                 password = text3.getText();
                 /*
-                * 不进行身份验证时
+                * 不进行验证时
                 * */
                 setVisible(false);
                 dispose();
                 new StartUI(username);
 
                 /*
-                * 进行身份验证时
+                * 进行用户身份验证+权限验证
                 * */
                /* try {
                     //TODO: verifyIdentity
