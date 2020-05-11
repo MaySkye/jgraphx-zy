@@ -233,7 +233,7 @@ public class WWFiberAttachmentAction {
 
         // 获取几何元素
         mxGeometry geometry = fiberCell.getGeometry();
-        // 获取关键点
+        // 获取端点
         mxPoint sourcePoint = fiberCell.getTerminal(true) == null ? geometry.getSourcePoint() : getConnectPoint(true);
         mxPoint targetPoint = fiberCell.getTerminal(false) == null ? geometry.getTargetPoint() : getConnectPoint(false);
         // 判断是否为直线型光纤
@@ -339,13 +339,19 @@ public class WWFiberAttachmentAction {
             // 计算斜率
             double k = p2.getX() == p1.getX() ? (p2.getY() >= p1.getY() ? Double.POSITIVE_INFINITY : Double.NEGATIVE_INFINITY) : (p2.getY() - p1.getY()) / (p2.getX() - p1.getX());
             double x, y, length;
-            WWLogger.warn("k is ", k);
-//            WWLogger.log("line length is ", length);
+            // WWLogger.warn("k is ", k);
+            // 获取几何信息
+            mxGeometry tg = (mxGeometry) fiberCell.getTerminal(source).getGeometry();
+            // 判断是否为相对坐标系
+            if (tg.isRelative()) {
+                WWLogger.warn("相对坐标系");
+                mxGeometry pg = fiberCell.getTerminal(source).getParent().getGeometry();
+                tg = new mxGeometry(pg.getX() + pg.getWidth() * tg.getX() + tg.getOffset().getX(), pg.getY() + pg.getHeight() * tg.getY() + tg.getOffset().getY(), tg.getWidth(), tg.getHeight());
+            }
             // 获取终端设备中心坐标
-            mxGeometry terminalGeometry = (mxGeometry) fiberCell.getTerminal(source).getGeometry();
-            mxPoint basePoint = new mxPoint(terminalGeometry.getCenterX(), terminalGeometry.getCenterY());
+            mxPoint basePoint = new mxPoint(tg.getCenterX(), tg.getCenterY());
             // 当前直线是kx + h/2 - kw/2
-            mxPoint[] pointers = getLinePointerOnTerminalcBorder(k, terminalGeometry, basePoint);
+            mxPoint[] pointers = getLinePointerOnTerminalcBorder(k, tg, basePoint);
             WWLogger.error("待选点", pointers[0], pointers[1]);
             if (source) {
                 for (mxPoint pointer : pointers) {
