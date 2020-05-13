@@ -1,387 +1,757 @@
 package com.mxgraph.examples.swing.select;
 
 import com.mxgraph.examples.swing.editor.BasicGraphEditor;
+import com.mxgraph.examples.swing.editor.DefaultFileFilter;
 import com.mxgraph.examples.swing.graph.GraphInterface;
+import com.mxgraph.examples.swing.graph.Vertex;
+import com.mxgraph.examples.swing.graph.VertexInterface;
 import com.mxgraph.examples.swing.graph.showGraph;
 import com.mxgraph.examples.swing.match.ModifyTemplateCore;
 import com.mxgraph.examples.swing.match.ResMatchCore;
-import com.mxgraph.examples.swing.owl.OwlObject;
-import com.mxgraph.examples.swing.owl.OwlObjectAttribute;
-import com.mxgraph.examples.swing.owl.OwlResourceData;
+import com.mxgraph.examples.swing.owl.*;
+import com.mxgraph.examples.swing.util.AliasName;
+import com.mxgraph.examples.swing.util.EncodeUtil;
 import com.mxgraph.examples.swing.util.FileUtil;
+import com.mxgraph.examples.swing.util.ww.WWFiberManager;
+import com.mxgraph.examples.swing.util.ww.WWLogger;
 import com.mxgraph.io.mxCodec;
+import com.mxgraph.model.mxCell;
+import com.mxgraph.swing.mxGraphComponent;
+import com.mxgraph.util.mxResources;
+import com.mxgraph.util.mxUtils;
 import com.mxgraph.util.mxXmlUtils;
+import com.mxgraph.view.mxGraph;
 import org.w3c.dom.Document;
 
 import javax.swing.*;
-import javax.swing.border.Border;
-import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
+import javax.swing.filechooser.FileFilter;
+import javax.swing.plaf.basic.BasicButtonUI;
+import javax.swing.table.AbstractTableModel;
+import javax.swing.table.DefaultTableModel;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-import java.io.FileInputStream;
-import java.io.IOException;
+import java.awt.event.*;
+import java.io.*;
 import java.util.*;
 
-import static com.mxgraph.examples.swing.owl.OwlResourceUtil.findSubsystem;
-import static com.mxgraph.examples.swing.owl.OwlResourceUtil.printOwlobject;
+import static com.mxgraph.examples.swing.editor.EditorActions.showTitle;
+import static com.mxgraph.examples.swing.owl.OwlResourceUtil.*;
 
 /**
  * @Author:zhoayi
- * @Description:提供资源选择模板，返回new_owlResourceData
- * @Data: Created in 11:04 2018/11/26
+ * @Description:
+ * @Data: Created in 10:58 2018/12/27
  * @Modify By:
  */
+
 public class ResSelectFrame extends Frame{
-    private OwlResourceData origin_owlResourceData;
-    private OwlResourceData new_owlResourceData;
-    private BasicGraphEditor editor;
 
     private JPanel mainPanel;
-    private JPanel topPanel;
-    private JPanel contentPanel;
-    private JPanel devicePanel;
-    private JPanel devinfoPanel;
-    private JPanel troductionPanel;
+    private JPanel chartPanel;
+    private JPanel buttonPanel;
+    private JPanel selectPanel;
+    private JPanel introductionPanel;
     private JPanel monitorPanel;
     private JPanel coninfoPanel;
 
-    private JButton button_light_fre;
-    private JButton button_time;
-    private JButton button_microwave;
-
-    private ArrayList<String> light_device_list = new ArrayList<String>();
-    private ArrayList<String> time_device_list = new ArrayList<String>();
-    private ArrayList<String> microwave_device_list = new ArrayList<String>();
-
-    private ArrayList<JButton> light_device_btn = new ArrayList<JButton>();
-    private ArrayList<JButton> time_device_btn = new ArrayList<JButton>();
-    private ArrayList<JButton> microwave_device_btn = new ArrayList<JButton>();
-
-    private JRadioButton jRadioButton;
-    private boolean jRadioButton_isSelected=true;
-    private String cur_device_name;
-    private JTextField jTextField;
-    //设备介绍信息字符串
-    private String device_info="";
-    //监测量单选控件(大小 写死了)
-    private ArrayList<JRadioButton> jrbtn_list = new ArrayList<JRadioButton>(20);
-    private ArrayList<showClass> jrbtn_list_name=new ArrayList<showClass>();
-    //连接关系单选控件
-    private ArrayList<JRadioButton> conn_list = new ArrayList<JRadioButton>(20);
-    private Map<String,showClass> conn_list_name=new HashMap<>();
-
+    private BasicGraphEditor editor;
+    private OwlResourceData origin_owlResourceData;
+    private OwlResourceData new_owlResourceData;
     private Map<String, OwlObject> origin_objMap;
     private Map<String, OwlObject> new_objMap;
+    private Map<String, OwlObject> main_objMap=new HashMap<>();
+    private Map<String, Object> vertex_objMap=new HashMap<>();
+    private Map<String, OwlObject> vertex_main_objMap=new HashMap<>();
+    private Map<Object, String> edge_objMap=new HashMap<>();
 
+    private int height;
+    private int width;
 
-    public ResSelectFrame(BasicGraphEditor editor,OwlResourceData origin_owlResourceData) throws HeadlessException {
+    private final mxGraph graph ;
+    private Object parent ;
+    private final mxGraphComponent graphComponent;
+
+    private JTextField jTextField;//显示introductionPanel的信息
+    private String info;
+    private JRadioButton jRadioButton;//是否添加到组态图中的单选框
+    private Set<JRadioButton> jrbtn_list=new HashSet<>();
+    private Map<String,JRadioButton> conn_list=new HashMap<>();
+    private String selected_obj_name="";
+
+    private JButton return_btn;
+    private JButton diagram_btn;
+    private JButton refresh_btn;
+    private JButton save_btn;
+    private JButton open_btn;
+
+    private JTable jTable;
+    private AbstractTableModel attrListModel;
+    private JScrollPane scrollPanel;
+    private String filePath;
+    private boolean isreOpen=false;
+    private String file_xmi=null;
+    private String siteName = ""; //默认为空
+
+    public ResSelectFrame(BasicGraphEditor editor){
         this.editor=editor;
-        this.origin_owlResourceData=origin_owlResourceData;
-        this.new_owlResourceData=editor.getNew_owlResourceData();
+        this.origin_owlResourceData=this.editor.getOrigin_owlResourceData();
+        this.new_owlResourceData=this.editor.getNew_owlResourceData();
+        this.filePath=editor.getResourceFile();
 
         this.origin_objMap=this.origin_owlResourceData.objMap;
-        this.new_objMap=new_owlResourceData.objMap;
+        this.new_objMap=this.new_owlResourceData.objMap;
+        this.graph = new mxGraph();
+        this.parent = graph.getDefaultParent();
+        this.graphComponent = new mxGraphComponent(graph);
 
-        initButton();
-        initPanel();
+        return_btn=new JButton("还原");
+        diagram_btn=new JButton("生成组态图");
+        refresh_btn=new JButton("刷新");
+        save_btn=new JButton("保存");
+        open_btn=new JButton("打开");
+
+        initSiteName();
+        initselectHandler();
+        initJPanel();
         initFrame();
-        init_devicePanel_data();
 
-        init_devinfoPanel_data();
-
-        addListener(light_device_btn);
-        addListener(time_device_btn);
-        addListener(microwave_device_btn);
-    }
-
-    private void initStyle(JButton button){
-        //初始化透明按钮
-        button.setOpaque(true);
-        Border lineBorder=new LineBorder(Color.GRAY,1);
-        button.setBorder(lineBorder);
-        Dimension preferredSize = new Dimension(130,35);//设置尺寸
-        button.setPreferredSize(preferredSize );
-        //button.setBorderPainted(false);
-       /* button.setFocusable(false);
-        button.setBackground(null);
-        button.setFocusPainted(false);
-        button.setContentAreaFilled(false);*/
-        Font font1=new Font("楷体", Font.PLAIN, 20);
-        button.setFont(font1);
-    }
-    private void initButton(){
-        button_light_fre=new JButton("光频分系统");
-        button_time=new JButton("时间分系统");
-        button_microwave=new JButton("微波分系统");
-
-        initStyle(button_light_fre);
-        initStyle(button_time);
-        initStyle(button_microwave);
-    }
-    private void initPanel(){
-        //先初始化子Panel,再初始化父Panel
-        //初始化troductionPanel，monitorPanel， coninfoPanel
-        troductionPanel=new JPanel();
-        troductionPanel.setBorder(new TitledBorder("设备介绍："));
-        troductionPanel.setLayout(new FlowLayout());
-
-        monitorPanel=new JPanel();
-        monitorPanel.setBorder(new TitledBorder("设备监测量："));
-        monitorPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
-        Dimension preferredSize = new Dimension(130,35);//设置尺寸
-        monitorPanel.setPreferredSize(preferredSize);
-
-        coninfoPanel=new JPanel();
-        coninfoPanel.setBorder(new TitledBorder("设备连接关系："));
-        coninfoPanel.setLayout(new FlowLayout());
-
-        //初始化devicePanel
-        devicePanel=new JPanel();
-        devicePanel.setBorder(new TitledBorder("设备："));
-        devicePanel.setLayout(new FlowLayout());
-
-        JScrollPane scrollPane = new JScrollPane();
-        devicePanel.add(scrollPane);
-
-        //初始化devinfoPanel
-        devinfoPanel=new JPanel();
-        devinfoPanel.setBorder(new LineBorder(Color.LIGHT_GRAY));
-        devinfoPanel.setLayout(new GridLayout(3,1));
-        devinfoPanel.add(troductionPanel);
-        devinfoPanel.add(monitorPanel);
-        devinfoPanel.add(coninfoPanel);
-
-        //初始化contentPanel
-        contentPanel=new JPanel();
-        contentPanel.setLayout(new BorderLayout());
-        Dimension preferredSize2 = new Dimension(200,35);//设置尺寸
-        devicePanel.setPreferredSize(preferredSize2);
-        contentPanel.add(devicePanel,BorderLayout.WEST);
-        Dimension preferredSize1 = new Dimension(130,35);//设置尺寸
-        devinfoPanel.setPreferredSize(preferredSize1);
-        contentPanel.add(devinfoPanel,BorderLayout.CENTER);
-
-        //初始化topPanel
-        topPanel=new JPanel();
-        topPanel.setSize(880,200);
-        topPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
-        topPanel.add(button_light_fre);
-        topPanel.add(button_time);
-        topPanel.add(button_microwave);
-
-        //初始化mainPanel
-        mainPanel=new JPanel();
-        mainPanel.setSize(900,500);
-        mainPanel.setLayout(new BorderLayout());
-        mainPanel.add(topPanel,BorderLayout.NORTH);
-        mainPanel.add(contentPanel,BorderLayout.CENTER);
-
-    }
-    private void initFrame(){
-        this.setTitle("-文件资源模板选择框-");//设置窗口标题内容
-        this.setSize(1000, 600);//设置窗口大小,宽度500，高度400
-        this.setLocation(200, 100);//设置窗口位置为距离屏幕左边水平方向300，上方垂直方向200
-        this.setVisible(true);//设置窗体可见。
-        this.setLayout(new BorderLayout());//设置窗体布局为流式布局。
-        this.setResizable(false); //禁止改变大小在调用显示之前
-
-        this.addWindowListener (new WindowAdapter()
-        {
+        jRadioButton.addActionListener(new ActionListener() {
             @Override
-            public void windowClosing ( WindowEvent e )
-            {
-                editor.setNew_owlResourceData(new_owlResourceData);
-                System.out.println("改变后：--------------------------------------------------------------------------");
-                printOwlobject(editor.getNew_owlResourceData().objMap);
+            public void actionPerformed(ActionEvent e) {
+                System.out.println("selected_obj_name:"+selected_obj_name);
+                new_objMap.forEach((uri, obj) -> {
+                    if(obj.id.equals(selected_obj_name)){
+                        if(jRadioButton.isSelected()){
+                            obj.visible=true;
+                        }
+                        else{
+                            obj.visible=false;
+                        }
+                    }
+                });
+            }
+        });
 
+        return_btn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.out.println("还原......");
+                graph.getModel().beginUpdate();
+                try
+                {
+                    //把graph清空
+                    graph.removeCells(graph.getChildVertices(graph.getDefaultParent()));
+                    parent = graph.getDefaultParent();
+                    //把数据还原
+                    //重新得到一遍OwlResourceData数据，是为了避免和原来的数据使用同一内存
+                    OwlResourceData owlResourceData=null;
+                    if(isreOpen){
+                        if(file_xmi!=null){
+                            owlResourceData=readtoGetOwlResourceData(file_xmi);
+                        }else{
+                            System.out.println("file_xmi is null!!");
+                        }
+                    }else{
+                        owlResourceData = parseResourceFile(filePath);
+                    }
 
-                //--------------------------------------
+                    new_owlResourceData=owlResourceData;
+                    new_objMap=new_owlResourceData.objMap;
+                    editor.setNew_owlResourceData(owlResourceData);
+                    paint(new_objMap);
+                }
+                finally
+                {
+                    graph.getModel().endUpdate();
+                }
+            }
+        });
+
+        diagram_btn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
                 //匹配模板图时使用如下方法
                 //为graph匹配相似度最高的match_graph,得到对应模板图的文件名
-                String TemplatePath= ResMatchCore.getTemplatePath(editor.getNew_owlResourceData());
-                System.out.println("TemplatePath:"+TemplatePath);
+                String templatePath= ResMatchCore.getTemplatePath(new_owlResourceData);
+                System.out.println("templatePath:"+templatePath);
 
                 /*此段代码可以显示出模板mxe文件*/
-                if (TemplatePath == null) {
+               if (templatePath == null) {
                     return;
                 }
                 Document document = null;
                 try {
-                    document = mxXmlUtils.parseXml(FileUtil.readFile(new FileInputStream(TemplatePath)));
+                    document = mxXmlUtils.parseXml(FileUtil.readFile(this.getClass().getResourceAsStream(templatePath)));
                 } catch (IOException e1) {
                     e1.printStackTrace();
                 }
                 mxCodec codec = new mxCodec(document);
                 codec.decode(document.getDocumentElement(), editor.getGraphComponent().getGraph().getModel());
-
                 // 根据资源模型文件，对模板组态图进行调整,
                 // 则可以显示出调整好的组态图，图元没有绑定资源信息
-                GraphInterface<String> graph= showGraph.createGraph(editor.getNew_owlResourceData());
-                new ModifyTemplateCore(TemplatePath).postProcess(graph,editor,editor.getResourceFile());
+                GraphInterface<String> graph= showGraph.createGraph(new_owlResourceData);
+                new ModifyTemplateCore(templatePath).postProcess(graph,editor,filePath);
 
-                //---------------------------------------
+                //添加标题
+                showTitle(siteName,editor);
+                editor.getGraphComponent().getGraph().refresh();
+                editor.getOrigin_owlResourceData().title = siteName;
+                editor.getNew_owlResourceData().title = siteName;
+
+                // 王伟：todo
+                WWFiberManager.doHandleForGraph(editor.getGraphComponent().getGraph());
+
                 dispose();
             }
         });
-        this.add(mainPanel);
-    }
 
-    private void init_devicePanel_data(){
-        //先把设备的数据加载好，不论visible为true还是false,都应该显示出来，所以用origin_owlResourceData
-        loadDevices(origin_objMap);
-        //以下是初始化的一个显示状态
-        Border lineBorder=new LineBorder(Color.GRAY,2);
-        button_light_fre.setBorder(lineBorder);
-        Border lineBorder1=new LineBorder(Color.WHITE,2);
-        button_time.setBorder(lineBorder1);
-        Border lineBorder2=new LineBorder(Color.WHITE,2);
-        button_microwave.setBorder(lineBorder2);
-
-        for(int i=0;i<light_device_btn.size();i++){
-            light_device_btn.get(i).setVisible(true);
-        }
-        for(int i=0;i<time_device_btn.size();i++){
-            time_device_btn.get(i).setVisible(false);
-        }
-        for(int i=0;i<microwave_device_btn.size();i++){
-            microwave_device_btn.get(i).setVisible(false);
-        }
-
-        button_light_fre.addActionListener(new ActionListener() {
+        refresh_btn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                System.out.println("刷新：.......");
+                graph.getModel().beginUpdate();
+                try
+                {
+                    graph.removeCells(graph.getChildVertices(graph.getDefaultParent()));
+                    parent = graph.getDefaultParent();
+                    paint(new_objMap);
 
-                Border lineBorder=new LineBorder(Color.GRAY,2);
-                button_light_fre.setBorder(lineBorder);
-                Border lineBorder1=new LineBorder(Color.WHITE,2);
-                button_time.setBorder(lineBorder1);
-                Border lineBorder2=new LineBorder(Color.WHITE,2);
-                button_microwave.setBorder(lineBorder2);
+                    //打印new_owlResourceData
+                   /* new_owlResourceData.objMap.forEach((uri, obj) -> {
+                        //解析它的基本信息，对象信息和属性信息
+                        obj.objAttrs.forEach((objAttr, objSet) -> {
+                            objSet.forEach(obj2 -> {
+                                System.out.println(obj.id+"->" + objAttr.id + "->"+obj2.id);
+                            });
+                        });
+                    });*/
+                }
+                finally
+                {
+                    graph.getModel().endUpdate();
+                }
+            }
+        });
 
-                for(int i=0;i<light_device_btn.size();i++){
-                    light_device_btn.get(i).setVisible(true);
+        save_btn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                    //保存为xmodel文件
+                    FileFilter selectedFilter = null;
+                    String filename=null;
+                    String filename_xmodel = null;
+                    String filename_xmi = null;
+                    String lastDir=null;
+
+                    String wd;
+
+                    if (lastDir != null) {
+                        wd = lastDir;
+                    } else {
+                        wd = FileUtil.getAppPath();
+                    }
+
+                    JFileChooser fc = new JFileChooser(wd);
+
+                    // Adds the default file format
+                    DefaultFileFilter defaultFilter = new DefaultFileFilter(".xmodel",
+                            "xmodel file " + mxResources.get("file") + " (.xmodel)");
+                    // Adds special vector graphics formats and HTML
+                    fc.addChoosableFileFilter(defaultFilter);
+
+                    // Adds filter that accepts all supported image formats
+                    fc.setFileFilter(defaultFilter);
+                    int rc = fc.showDialog(null, mxResources.get("save"));
+
+                    if (rc != JFileChooser.APPROVE_OPTION) {
+                        return;
+                    } else {
+                        lastDir = fc.getSelectedFile().getParent();
+                    }
+
+                    filename = fc.getSelectedFile().getAbsolutePath();
+                    selectedFilter = fc.getFileFilter();
+                    if (selectedFilter == null || !selectedFilter.equals(defaultFilter)) {
+                        return;
+                    }
+
+                    String ext = ((DefaultFileFilter) selectedFilter).getExtension();
+
+                    if (!filename.toLowerCase().endsWith(ext)) {
+                        filename_xmodel =filename+ ext;
+                    }
+
+                    if (new File(filename_xmodel).exists()
+                            && JOptionPane.showConfirmDialog(graphComponent,
+                            mxResources.get("overwriteExistingFile")) != JOptionPane.YES_OPTION) {
+                        return;
+                    }
+
+                //System.out.println("filename:"+filename);
+                //System.out.println("filename_xmodel:"+filename_xmodel);
+                //System.out.println("filename_xmi:"+filename_xmi);
+                    // save as xmodel file
+                mxCodec codec = new mxCodec();
+                String xml = mxXmlUtils.getXml(codec.encode(graph.getModel()));
+
+                try {
+                    mxUtils.writeFile(xml, filename_xmodel);
+                } catch (IOException e1) {
+                    e1.printStackTrace();
                 }
-                for(int i=0;i<time_device_btn.size();i++){
-                    time_device_btn.get(i).setVisible(false);
-                }
-                for(int i=0;i<microwave_device_btn.size();i++){
-                    microwave_device_btn.get(i).setVisible(false);
+
+                SimplifyModelInfo ModelInfo =new SimplifyModelInfo(
+                        editor.getResourceFile(),
+                        editor.getNew_owlResourceData().classMap,
+                        editor.getNew_owlResourceData().objAttrMap,
+                        editor.getNew_owlResourceData().dataAttrMap,
+                        editor.getNew_owlResourceData().objMap,
+                        main_objMap,vertex_objMap,vertex_main_objMap,edge_objMap
+                );
+
+                FileOutputStream outStream = null;
+                filename_xmi = filename+".xmi";
+                System.out.println("filename_xmi:"+filename_xmi);
+                try {
+                    outStream = new FileOutputStream(filename_xmi);
+                    ObjectOutputStream objectOutputStream = new ObjectOutputStream(outStream);
+                    objectOutputStream.writeObject(ModelInfo);
+
+                    outStream.close();
+                    System.out.println("successful");
+                } catch (FileNotFoundException e1) {
+                    e1.printStackTrace();
+                } catch (IOException e1) {
+                    e1.printStackTrace();
                 }
             }
 
         });
 
-        button_time.addActionListener(new ActionListener() {
+        open_btn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                System.out.println("打开：.......");
+                isreOpen=true;
+                graph.getModel().beginUpdate();
+                try
+                {
+                    if (JOptionPane.showConfirmDialog(graphComponent, mxResources.get("loseChanges")) == JOptionPane.YES_OPTION) {
 
-                Border lineBorder=new LineBorder(Color.WHITE,2);
-                button_light_fre.setBorder(lineBorder);
-                Border lineBorder1=new LineBorder(Color.GRAY,2);
-                button_time.setBorder(lineBorder1);
-                Border lineBorder2=new LineBorder(Color.WHITE,2);
-                button_microwave.setBorder(lineBorder2);
+                        if (graph != null) {
+                            //清空图案
+                            graph.removeCells(graph.getChildVertices(graph.getDefaultParent()));
 
-                for(int i=0;i<light_device_btn.size();i++){
-                    light_device_btn.get(i).setVisible(false);
+                            String lastDir = null;
+                            String wd = (lastDir != null) ? lastDir : FileUtil.getAppPath();
+
+                            JFileChooser fc = new JFileChooser(wd);
+
+                            // Adds file filter for supported file format
+                            DefaultFileFilter defaultFilter = new DefaultFileFilter(".xmodel",
+                                    mxResources.get("allSupportedFormats") + " (.xmodel)") {
+
+                                public boolean accept(File file) {
+                                    String lcase = file.getName().toLowerCase();
+                                    return super.accept(file) || lcase.endsWith(".xmodel");
+                                }
+                            };
+                            fc.addChoosableFileFilter(defaultFilter);
+                            fc.setFileFilter(defaultFilter);
+                            fc.setDialogTitle("打开文件");
+
+                            int rc = fc.showDialog(null, AliasName.getAlias("open_file"));
+
+                            if (rc == JFileChooser.APPROVE_OPTION) {
+                                File sFile = fc.getSelectedFile();
+                                lastDir = sFile.getParent();
+
+                                if (sFile.getAbsolutePath().toLowerCase().endsWith(".xmodel")) {
+                                    //打开xmodel文件
+                                    System.out.println("open .xmodel file......");
+                                    System.out.println("lastDir:"+lastDir);
+                                    System.out.println("sFile.getAbsolutePath():"+sFile.getAbsolutePath());
+
+                                    /*此段代码可以显示出xmodel文件*/
+                                    if (sFile.getAbsolutePath() == null) {
+                                        return;
+                                    }
+                                    Document document = null;
+                                    try {
+                                        document = mxXmlUtils.parseXml(FileUtil.readFile(new FileInputStream(sFile.getAbsolutePath())));
+                                    } catch (IOException e1) {
+                                        e1.printStackTrace();
+                                    }
+                                    mxCodec codec = new mxCodec(document);
+                                    codec.decode(document.getDocumentElement(),graph.getModel());
+
+                                    //给相关信息重新赋值
+                                    //首先得到.xmi文件的路径
+                                    String str=sFile.getAbsolutePath();
+                                    file_xmi=str.substring(0,str.indexOf("."))+".xmi";
+                                    System.out.println("----file_xmi:"+file_xmi);
+                                    resetData(file_xmi);
+                                }
+                            }
+                        }
+                    }
+                    //paint(new_objMap);
                 }
-                for(int i=0;i<time_device_btn.size();i++){
-                    time_device_btn.get(i).setVisible(true);
-                }
-                for(int i=0;i<microwave_device_btn.size();i++){
-                    microwave_device_btn.get(i).setVisible(false);
-                }
-
-            }
-        });
-
-        button_microwave.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-
-                Border lineBorder=new LineBorder(Color.WHITE,2);
-                button_light_fre.setBorder(lineBorder);
-                Border lineBorder1=new LineBorder(Color.WHITE,2);
-                button_time.setBorder(lineBorder1);
-                Border lineBorder2=new LineBorder(Color.GRAY,2);
-                button_microwave.setBorder(lineBorder2);
-
-                for(int i=0;i<light_device_btn.size();i++){
-                    light_device_btn.get(i).setVisible(false);
-                }
-                for(int i=0;i<time_device_btn.size();i++){
-                    time_device_btn.get(i).setVisible(false);
-                }
-                for(int i=0;i<microwave_device_btn.size();i++){
-                    microwave_device_btn.get(i).setVisible(true);
+                finally
+                {
+                    graph.getModel().endUpdate();
                 }
             }
         });
     }
-    private void loadDevices(Map<String, OwlObject> objMap){
-         objMap.forEach((uri, obj) -> {
-            System.out.println(findSubsystem(obj.type));
-            if(findSubsystem(obj.type).equals("光纤光频传递分系统设备")) {
-                light_device_list.add(obj.id);
-                JButton button=new JButton(obj.id);
-                Dimension preferredSize = new Dimension(190,35);//设置尺寸
-                button.setPreferredSize(preferredSize);
-                Font font=new Font("楷体", Font.PLAIN, 15);
-                button.setFont(font);
-                button.setToolTipText(button.getText());
-                button.setVisible(false);
-                light_device_btn.add(button);
-                devicePanel.add(button);
-            }
-            if(findSubsystem(obj.type).equals("光纤时间同步分系统设备")) {
-                time_device_list.add(obj.id);
-                JButton button=new JButton(obj.id);
-                Dimension preferredSize = new Dimension(190,35);//设置尺寸
-                button.setPreferredSize(preferredSize);
-                Font font=new Font("楷体", Font.PLAIN, 15);
-                button.setFont(font);
-                button.setToolTipText(button.getText());
-                button.setVisible(false);
-                time_device_btn.add(button);
-                devicePanel.add(button);
-            }
-            if(findSubsystem(obj.type).equals("微波频率传递分系统设备")) {
 
-                microwave_device_list.add(obj.id);
-                JButton button=new JButton(obj.id);
-                Dimension preferredSize = new Dimension(190,35);//设置尺寸
-                button.setPreferredSize(preferredSize);
-                Font font=new Font("楷体", Font.PLAIN, 15);
-                button.setFont(font);
-                button.setToolTipText(button.getText());
-                button.setVisible(false);
-                microwave_device_btn.add(button);
-                devicePanel.add(button);
+    private void initSiteName(){
+
+        if(new_objMap == null){
+            System.out.println("new_objMap is null!");
+            return;
+        }
+        for (Map.Entry<String, OwlObject> entry : new_objMap.entrySet()) {
+            if((findKind(entry.getValue().type).equals("Site")) &&entry.getValue().visible){
+                for (Map.Entry<OwlDataAttribute, Set<Object>> entrys : entry.getValue().dataAttrs.entrySet()) {
+                    //得到站点名称
+                    System.out.println("id: "+entrys.getKey().id+" size: "+entrys.getValue().size());
+                    if (entrys.getKey().id.equals("站点名称")&&entrys.getValue().size()!=0) {
+                        for (Object obj : entrys.getValue()) {
+                            siteName = obj.toString();
+                            System.out.println("siteName: "+siteName);
+                            return;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    //绘制关系图，及关系图中发生的点击事件
+    private void initselectHandler() {
+        //selectHandler = new selectHandler(editor);
+        //selectHandler.setVisible(true);
+        //graphComponent.setSize(880,400);
+        Dimension preferredSize3 = new Dimension(880,530);//设置尺寸
+        graphComponent.setPreferredSize(preferredSize3);
+        graphComponent.setBackground(Color.WHITE);
+        //this.height=graphComponent.getHeight();
+        //this.width=graphComponent.getWidth();
+        this.height=graphComponent.getPreferredSize().height;
+        this.width=graphComponent.getPreferredSize().width;
+        System.out.println("height:"+height+"  width:"+width);
+        //graphComponent.setBorder(null);
+        //graphComponent.setDragEnabled(true);
+        graph.getModel().beginUpdate();
+        try
+        {
+            paint(new_objMap); //绘制关系图
+        }
+        finally
+        {
+            graph.getModel().endUpdate(); //刷新
+        }
+
+        graphComponent.getGraphControl().addMouseListener(new MouseAdapter()
+        {
+
+            public void mouseReleased(MouseEvent e)
+            {
+                Object cell = graphComponent.getCellAt(e.getX(), e.getY());
+
+                if (cell != null)
+                {
+                    System.out.println("cell="+graph.getLabel(cell));
+                    if(graph.getLabel(cell)!=null&&graph.getLabel(cell)!=""){
+                        System.out.println("is Vertex...");
+                        OwlObject owlObject= vertex_main_objMap.get(graph.getLabel(cell));
+                        selected_obj_name=owlObject.id;
+                        owlObject_data_Change_Fun(owlObject);
+                        //刷新内容
+                        update_introductionPanel_data();
+                        update_monitorPanel_data();
+                        update_coninfoPanel_data();
+                    }else{
+                        System.out.println("is Edge...");
+
+                        String[] strs=edge_objMap.get(cell).split("-");
+                        String source_str=strs[0];
+                        String target_str=strs[1];
+                        OwlObject source=vertex_main_objMap.get(source_str);
+                        OwlObject target=vertex_main_objMap.get(target_str);
+                        edge_data_Change_Fun(source,target);
+
+                        //刷新内容
+                        update_introductionPanel_data();
+                        update_monitorPanel_data();
+                        update_coninfoPanel_data();
+                    }
+                }
             }
         });
     }
 
-    private void init_devinfoPanel_data(){
-        //初始化devinfoPanel里面的控件
-        jTextField=new JTextField(device_info);
-        troductionPanel.add(jTextField);
-        jTextField.setVisible(false);
+    private void initJPanel(){
 
-        jRadioButton=new JRadioButton("是否将该设备添加到组态图中",true);
-        monitorPanel.add(jRadioButton);
+        jTable=new JTable();
+        scrollPanel=new JScrollPane(jTable);
+        jTable.setRowHeight(30);
+        jTable.setShowGrid(true);
+        Dimension preferredSize1 = new Dimension(360,150);//设置尺寸
+        scrollPanel.setPreferredSize(preferredSize1);
+
+        introductionPanel=new JPanel();
+        introductionPanel.setBorder(new TitledBorder("基本信息："));
+        introductionPanel.setLayout(new FlowLayout());
+        introductionPanel.add(scrollPanel);
+        /*jTextField=new JTextField();
+        introductionPanel.add(jTextField);
+        jTextField.setVisible(false);*/
+
+        monitorPanel=new JPanel();
+        monitorPanel.setBorder(new TitledBorder("监测属性："));
+        monitorPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+        Dimension preferredSize = new Dimension(300,200);//设置尺寸
+        monitorPanel.setPreferredSize(preferredSize);
+        jRadioButton=new JRadioButton("是否添加到组态图中",true);
         jRadioButton.setVisible(false);
 
-        jRadioButton.addActionListener(new ActionListener() {
+        coninfoPanel=new JPanel();
+        coninfoPanel.setBorder(new TitledBorder("连接信息："));
+        coninfoPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+
+        buttonPanel=new JPanel();
+        buttonPanel.setLayout(new FlowLayout(FlowLayout.RIGHT));
+        buttonPanel.add(open_btn);
+        buttonPanel.add(save_btn);
+        buttonPanel.add(return_btn);
+        buttonPanel.add(diagram_btn);
+        buttonPanel.add(refresh_btn);
+
+        Dimension preferredSize3 = new Dimension(130,40);//设置尺寸
+        buttonPanel.setPreferredSize(preferredSize3);
+
+        chartPanel=new JPanel();
+        chartPanel.setBorder(new TitledBorder("resource chart："));
+        chartPanel.setLayout(new BorderLayout());
+        Dimension preferredSize2 = new Dimension(880,600);//设置尺寸
+        chartPanel.setPreferredSize(preferredSize2);
+        chartPanel.add(graphComponent,BorderLayout.SOUTH);
+        chartPanel.add(buttonPanel,BorderLayout.NORTH);
+
+        selectPanel=new JPanel();
+        //selectPanel.setBorder(new TitledBorder("resource select："));
+        Dimension preferredSize4 = new Dimension(300,780);//设置尺寸
+        selectPanel.setPreferredSize(preferredSize4);
+        selectPanel.setLayout(new GridLayout(3,1));
+        selectPanel.add(introductionPanel);
+        selectPanel.add(monitorPanel);
+        selectPanel.add(coninfoPanel);
+
+        mainPanel=new JPanel();
+        mainPanel.setSize(1000,660);
+        mainPanel.setLayout(new BorderLayout());
+        mainPanel.add(chartPanel,BorderLayout.WEST);
+        mainPanel.add(selectPanel,BorderLayout.CENTER);
+        /*JPanel temp=new JPanel();
+        temp.setSize(0,0);
+        mainPanel.add(temp,BorderLayout.CENTER);*/
+    }
+
+    private void initFrame(){
+        this.setTitle("-文件资源模板选择框-");//设置窗口标题内容
+        Dimension screen = getToolkit().getScreenSize();
+        this.setSize(1280, 680);//设置窗口大小,宽度500，高度400
+        this.setLocation((screen.width - getSize().width) / 2, (screen.height - getSize().height) / 2);;//设置窗口位置为距离屏幕左边水平方向300，上方垂直方向200
+        this.setVisible(true);//设置窗体可见
+        this.setLayout(new BorderLayout());//设置窗体布局为流式布局。
+        this.setResizable(true); //禁止改变大小在调用显示之
+        this.addWindowListener (new WindowAdapter()
+        {
             @Override
-            public void actionPerformed(ActionEvent e) {
-                    String id=jRadioButton.getText();
-                    new_objMap.forEach((uri, obj) -> {
-                        if(obj.id.equals(cur_device_name)){
-                            if(jRadioButton.isSelected()){
+            public void windowClosing ( WindowEvent e )
+            {
+                dispose();
+            }
+        });
+        this.add(mainPanel,BorderLayout.CENTER);
+    }
+
+    public void paint(Map<String, OwlObject> new_objMap){
+        main_objMap.clear(); //<url,OwlObject> 存储类型为FOI的对象
+        vertex_main_objMap.clear(); //<id,OwlObject> 方便查找对象信息
+        vertex_objMap.clear(); //<id,Object>  方便查找图形对象，进行图形的增删改查
+        init_main_objMap(new_objMap,main_objMap);
+
+        //先判断个数
+        int num= OwlResourceUtil.getFOINum(main_objMap);
+        System.out.println("num:"+num);
+        //分网格
+        int part_num=getPart_num(num);
+        int part_height=height/part_num;
+        int part_width=width/part_num;
+
+        //放置每个obj的位置
+        int i=0;
+        for (Map.Entry<String, OwlObject> entry : main_objMap.entrySet()) {
+            //矩形左上角的坐标
+            //int x=part_width*(i%part_num)+part_width/3;
+            //int y=part_height*(i/part_num)+part_height/5;
+            int x=part_width*(i%part_num)+part_width/3;
+            int y=part_height*(i/part_num)+part_height/5;
+            //绘制圆
+            //Object v1 = graph.insertVertex(parent, null, "Hello", 20, 20, 80,30);
+            System.out.println("x:"+x+"   y:"+y);
+            //显示的属性值
+            String attr_str="";
+            for (Map.Entry<OwlObjectAttribute, Set<OwlObject>> entry1 : entry.getValue().objAttrs.entrySet()) {
+                if(entry1.getKey().id.equals("has_property")){
+                    for (OwlObject obj : entry1.getValue()) {
+                        if(obj.visible){
+                            attr_str=attr_str+obj.id;
+                            //System.out.println("attr_str:"+attr_str+"\n\r"+"<br/>");
+                        }
+                    }
+                }
+            }
+
+            Object obj=graph.insertVertex(parent, null,
+                    entry.getValue().id, x, y, 140,80,
+                    "shape=ellipse;perimeter=ellipsePerimeter");
+
+            vertex_objMap.put(entry.getValue().id,obj);
+            vertex_main_objMap.put(entry.getValue().id,entry.getValue());
+            i++;
+        }
+
+        //将连接关系连接起来
+        //根据坐标来找绘制的图形
+        for (Map.Entry<String, OwlObject> entry : main_objMap.entrySet()) {
+            entry.getValue().objAttrs.forEach((objAttr, objSet) -> {
+                if(objAttr.id.equals("connect")){
+                    objSet.forEach(obj2 -> {
+                        if(obj2.visible) {
+                            Object obj=graph.insertEdge(parent,null , null,
+                                    vertex_objMap.get(entry.getValue().id), vertex_objMap.get(obj2.id)
+                                    //,"strokeWidth=3"
+                            );
+                            edge_objMap.put(obj,entry.getValue().id+"-"+obj2.id);
+                        }
+                    });
+                }
+                if(objAttr.id.equals("data_trans")){
+                    objSet.forEach(obj2 -> {
+                        if(obj2.visible) {
+                            Object obj=graph.insertEdge(parent,null , null,
+                                    vertex_objMap.get(entry.getValue().id), vertex_objMap.get(obj2.id),
+                                    "strokeColor=#A0A0A0"
+                            );
+                            edge_objMap.put(obj,entry.getValue().id+"-"+obj2.id);
+                        }
+                    });
+                }
+            });
+        }
+
+    }
+
+    public Map<String, OwlObject> init_main_objMap(Map<String, OwlObject> objMap,Map<String, OwlObject> main_objMap){
+        System.out.println("main_objMap:"+main_objMap.size());
+        for (Map.Entry<String, OwlObject> entry : objMap.entrySet()) {
+            System.out.println("name: "+entry.getValue().id+" type: "+entry.getValue().type+" kind: "+findKind(entry.getValue().type));
+            if((findKind(entry.getValue().type).equals("FeatureOfInterest")
+                    //||findKind(entry.getValue().type).equals("Site")
+                    ||findKind(entry.getValue().type).equals("ControlRoom"))
+                    &&entry.getValue().visible){
+                main_objMap.put(entry.getKey(),entry.getValue());
+            }
+        }
+        return main_objMap;
+    }
+
+    public int getPart_num(int num){
+        int n;
+        double m=Math.sqrt(num);
+        System.out.println("m:"+m);
+        n=(int)m;
+        System.out.println("n:"+n);
+        if(n==m){
+            return n;
+        }else{
+            return n+1;
+        }
+    }
+
+    private void update_introductionPanel_data(){
+        /*jTextField.setText(info);
+        if (info == null || info == "") {
+            jTextField.setVisible(false);
+        }else {
+            jTextField.setVisible(true);
+        }*/
+        jTable.setModel(attrListModel);
+        jTable.revalidate();
+        introductionPanel.validate();
+    }
+
+    private void update_monitorPanel_data(){
+        monitorPanel.removeAll();
+        monitorPanel.repaint();
+        monitorPanel.add(jRadioButton);
+
+        if(jrbtn_list.size()==0){
+            return;
+        }else{
+            for (JRadioButton jrb : jrbtn_list) {
+                //jrb.setBackground(Color.WHITE);
+                monitorPanel.add(jrb);
+            }
+        }
+
+        monitorPanel.revalidate();
+    }
+
+    private void update_coninfoPanel_data(){
+
+        coninfoPanel.removeAll();
+        coninfoPanel.repaint();
+
+        if(conn_list.size()==0){
+            return;
+        }else{
+
+            for (Map.Entry<String,JRadioButton> entry : conn_list.entrySet()) {
+                //entry.getValue().setBackground(Color.WHITE);
+                coninfoPanel.add(entry.getValue());
+            }
+        }
+
+        coninfoPanel.revalidate();
+    }
+
+    private void owlObject_data_Change_Fun(OwlObject owlObject){
+
+        //为info(introduction面板赋值)
+        info="Name:"+owlObject.id+"  Type:"+owlObject.type.id;
+         jrbtn_list.clear();
+         jRadioButton.setVisible(true);
+         jRadioButton.setSelected(owlObject.visible);
+        //用表格显示它的信息
+        attrListModel = null;
+        attrListModel = new AttrListModel(owlObject);
+
+        conn_list.clear();
+        for (Map.Entry<OwlObjectAttribute, Set<OwlObject>> entry : owlObject.objAttrs.entrySet()) {
+            if(entry.getKey().id.equals("has_property")){
+                for (OwlObject obj : entry.getValue()) {
+                    JRadioButton jrb=new JRadioButton(obj.id);
+                    jrb.setSelected(obj.visible);
+                    jrb.setVisible(true);
+                    jrbtn_list.add(jrb);
+                    jrb.addActionListener(new ActionListener() {
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
+                            if(jrb.isSelected()){
                                 obj.visible=true;
                             }
                             else{
@@ -389,43 +759,47 @@ public class ResSelectFrame extends Frame{
                             }
                         }
                     });
+                }
             }
-        });
 
-        //为JRadioButton添加监听事件--监测量
-        for(int i=0;i<20;i++){
-            JRadioButton jrb=new JRadioButton("111",true);
-            jrb.setVisible(false);
+            if(entry.getKey().id.equals("connect")||entry.getKey().id.equals("data_trans")){
+                for (OwlObject obj : entry.getValue()) {
+                    if(obj.visible){
+                        String s=owlObject.id+"-"+obj.id;
+                        JRadioButton jrb=new JRadioButton(s);
+                        jrb.setSelected(true);
+                        jrb.setVisible(true);
+                        conn_list.put(s,jrb);
+                    }
 
-            jrb.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                        String id=jrb.getText();
-                        System.out.println("id:"+id);
-                        new_objMap.forEach((uri, obj) -> {
-                           if(obj.id.equals(id)){
-                               if(jrb.isSelected()){
-                                   obj.visible=true;
-                               }else{
-                                   obj.visible=false;
-                               }
-                           }
-                        });
+                }
+            }
+
+            origin_objMap.forEach((uri, obj) -> {
+                if(obj.id.equals(owlObject.id)){
+                    obj.objAttrs.forEach((objAttr, objSet) -> {
+                        if(objAttr.id.equals("connect")||objAttr.id.equals("data_trans")){
+                            objSet.forEach(obj2 -> {
+                                if(obj.visible&&obj2.visible){
+                                    String s=obj.id+"-"+obj2.id;
+                                    if(conn_list.get(s)==null){
+                                        JRadioButton jrb=new JRadioButton(s);
+                                        jrb.setVisible(true);
+                                        jrb.setSelected(false);
+                                        conn_list.put(s,jrb);
+                                    }
+                                }
+                            });
+                        }
+                    });
                 }
             });
 
-            jrbtn_list.add(jrb);
-            monitorPanel.add(jrb);
-        }
-        //为JRadioButton添加监听事件--连接关系
-        for(int i=0;i<20;i++){
-            JRadioButton jrb=new JRadioButton("222",true);
-            jrb.setVisible(false);
-
-            jrb.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                        String str=jrb.getText();
+            for (Map.Entry<String,JRadioButton> entry1 : conn_list.entrySet()) {
+                entry1.getValue().addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        String str=entry1.getValue().getText();
                         int index=str.indexOf("-");
                         String first=str.substring(0,index);
                         String last=str.substring(index+1);
@@ -434,133 +808,45 @@ public class ResSelectFrame extends Frame{
                         new_objMap.forEach((uri, obj) -> {
                             if(obj.id.equals(first)){
                                 obj.objAttrs.forEach((objAttr, objSet) -> {
-                                    if(objAttr.id.equals("connect")){
+                                    if(objAttr.id.equals("connect")||objAttr.id.equals("data_trans")){
+
                                         if(objSet.contains(last_obj)){
-                                            if(!jrb.isSelected()){
+                                            if(!entry1.getValue().isSelected()){
+                                                System.out.println(last_obj.id+"被移除");
                                                 objSet.remove(last_obj);
                                             }
                                         }else{
-                                            if(jrb.isSelected()){
+                                            if(entry1.getValue().isSelected()){
                                                 objSet.add(last_obj);
+                                                System.out.println(last_obj.id+"被添加");
                                             }
                                         }
                                     }
                                 });
                             }
                         });
-                }
-            });
-
-            conn_list.add(jrb);
-            coninfoPanel.add(jrb);
+                    }
+                });
+            }
         }
     }
 
-    private void update_monitorPanel_data(){
+    private void edge_data_Change_Fun(OwlObject source,OwlObject target){
 
-        jRadioButton.setVisible(true);
-        jRadioButton.setSelected(jRadioButton_isSelected);
+        jrbtn_list.clear();
+        conn_list.clear();
+        //用表格显示它的信息
+        attrListModel = null;
+        Object[] columns={"数据属性","值"};//字段
+        Object[][] data=new Object[2][2];//需要展示的数据，一般是二维数组
+        data[0][0]="source";
+        data[0][1]=source.id;
+        data[1][0]="target";
+        data[1][1]=target.id;
+        attrListModel=new DefaultTableModel(data,columns);
 
-        for(int i=0;i<jrbtn_list.size();i++){
-            jrbtn_list.get(i).setVisible(false);
-        }
+        jRadioButton.setVisible(false);
 
-        for(int i=0;i<jrbtn_list_name.size();i++){
-            jrbtn_list.get(i).setText(jrbtn_list_name.get(i).name);
-            jrbtn_list.get(i).setSelected(jrbtn_list_name.get(i).isSelected);
-            jrbtn_list.get(i).setVisible(true);
-        }
-    }
-
-    private void update_coninfoPanel_data(){
-        for(int i=0;i<conn_list.size();i++){
-            conn_list.get(i).setVisible(false);
-        }
-
-        int i=0;
-        for (Map.Entry<String, showClass> entry : conn_list_name.entrySet()) {
-            conn_list.get(i).setText(entry.getKey());
-            conn_list.get(i).setSelected(entry.getValue().isSelected);
-            conn_list.get(i).setVisible(true);
-            i++;
-        }
-    }
-
-    private void update_troductionPanel_data(){
-        if (device_info == null || device_info == "") {
-            jTextField.setVisible(false);
-        }else {
-            jTextField.setVisible(true);
-        }
-        jTextField.setText(device_info);
-    }
-
-    private void addListener(ArrayList<JButton> list){
-        //为devicePanel里面的button添加点击事件
-        for(int i=0;i<list.size();i++){
-             JButton button=list.get(i);
-             button.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    String id=button.getText();
-                    System.out.println(id);
-                    OwlObject owlObject=new OwlObject();
-                    //获取对应的设备信息
-                    jrbtn_list_name.clear();
-                    conn_list_name.clear();
-                    device_info="";
-
-                    new_objMap.forEach((uri, obj) -> {
-                        if(obj.id.equals(id)){
-                            device_info="Name:"+obj.id+"  Type:"+obj.type.id;
-                            jRadioButton_isSelected=obj.visible;
-                            cur_device_name=id;
-                            obj.objAttrs.forEach((objAttr, objSet) -> {
-                                if(objAttr.id.equals("has_property")){
-                                    objSet.forEach(obj2 -> {
-                                        showClass scl=new showClass();
-                                        scl.name=obj2.id;
-                                        scl.isSelected=obj2.visible;
-                                        jrbtn_list_name.add(scl);
-                                    });
-                                }
-                                if(objAttr.id.equals("connect")){
-                                    objSet.forEach(obj2 -> {
-                                        showClass scl=new showClass();
-                                        scl.name=obj.id+"-"+obj2.id;
-                                        scl.isSelected=true;
-                                        String s=obj.id+"-"+obj2.id;
-                                        conn_list_name.put(s,scl);
-                                    });
-                                }
-                            });
-                        }
-                    });
-
-                    origin_objMap.forEach((uri, obj) -> {
-                        if(obj.id.equals(id)){
-                            obj.objAttrs.forEach((objAttr, objSet) -> {
-                                if(objAttr.id.equals("connect")){
-                                    objSet.forEach(obj2 -> {
-                                        showClass scl=new showClass();
-                                        scl.name=obj.id+"-"+obj2.id;
-                                        scl.isSelected=true;
-                                        String ss=obj.id+"-"+obj2.id;
-                                        if(conn_list_name.get(ss)==null){
-                                            scl.isSelected=false;
-                                            conn_list_name.put(ss,scl);
-                                        }
-                                    });
-                                }
-                            });
-                        }
-                    });
-                    update_troductionPanel_data();
-                    update_monitorPanel_data();
-                    update_coninfoPanel_data();
-                }
-            });
-        }
     }
 
     private OwlObject getObjectById(String id){
@@ -573,4 +859,98 @@ public class ResSelectFrame extends Frame{
         return temp;
     }
 
+    private void resetData(String file_xmi){
+
+        OwlResourceData new_open_owlResourceData=new OwlResourceData();
+        new_open_owlResourceData.model=null;
+        OwlResourceData origin_open_owlResourceData=new OwlResourceData();
+        origin_open_owlResourceData.model=null;
+        FileInputStream new_freader;
+        FileInputStream origin_freader;
+        try {
+            new_freader = new FileInputStream(file_xmi);
+            origin_freader = new FileInputStream(file_xmi);
+            ObjectInputStream new_objectInputStream = new ObjectInputStream(new_freader);
+            ObjectInputStream origin_objectInputStream = new ObjectInputStream(origin_freader);
+            SimplifyModelInfo new_simplifyModelInfo=(SimplifyModelInfo) new_objectInputStream.readObject();
+            SimplifyModelInfo origin_simplifyModelInfo=(SimplifyModelInfo) origin_objectInputStream.readObject();
+
+            filePath = new_simplifyModelInfo.getFilePath();
+            new_open_owlResourceData.classMap=new_simplifyModelInfo.getClassMap();
+            new_open_owlResourceData.objAttrMap=new_simplifyModelInfo.getObjAttrMap();
+            new_open_owlResourceData.dataAttrMap=new_simplifyModelInfo.getDataAttrMap();
+            new_open_owlResourceData.objMap=new_simplifyModelInfo.getObjMap();
+
+            origin_open_owlResourceData.classMap=origin_simplifyModelInfo.getClassMap();
+            origin_open_owlResourceData.objAttrMap=origin_simplifyModelInfo.getObjAttrMap();
+            origin_open_owlResourceData.dataAttrMap=origin_simplifyModelInfo.getDataAttrMap();
+            origin_open_owlResourceData.objMap=origin_simplifyModelInfo.getObjMap();
+
+            main_objMap.clear();
+            main_objMap = new_simplifyModelInfo.getMain_objMap();
+            vertex_objMap.clear();
+            vertex_objMap = new_simplifyModelInfo.getVertex_objMap() ;
+            vertex_main_objMap.clear();
+            vertex_main_objMap = new_simplifyModelInfo.getVertex_main_objMap();
+            edge_objMap.clear();
+            edge_objMap = new_simplifyModelInfo.getEdge_objMap();
+
+            new_owlResourceData=null;
+            new_owlResourceData=new_open_owlResourceData;
+            new_objMap.clear();
+            new_objMap=new_owlResourceData.objMap;
+
+            origin_owlResourceData=null;
+            origin_owlResourceData=origin_open_owlResourceData;
+            origin_objMap.clear();
+            origin_objMap=origin_owlResourceData.objMap;
+
+            editor.setNew_owlResourceData(new_owlResourceData);
+            editor.setOrigin_owlResourceData(origin_owlResourceData);
+            editor.setResourceFile(filePath);
+
+        } catch (FileNotFoundException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
+    }
+
+    private OwlResourceData readtoGetOwlResourceData(String file_xmi){
+        OwlResourceData open_owlResourceData=new OwlResourceData();
+        open_owlResourceData.model=null;
+        FileInputStream freader;
+
+        try {
+            freader = new FileInputStream(file_xmi);
+            ObjectInputStream objectInputStream = new ObjectInputStream(freader);
+            SimplifyModelInfo simplifyModelInfo=(SimplifyModelInfo) objectInputStream.readObject();
+
+            filePath = simplifyModelInfo.getFilePath();
+            open_owlResourceData.classMap=simplifyModelInfo.getClassMap();
+            open_owlResourceData.objAttrMap=simplifyModelInfo.getObjAttrMap();
+            open_owlResourceData.dataAttrMap=simplifyModelInfo.getDataAttrMap();
+            open_owlResourceData.objMap=simplifyModelInfo.getObjMap();
+
+            return open_owlResourceData;
+
+        } catch (FileNotFoundException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
+        return null;
+    }
 }

@@ -38,16 +38,18 @@ import com.mxgraph.view.mxGraph;
 
 import static com.mxgraph.examples.swing.owl.OwlResourceUtil.findKind;
 
-
 public class BasicGraphEditor extends JPanel
 {
-
 	private static final long serialVersionUID = -6561623072112577140L;
-	/**
-	 * 在加载图元时，保存候选图元
-	 */
+
+	//在加载图元时，保存系统涉及的图元信息，初始化在GraphEditor.java中完成
 	public static Map<String, mxCell> AllCellMap = new HashMap<>();
 
+	public  Map<String, mxCell> getAllCellMap() {
+		return AllCellMap;
+	}
+
+	//资源文件路径
 	private String resourceFile = null;
 
 	public void setResourceFile(String resourceFile) {
@@ -58,6 +60,7 @@ public class BasicGraphEditor extends JPanel
 		return resourceFile;
 	}
 
+	//origin_owlResourceData表示选择之前的图元
 	private OwlResourceData origin_owlResourceData;
 
 	public OwlResourceData getOrigin_owlResourceData() {
@@ -68,9 +71,7 @@ public class BasicGraphEditor extends JPanel
 		this.origin_owlResourceData = origin_owlResourceData;
 	}
 
-	/*
-	* new_owlResourceData表示经过选择后的资源，根据new_owlResourceData来绘制组态图
-	* */
+	//new_owlResourceData表示经过选择后的资源，根据new_owlResourceData来绘制组态图
 	private OwlResourceData new_owlResourceData;
 
 	public OwlResourceData getNew_owlResourceData() {
@@ -90,7 +91,6 @@ public class BasicGraphEditor extends JPanel
 	public void setEditable(boolean editable) {
 		this.editable = editable;
 	}
-
 	public boolean isEditable() {
 		return editable;
 	}
@@ -110,13 +110,13 @@ public class BasicGraphEditor extends JPanel
 	 */
 	private EditorToolBar toolBar = null;
 
+
     private JSplitPane dataPanel;
     private JPanel propertyPanel = new JPanel();
     private JScrollPane jScrollPane = new JScrollPane(propertyPanel);
     private Map<String,JLabel> property_name = new HashMap<>();
     private Map<String,JTextField> property_data = new HashMap<>();
 	private Map<String,JLabel> property_unit = new HashMap<>();
-
     private Map<String,JPanel> device_property=new HashMap<>();
     private Map<String,OwlObject> cell_property=new HashMap<>();
     //用来记录包括哪些记录数据的图元
@@ -1029,11 +1029,10 @@ public class BasicGraphEditor extends JPanel
 	}
 
 	public void switchToView() {
-		dataPanel.setDividerLocation(600);
+		//dataPanel.setDividerLocation(600);
 		mxGraph graph = graphComponent.getGraph();
-
 		/*右侧属性面板，先清空再重新加载*/
-		initPropertyPanel();
+		/*initPropertyPanel();
 		propertyPanel.setLayout(new BoxLayout(propertyPanel, BoxLayout.Y_AXIS));
 		propertyPanel.add(Box.createVerticalStrut(15));
 		propertyPanel.removeAll();
@@ -1044,13 +1043,10 @@ public class BasicGraphEditor extends JPanel
 		propertyPanel.setVisible(true);
 		jScrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
 		jScrollPane.setVerticalScrollBarPolicy( JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-		jScrollPane.setVisible(true);
+		jScrollPane.setVisible(true);*/
 
-		/*
-		为每个设备添加属性图元
-		保留原先的，查漏补缺
-		*/
-		insertPropertyCell();
+		//为每个设备添加监控项图元，保留原先的，查漏补缺
+		//insertPropertyCell();
 
 		inner.setVisible(false);
 		uninstallToolBar();
@@ -1071,10 +1067,9 @@ public class BasicGraphEditor extends JPanel
 	public void switchToEdit() {
 		inner.setVisible(true);
 		outer.setDividerLocation(260);
-		dataPanel.setDividerLocation(900);
+		//dataPanel.setDividerLocation(900);
 		installToolBar();
-		jScrollPane.setVisible(false);
-
+		//jScrollPane.setVisible(false);
 		mxGraph graph = graphComponent.getGraph();
 		graph.setVertexLabelsMovable(true);
 		graph.setDisconnectOnMove(true);
@@ -1157,9 +1152,7 @@ public class BasicGraphEditor extends JPanel
 			}
 		}
 	}
-
-	//应该遍历graph,获取图元的位置，设计图元的摆放问题
-	//每一个属性是一个obj
+	//应该遍历graph,获取图元的位置，设计图元的摆放问题,每一个属性是一个obj
 	public void insertPropertyCell(){
 		  mxGraph graph = graphComponent.getGraph();
 		  mxCell root = (mxCell) graph.getModel().getRoot();
@@ -1178,7 +1171,6 @@ public class BasicGraphEditor extends JPanel
 				mxGeometry geo = child.getGeometry();
 				double x = geo.getX();
 				double y = geo.getY() + geo.getHeight();
-
 
 				//添加设备名称
 				if(child.getV().getName()!=null){
@@ -1269,9 +1261,6 @@ public class BasicGraphEditor extends JPanel
 		}
 	}
 
-	public  Map<String, mxCell> getAllCellMap() {
-		return AllCellMap;
-	}
 
 	public JFrame createCellFrame() {
 

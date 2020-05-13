@@ -6,8 +6,6 @@ package com.mxgraph.examples.swing.editor;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
 import java.awt.print.PageFormat;
 import java.awt.print.Paper;
@@ -16,10 +14,7 @@ import java.awt.print.PrinterJob;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.*;
-import java.lang.reflect.Field;
 import java.lang.reflect.Method;
-import java.lang.reflect.Modifier;
-import java.math.BigInteger;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.util.*;
@@ -36,33 +31,22 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.mxgraph.examples.swing.browser.BrowserFrame;
 import com.mxgraph.examples.swing.db.DBDataAdaptor;
-import com.mxgraph.examples.swing.frame.CellManagerFrame;
 import com.mxgraph.examples.swing.frame.QuanzhouUploadMxeFileFrame;
 import com.mxgraph.examples.swing.frame.UploadMxeFileFrame;
 import com.mxgraph.examples.swing.graph.GraphInterface;
-import com.mxgraph.examples.swing.graph.Vertex;
-import com.mxgraph.examples.swing.graph.VertexInterface;
 import com.mxgraph.examples.swing.graph.showGraph;
-import com.mxgraph.examples.swing.map.Liulanqi;
 import com.mxgraph.examples.swing.map.OpenMap;
 import com.mxgraph.examples.swing.match.ModifyTemplateCore;
 import com.mxgraph.examples.swing.match.ResMatchCore;
+import com.mxgraph.examples.swing.owl.OwlDataAttribute;
 import com.mxgraph.examples.swing.owl.OwlObject;
 import com.mxgraph.examples.swing.owl.OwlResourceData;
-import com.mxgraph.examples.swing.owl.OwlResourceUtil;
 import com.mxgraph.examples.swing.resource_manage.ResourceManageFrame;
-import com.mxgraph.examples.swing.select.ResSelectFrame4;
-import com.mxgraph.examples.swing.select.ResSelectFrame5;
+import com.mxgraph.examples.swing.select.ResSelectFrame;
 import com.mxgraph.examples.swing.util.*;
 import com.mxgraph.examples.swing.util.ww.WWFiberManager;
 import com.mxgraph.model.mxGeometry;
 import com.mxgraph.util.*;
-import com.mxgraph.view.mxCellState;
-import com.mxgraph.view.mxGraphView;
-import com.mxgraph.view.mxStylesheet;
-import com.teamdev.jxbrowser.chromium.Browser;
-import com.teamdev.jxbrowser.chromium.ba;
-import com.teamdev.jxbrowser.chromium.swing.BrowserView;
 import org.w3c.dom.Document;
 
 import com.mxgraph.analysis.mxDistanceCostFunction;
@@ -89,7 +73,6 @@ import com.mxgraph.view.mxGraph;
 
 import static com.mxgraph.examples.swing.owl.OwlResourceUtil.*;
 import static com.mxgraph.examples.swing.util.HttpUtil.sendHttpPost;
-import static com.sun.deploy.uitoolkit.ToolkitStore.dispose;
 
 /**
  *
@@ -2019,37 +2002,56 @@ public class EditorActions {
                     editor.setNew_owlResourceData(new_owlResourceData);
                     editor.setOrigin_owlResourceData(origin_owlResourceData);
 
+                    //初始化siteName
+                    Map<String, OwlObject> new_objMap=new_owlResourceData.objMap;
+                    String siteName = "";
+                    if(new_objMap == null){
+                        System.out.println("new_objMap is null!");
+                        return;
+                    }
+                    for (Map.Entry<String, OwlObject> entry : new_objMap.entrySet()) {
+                        if((findKind(entry.getValue().type).equals("Site")) &&entry.getValue().visible){
+                            for (Map.Entry<OwlDataAttribute, Set<Object>> entrys : entry.getValue().dataAttrs.entrySet()) {
+                                //得到站点名称
+                                System.out.println("id: "+entrys.getKey().id+" size: "+entrys.getValue().size());
+                                if (entrys.getKey().id.equals("站点名称")&&entrys.getValue().size()!=0) {
+                                    for (Object obj : entrys.getValue()) {
+                                        siteName = obj.toString();
+                                        System.out.println("siteName: "+siteName);
+                                        break;
+                                    }
+                                }
+                            }
+                        }
+                    }
+
                     //匹配模板图时使用如下方法
                     //为graph匹配相似度最高的match_graph,得到对应模板图的文件名
-                    String TemplatePath = ResMatchCore.getTemplatePath(origin_owlResourceData);
-                    //System.out.println("TemplatePath:"+TemplatePath);
+                    String templatePath= ResMatchCore.getTemplatePath(new_owlResourceData);
+                    System.out.println("templatePath:"+templatePath);
 
                     /*此段代码可以显示出模板mxe文件*/
-                    if (TemplatePath == null) {
+                    if (templatePath == null) {
                         return;
                     }
                     Document document = null;
                     try {
-                        document = mxXmlUtils.parseXml(FileUtil.readFile(this.getClass().getResourceAsStream(TemplatePath)));
+                        document = mxXmlUtils.parseXml(FileUtil.readFile(this.getClass().getResourceAsStream(templatePath)));
                     } catch (IOException e1) {
                         e1.printStackTrace();
                     }
                     mxCodec codec = new mxCodec(document);
                     codec.decode(document.getDocumentElement(), editor.getGraphComponent().getGraph().getModel());
-
                     // 根据资源模型文件，对模板组态图进行调整,
                     // 则可以显示出调整好的组态图，图元没有绑定资源信息
-                    GraphInterface<String> graph = showGraph.createGraph(origin_owlResourceData);
-                    new ModifyTemplateCore(TemplatePath).postProcess(graph, editor, filePath);
+                    GraphInterface<String> graph= showGraph.createGraph(new_owlResourceData);
+                    new ModifyTemplateCore(templatePath).postProcess(graph,editor,filePath);
 
                     //添加标题
-                    showTitle(sFile.getName(), editor);
+                    showTitle(siteName,editor);
                     editor.getGraphComponent().getGraph().refresh();
-                    editor.getOrigin_owlResourceData().title = sFile.getName().substring(0, sFile.getName().length() - 4);
-                    editor.getNew_owlResourceData().title = sFile.getName().substring(0, sFile.getName().length() - 4);
-
-                    //editor.getOrigin_owlResourceData().title=EncodeUtil.GBKTOUTF8(sFile.getName().substring(0,sFile.getName().length()-4));
-                    //editor.getNew_owlResourceData().title=EncodeUtil.GBKTOUTF8(sFile.getName().substring(0,sFile.getName().length()-4));
+                    editor.getOrigin_owlResourceData().title = siteName;
+                    editor.getNew_owlResourceData().title = siteName;
                 }
             }
             // 王伟：todo
@@ -2058,7 +2060,7 @@ public class EditorActions {
     }
 
     public static void showTitle(String sitename, BasicGraphEditor editor) {
-        String title = sitename.substring(0, sitename.length() - 4) + "站点监控图";
+        String title = sitename + "监控图";
         String titleStyle = AliasName.getAlias("monitor_title_style");
         mxCell titleCell = new mxCell(title, title,
                 new mxGeometry(100, 50, 400, 60), titleStyle);
@@ -2077,13 +2079,9 @@ public class EditorActions {
             OwlResourceData origin_owlResourceData = parseResourceFile(filePath);
             OwlResourceData new_owlResourceData = parseResourceFile(filePath);
             editor.setNew_owlResourceData(new_owlResourceData);
-
             System.out.println("改变前：-----------------------------------------------------------------------------");
             printOwlobject(editor.getNew_owlResourceData().objMap);
-
-            new ResSelectFrame4(editor, origin_owlResourceData);
-
-
+            //new ResSelectFrame4(editor, origin_owlResourceData);
         }
     }
 
@@ -2113,7 +2111,6 @@ public class EditorActions {
             if (rc == JFileChooser.APPROVE_OPTION) {
                 File sFile = fc.getSelectedFile();
                 lastDir = sFile.getParent();
-
                 if (sFile.getAbsolutePath().toLowerCase().endsWith(".owl")) {
                     BasicGraphEditor editor = getEditor(e);
                     String filePath = sFile.getAbsolutePath();
@@ -2123,27 +2120,9 @@ public class EditorActions {
                     editor.setNew_owlResourceData(new_owlResourceData);
                     editor.setOrigin_owlResourceData(origin_owlResourceData);
                    // OwlResourceUtil.print(new_owlResourceData);
-                    new ResSelectFrame5(editor, sFile.getName());
-
+                    new ResSelectFrame(editor);
                 }
             }
-
-
-			/*BasicGraphEditor editor = getEditor(e);
-			String filePath="C:/Users/ASUS/Desktop/putong.owl";
-			editor.setResourceFile(filePath);
-			OwlResourceData origin_owlResourceData = parseResourceFile(filePath);
-			OwlResourceData new_owlResourceData = parseResourceFile(filePath);
-			editor.setNew_owlResourceData(new_owlResourceData);
-			editor.setOrigin_owlResourceData(origin_owlResourceData);
-
-			ResSelectFrame5 resSelectFrame5=new ResSelectFrame5(editor);*/
-			/*selectHandler frame = new selectHandler(editor,origin_owlResourceData);
-			frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-			frame.setSize(1000, 800);
-			frame.setVisible(true);*/
-
-
         }
     }
 
@@ -2157,8 +2136,8 @@ public class EditorActions {
                 return;
             }
 
-            new QuanzhouUploadMxeFileFrame(editor);
-//            new UploadMxeFileFrame(editor);
+            //new QuanzhouUploadMxeFileFrame(editor);
+            new UploadMxeFileFrame(editor);
         }
     }
 

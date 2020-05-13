@@ -1,5 +1,7 @@
 package com.mxgraph.examples.swing.db;
 
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.mxgraph.examples.swing.editor.BasicGraphEditor;
 import com.mxgraph.examples.swing.util.FileUtil;
 import com.mxgraph.io.mxCodec;
@@ -51,11 +53,17 @@ public class DBDataAdaptor extends Thread {
     //使用静态代码块读取配置文件
     private static Properties properties = new Properties();
     private static InputStream in = null;
+    private static Properties urlProperties = new Properties();
+    private static InputStream urlIn = null;
+    private static String url = null;
 
     static {
         try {
             in = new FileInputStream(new File(FileUtil.getAppPath()+"/config/jdbc.properties"));
             properties.load(in);
+            urlIn = new FileInputStream(new File(FileUtil.getAppPath()+"/config/http_url.properties"));
+            urlProperties.load(urlIn);
+            url = urlProperties.getProperty("baseUrl")+urlProperties.getProperty("getTelemetryInfo");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -79,7 +87,6 @@ public class DBDataAdaptor extends Thread {
 
         mxCell root = (mxCell) graph.getModel().getRoot();
         getMonitorInfoStr(root,monitorInfoSet);
-
         for (String str : monitorInfoSet) {
             resStr = resStr + str + "::";
         }
@@ -88,27 +95,21 @@ public class DBDataAdaptor extends Thread {
         } else {
             return;
         }
-        System.out.println("monitorInfoSet="+resStr);
 
         while (running) {
-            /*HttpUtil httpUtil = new HttpUtil(properties.getProperty("http.url"));
-            //使用http请求获取List集合
-            telemetryDTOList = httpUtil.getTelemetryDTOList();
-            //将list的下标清零
-            index = 29;*/
-            String url= null;
+            String JSONBody = null;
+            JSONObject jsonObject = new JSONObject();
             try {
-                url = "http://localhost:8888/telemetry/findMonitorValue/"+URLEncoder.encode(site_name,"utf-8")+"/"+ URLEncoder.encode(resStr,"utf-8");
+                jsonObject.put("site_name", URLEncoder.encode(site_name,"utf-8"));
+                jsonObject.put("resStr", URLEncoder.encode(resStr,"utf-8"));
             } catch (UnsupportedEncodingException e) {
                 e.printStackTrace();
             }
-            //HttpUtil httpUtil = new HttpUtil(url);
-            telemetryDTOList=getTelemetryDTOList(url);
-            //输出list的内容
-          /*  for(TelemetryDTO telemetryDTO:telemetryDTOList){
-                System.out.println(telemetryDTO.getDeviceName()+"  "+telemetryDTO.getDataName()+"  "+telemetryDTO.getDetectedValue());
-            }*/
-
+            JSONBody = jsonObject.toString();
+            JSONBody = "["+JSONBody+"]";
+            System.out.println("JSONBody: "+JSONBody);
+            System.out.println("url: "+url);
+            telemetryDTOList=getTelemetryDTOList(url,JSONBody);
             updatePropertyData(property_data);
             //更新一张图片上所有的属性值
             updateCellData(root);
@@ -151,24 +152,20 @@ public class DBDataAdaptor extends Thread {
         if (cell == null) {
             return ;
         }
-        //System.out.println("type:"+cell.getType());
         if(cell.getType()!=null){
             if(cell.getType().equals("title")){
                 site_name=cell.getValue().toString();
-                site_name=site_name.substring(0,site_name.length()-5);
-                //System.out.println("getMonitorInfoStr  site_name：  "+site_name);
-                //site_name="xian";
+                site_name=site_name.substring(0,site_name.length()-3);
+                System.out.println("site_name： "+site_name);
             }
         }
 
         if (cell.isVertex()  && cell.getAttr() == "property_data") {
-            String monitor_device_name = cell.getMonitor_device_name();
            /* System.out.println("**********************************");
             System.out.println("monitor_device_name：  "+cell.getMonitor_device_name());
             System.out.println("monitor_property_name：  "+cell.getName());
             System.out.println("monitor_unit：  "+cell.getMonitor_unit());
-            System.out.println("**********************************");
-*/
+            System.out.println("**********************************");*/
             String monitorInfo = cell.getMonitor_device_name()+":"+cell.getName();
             monitorInfoSet.add(monitorInfo);
         }
@@ -259,8 +256,7 @@ public class DBDataAdaptor extends Thread {
     /**
      * Saves XML+PNG format.
      */
-    protected void saveXmlPng(BasicGraphEditor editor, String filename,
-                              Color bg) throws IOException {
+    protected void saveXmlPng(BasicGraphEditor editor, String filename, Color bg) throws IOException {
         mxGraphComponent graphComponent = editor.getGraphComponent();
         mxGraph graph = graphComponent.getGraph();
 

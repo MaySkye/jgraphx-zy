@@ -38,19 +38,23 @@ public class HttpUtil {
         this.url = url;
     }
 
-    public static List<TelemetryDTO> getTelemetryDTOList(String url) {
+    public static List<TelemetryDTO> getTelemetryDTOList(String url,String JSONBody) {
         // http请求获取json字符串
-        String str = getDateByUrl(url);
-        System.out.println("telemetryjson:  "+str);
+        String str = null;
+        try {
+            str = sendHttpPost(url,JSONBody);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        System.out.println("telemetryJson:  "+str);
         // Json字符串转换转化为list
-        return JSON.parseObject(str, new TypeReference<List<TelemetryDTO>>() {
-        });
+        return JSON.parseObject(str, new TypeReference<List<TelemetryDTO>>() { });
     }
 
     public static List<SiteDTO> getSiteDTOList(String url) {
         // http请求获取json字符串
         String str = getDateByUrl(url);
-        System.out.println("sitejson:  "+str);
+        System.out.println("siteJson:  "+str);
         // Json字符串转换转化为list
         return JSON.parseObject(str, new TypeReference<List<SiteDTO>>() {
         });
@@ -103,13 +107,13 @@ public class HttpUtil {
         CloseableHttpClient httpClient = HttpClients.createDefault();
         HttpPost httpPost = new HttpPost(url);
         httpPost.addHeader("Content-Type", "application/json");
-        //httpPost.setEntity(new StringEntity(JSONBody));
-        httpPost.setEntity(new StringEntity(URLEncoder.encode(JSONBody,"utf-8")));
+        httpPost.setEntity(new StringEntity(JSONBody));
+        //httpPost.setEntity(new StringEntity(URLEncoder.encode(JSONBody,"utf-8")));
         CloseableHttpResponse response = httpClient.execute(httpPost);
-//		System.out.println(response.getStatusLine().getStatusCode() + "\n");
+        //System.out.println(response.getStatusLine().getStatusCode() + "\n");
         HttpEntity entity = response.getEntity();
         String responseContent = EntityUtils.toString(entity, "utf-8");
-//		System.out.println(responseContent);
+        //System.out.println(responseContent);
         response.close();
         httpClient.close();
         return responseContent;

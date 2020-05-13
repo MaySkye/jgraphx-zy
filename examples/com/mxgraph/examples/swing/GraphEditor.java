@@ -64,17 +64,15 @@ public class GraphEditor extends BasicGraphEditor {
     public GraphEditor(String appTitle, mxGraphComponent component) {
         super(appTitle, component);
         final mxGraph graph = graphComponent.getGraph();
-
         // Creates the shapes palette
         EditorPalette shapesPalette = insertPalette(mxResources.get("shapes"));
         //EditorPalette imagesPalette = insertPalette(mxResources.get("images"));
-       // EditorPalette symbolsPalette = insertPalette(mxResources.get("symbols"));
+        //EditorPalette symbolsPalette = insertPalette(mxResources.get("symbols"));
         EditorPalette opticalDevicesPalette = insertPalette("授时设备");
         EditorPalette networkDevicesPalette = insertPalette("网络设备");
-       // EditorPalette time_devicesPalette = insertPalette("时间设备");
-      //  EditorPalette micro_devicesPalette = insertPalette("微波设备");
+       //EditorPalette time_devicesPalette = insertPalette("时间设备");
+       //EditorPalette micro_devicesPalette = insertPalette("微波设备");
         EditorPalette linksPalette = insertPalette("设备连线");
-
         // Sets the edge template to be used for creating new edges if an edge
         // is clicked in the shape palette
         shapesPalette.addListener(mxEvent.SELECT, new mxIEventListener() {
@@ -102,16 +100,6 @@ public class GraphEditor extends BasicGraphEditor {
         addCellsToPalette(networkDevicesPalette, CellDecoder.networkDeviceCellList);
         // 王伟：添加边
         addEdgesToPalette(linksPalette, EdgeDecoder.egdeList);
-
-		/* 赵艺注解
-		* shapesPalette
-				.addTemplate(
-						"Horizontal Line",
-						new ImageIcon(
-								GraphEditor.class
-										.getResource("/com/mxgraph/examples/swing/images/hline.png")),
-						"line", 160, 10, "");
-		赵艺注解 */
     }
 
     // Adds some template cells for dropping into the graph
@@ -361,8 +349,7 @@ public class GraphEditor extends BasicGraphEditor {
                         50, 50, "Wrench");
     }
 
-    private void addSymbolsToPalette(EditorPalette symbolsPalette)
-    {
+    private void addSymbolsToPalette(EditorPalette symbolsPalette) {
         symbolsPalette
                 .addTemplate(
                         "Cancel",
@@ -492,7 +479,6 @@ public class GraphEditor extends BasicGraphEditor {
                     mxGeometry geo = new mxGeometry(cellPort.getX(), cellPort.getY(), cellPort.getWidth(), cellPort.getHeight());
                     geo.setOffset(new mxPoint(-geo.getWidth() / 2, -geo.getHeight() / 2));
                     geo.setRelative(true);
-
                     mxCell port = new mxCell();
                     port.setStyle(cellPort.getStyle());
                     port.setGeometry(geo);
@@ -502,23 +488,16 @@ public class GraphEditor extends BasicGraphEditor {
                     port.setAttr(cellPort.getAttr());
                     port.setLocation(cellPort.getLocation());
                     port.setDirection(cellPort.getDirection());
-                    //System.out.print("add cell port in " + cell.getName() + " # direction:" + port.getDirection());
-                    //System.out.println(" x:" + port.getGeometry().getX() + " y:" + port.getGeometry().getY());
                     cell.insert(port);
                 }
             }
             AllCellMap.put(cell.getName(), cell);  //添加的图元、连接点
             System.out.println(cellEle.getIcon());
-            //System.out.println(GraphEditor.class.getResource(cellEle.getIcon()));
-            //System.out.println(cell);
             palette.addTemplate(cellEle.getName(),
                     new ImageIcon(GraphEditor.class.getResource(cellEle.getIcon())), cell);
         }
     }
 
-    /**
-     *
-     */
     public static class CustomGraphComponent extends mxGraphComponent {
 
         /**
