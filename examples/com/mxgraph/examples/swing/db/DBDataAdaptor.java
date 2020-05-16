@@ -155,7 +155,7 @@ public class DBDataAdaptor extends Thread {
         if(cell.getType()!=null){
             if(cell.getType().equals("title")){
                 site_name=cell.getValue().toString();
-                site_name=site_name.substring(0,site_name.length()-3);
+                site_name=site_name.substring(0,site_name.length()-5);
                 System.out.println("site_name： "+site_name);
             }
         }

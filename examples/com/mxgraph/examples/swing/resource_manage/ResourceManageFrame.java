@@ -29,7 +29,7 @@ public class ResourceManageFrame extends Application {
         borderPane.setCenter(mainPane);
        // borderPane.setBottom(new Label("status bar"));
         Scene scene = new Scene(borderPane, 1000, 500);
-        primaryStage.setTitle(AliasName.getAlias("资源管理"));
+        primaryStage.setTitle(AliasName.getAlias("资源管理界面"));
         primaryStage.setScene(scene);
         primaryStage.show();
     }

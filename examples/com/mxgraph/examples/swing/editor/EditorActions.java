@@ -43,6 +43,7 @@ import com.mxgraph.examples.swing.owl.OwlObject;
 import com.mxgraph.examples.swing.owl.OwlResourceData;
 import com.mxgraph.examples.swing.resource_manage.ResourceManageFrame;
 import com.mxgraph.examples.swing.select.ResSelectFrame;
+import com.mxgraph.examples.swing.select.ResourceSelectFrame;
 import com.mxgraph.examples.swing.util.*;
 import com.mxgraph.examples.swing.util.ww.WWFiberManager;
 import com.mxgraph.model.mxGeometry;
@@ -2060,7 +2061,7 @@ public class EditorActions {
     }
 
     public static void showTitle(String sitename, BasicGraphEditor editor) {
-        String title = sitename + "监控图";
+        String title = sitename + "站点监控图";
         String titleStyle = AliasName.getAlias("monitor_title_style");
         mxCell titleCell = new mxCell(title, title,
                 new mxGeometry(100, 50, 400, 60), titleStyle);
@@ -2110,7 +2111,6 @@ public class EditorActions {
 
             if (rc == JFileChooser.APPROVE_OPTION) {
                 File sFile = fc.getSelectedFile();
-                lastDir = sFile.getParent();
                 if (sFile.getAbsolutePath().toLowerCase().endsWith(".owl")) {
                     BasicGraphEditor editor = getEditor(e);
                     String filePath = sFile.getAbsolutePath();
@@ -2119,8 +2119,10 @@ public class EditorActions {
                     OwlResourceData new_owlResourceData = parseResourceFile(filePath);
                     editor.setNew_owlResourceData(new_owlResourceData);
                     editor.setOrigin_owlResourceData(origin_owlResourceData);
-                   // OwlResourceUtil.print(new_owlResourceData);
+                    editorUtil.setEditor(editor);
+                    //OwlResourceUtil.print(new_owlResourceData);
                     new ResSelectFrame(editor);
+                    //new ResourceSelectFrame().show();
                 }
             }
         }
