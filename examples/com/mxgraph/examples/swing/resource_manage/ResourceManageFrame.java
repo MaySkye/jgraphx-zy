@@ -48,6 +48,8 @@ public class ResourceManageFrame extends Application {
         }
     }
 
+
+
     public void show() {
         ResourceManageFrame.launch();
     }

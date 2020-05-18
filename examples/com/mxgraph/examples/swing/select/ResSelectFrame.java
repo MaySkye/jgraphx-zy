@@ -300,7 +300,7 @@ public class ResSelectFrame extends Frame{
                     e1.printStackTrace();
                 }
 
-                SimplifyModelInfo ModelInfo =new SimplifyModelInfo(
+                SimplifyModelInfo2 ModelInfo =new SimplifyModelInfo2(
                         editor.getResourceFile(),
                         editor.getNew_owlResourceData().classMap,
                         editor.getNew_owlResourceData().objAttrMap,
@@ -733,9 +733,9 @@ public class ResSelectFrame extends Frame{
 
         //为info(introduction面板赋值)
         info="Name:"+owlObject.id+"  Type:"+owlObject.type.id;
-         jrbtn_list.clear();
-         jRadioButton.setVisible(true);
-         jRadioButton.setSelected(owlObject.visible);
+        jrbtn_list.clear();
+        jRadioButton.setVisible(true);
+        jRadioButton.setSelected(owlObject.visible);
         //用表格显示它的信息
         attrListModel = null;
         attrListModel = new AttrListModel(owlObject);
@@ -872,8 +872,8 @@ public class ResSelectFrame extends Frame{
             origin_freader = new FileInputStream(file_xmi);
             ObjectInputStream new_objectInputStream = new ObjectInputStream(new_freader);
             ObjectInputStream origin_objectInputStream = new ObjectInputStream(origin_freader);
-            SimplifyModelInfo new_simplifyModelInfo=(SimplifyModelInfo) new_objectInputStream.readObject();
-            SimplifyModelInfo origin_simplifyModelInfo=(SimplifyModelInfo) origin_objectInputStream.readObject();
+            SimplifyModelInfo2 new_simplifyModelInfo=(SimplifyModelInfo2) new_objectInputStream.readObject();
+            SimplifyModelInfo2 origin_simplifyModelInfo=(SimplifyModelInfo2) origin_objectInputStream.readObject();
 
             filePath = new_simplifyModelInfo.getFilePath();
             new_open_owlResourceData.classMap=new_simplifyModelInfo.getClassMap();

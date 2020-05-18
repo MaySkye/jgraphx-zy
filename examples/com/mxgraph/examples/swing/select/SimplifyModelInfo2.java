@@ -8,7 +8,6 @@ import javafx.scene.layout.Pane;
 import javafx.scene.shape.Line;
 
 import java.io.Serializable;
-import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -17,7 +16,7 @@ import java.util.Map;
  * @Data: Created in 15:37 2019/1/14
  * @Modify By:
  */
-public class SimplifyModelInfo implements Serializable {
+public class SimplifyModelInfo2 implements Serializable {
     private String filePath ; //文件路径
     private Map<String, OwlClass> classMap ;
     private Map<String, OwlObjectAttribute> objAttrMap ;
@@ -25,24 +24,23 @@ public class SimplifyModelInfo implements Serializable {
     private Map<String, OwlObject> objMap ;
 
     private Map<String, OwlObject> main_objMap ;
+    private Map<String, Object> vertex_objMap ;
     private Map<String, OwlObject> vertex_main_objMap ;
-    private Map<String, Pane> vertex_objMap ;
-    private Map<String, Line> edge_objMap ;
+    private Map<Object, String> edge_objMap ;
 
-    public SimplifyModelInfo(String filePath, Map<String, OwlClass> classMap, Map<String, OwlObjectAttribute> objAttrMap, Map<String, OwlDataAttribute> dataAttrMap, Map<String, OwlObject> objMap, Map<String, OwlObject> main_objMap, Map<String, OwlObject> vertex_main_objMap, Map<String, Pane> vertex_objMap, Map<String, Line> edge_objMap) {
+    public SimplifyModelInfo2(String filePath, Map<String, OwlClass> classMap, Map<String, OwlObjectAttribute> objAttrMap, Map<String, OwlDataAttribute> dataAttrMap, Map<String, OwlObject> objMap, Map<String, OwlObject> main_objMap, Map<String, Object> vertex_objMap, Map<String, OwlObject> vertex_main_objMap, Map<Object, String> edge_objMap) {
         this.filePath = filePath;
         this.classMap = classMap;
         this.objAttrMap = objAttrMap;
         this.dataAttrMap = dataAttrMap;
         this.objMap = objMap;
         this.main_objMap = main_objMap;
-        this.vertex_main_objMap = vertex_main_objMap;
         this.vertex_objMap = vertex_objMap;
+        this.vertex_main_objMap = vertex_main_objMap;
         this.edge_objMap = edge_objMap;
     }
 
-    public SimplifyModelInfo() {
-
+    public SimplifyModelInfo2() {
     }
 
     public String getFilePath() {
@@ -93,6 +91,14 @@ public class SimplifyModelInfo implements Serializable {
         this.main_objMap = main_objMap;
     }
 
+    public Map<String, Object> getVertex_objMap() {
+        return vertex_objMap;
+    }
+
+    public void setVertex_objMap(Map<String, Object> vertex_objMap) {
+        this.vertex_objMap = vertex_objMap;
+    }
+
     public Map<String, OwlObject> getVertex_main_objMap() {
         return vertex_main_objMap;
     }
@@ -101,19 +107,11 @@ public class SimplifyModelInfo implements Serializable {
         this.vertex_main_objMap = vertex_main_objMap;
     }
 
-    public Map<String, Pane> getVertex_objMap() {
-        return vertex_objMap;
-    }
-
-    public void setVertex_objMap(Map<String, Pane> vertex_objMap) {
-        this.vertex_objMap = vertex_objMap;
-    }
-
-    public Map<String, Line> getEdge_objMap() {
+    public Map<Object, String> getEdge_objMap() {
         return edge_objMap;
     }
 
-    public void setEdge_objMap(Map<String, Line> edge_objMap) {
+    public void setEdge_objMap(Map<Object, String> edge_objMap) {
         this.edge_objMap = edge_objMap;
     }
 }

@@ -122,6 +122,18 @@ public class LoginFrame extends JFrame {
                 path = text1.getText();
                 username = text2.getText();
                 password = text3.getText();
+                System.out.println("username: "+username);
+
+                /*if(username.equals("")){
+                    JOptionPane.showMessageDialog(null, "用户名不能为空", "提示", JOptionPane.ERROR_MESSAGE);
+                }
+                if(password.equals("")){
+                    JOptionPane.showMessageDialog(null, "密码不能为空", "提示", JOptionPane.ERROR_MESSAGE);
+                }
+                if(path.equals("")){
+                    JOptionPane.showMessageDialog(null, "文件路径不能为空", "提示", JOptionPane.ERROR_MESSAGE);
+                }*/
+
                 /*
                 * 不进行验证时
                 * */

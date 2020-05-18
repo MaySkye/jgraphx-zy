@@ -1,15 +1,30 @@
 package com.mxgraph.examples.swing.select;
 
 import com.mxgraph.examples.swing.editor.BasicGraphEditor;
+import com.mxgraph.examples.swing.editor.DefaultFileFilter;
 import com.mxgraph.examples.swing.editor.EditorActions;
+import com.mxgraph.examples.swing.graph.GraphInterface;
+import com.mxgraph.examples.swing.graph.showGraph;
+import com.mxgraph.examples.swing.match.ModifyTemplateCore;
+import com.mxgraph.examples.swing.match.ResMatchCore;
 import com.mxgraph.examples.swing.owl.*;
 import com.mxgraph.examples.swing.resource_manage.ResourceManageFrame;
 import com.mxgraph.examples.swing.util.AliasName;
+import com.mxgraph.examples.swing.util.FileUtil;
 import com.mxgraph.examples.swing.util.editorUtil;
+import com.mxgraph.examples.swing.util.ww.WWFiberManager;
+import com.mxgraph.io.mxCodec;
+import com.mxgraph.swing.mxGraphComponent;
+import com.mxgraph.util.mxResources;
+import com.mxgraph.util.mxUtils;
+import com.mxgraph.util.mxXmlUtils;
+import com.mxgraph.view.mxGraph;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
+import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
 import javafx.scene.Node;
@@ -28,9 +43,15 @@ import javafx.scene.shape.Line;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
+import org.w3c.dom.Document;
 
+import javax.swing.*;
+import javax.swing.filechooser.FileFilter;
+import java.io.*;
 import java.util.*;
 
+import static com.mxgraph.examples.swing.editor.EditorActions.showTitle;
 import static com.mxgraph.examples.swing.owl.OwlResourceUtil.findKind;
 
 /**
@@ -46,11 +67,23 @@ public class ResourceSelectFrame extends Application {
     private OwlResourceData new_owlResourceData;
     private Map<String, OwlObject> origin_objMap;
     private Map<String, OwlObject> new_objMap;
-    private Map<String, OwlObject> main_objMap=new HashMap<>();
-    private Map<String, Pane> vertex_objMap=new HashMap<>();
-    private Map<String, OwlObject> vertex_main_objMap=new HashMap<>();
-    private Map<Line, String> edge_objMap=new HashMap<>();
+    private Map<String, OwlObject> main_objMap=new HashMap<>(); //<url,OwlObject> 存储所有的类型为FOI或ControlRoom的对象
+    private Map<String, OwlObject> vertex_main_objMap=new HashMap<>(); //<id,OwlObject> 方便查找对象信息，存储当前显示的设备
+    private Map<String, Pane> vertex_objMap=new HashMap<>(); //<id,Pane>  方便查找顶点对象，进行设备的增删改查
+    private Map<String, Line> edge_objMap=new HashMap<>(); //<id,Line>  方便查找连线对象，进行连线的增删改查
     private String siteName;
+    private String filePath;
+
+    private List<String> devInfoList = new ArrayList<>();
+    private List<CheckBox> propertyCkList = new ArrayList<>();
+    private List<CheckBox> linkCkList = new ArrayList<>();
+    private BorderPane devInfoBorderPane;
+    private VBox propertyBox ;
+    private VBox linkBox ;
+    private Pane graphPane;
+    private CheckBox checkBox;
+
+    private Stage primaryStage;
 
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -60,6 +93,7 @@ public class ResourceSelectFrame extends Application {
         this.new_owlResourceData = this.editor.getNew_owlResourceData();
         this.origin_objMap = this.origin_owlResourceData.objMap;
         this.new_objMap = this.new_owlResourceData.objMap;
+        this.filePath = editor.getResourceFile();
 
         initSiteName();
         //总布局
@@ -69,6 +103,14 @@ public class ResourceSelectFrame extends Application {
         primaryStage.setTitle("自定义监控资源模板界面");
         primaryStage.setScene(scene);
         primaryStage.show();
+        this.primaryStage = primaryStage;
+        primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+            @Override
+            public void handle(WindowEvent event) {
+                System.exit(0);
+            }
+        });
+
     }
 
     public void creatTabContent(BorderPane pane){
@@ -91,12 +133,20 @@ public class ResourceSelectFrame extends Application {
         setButton(refreshBtn);
         setButton(diagramBtn);
         flowPane.getChildren().addAll(openBtn,saveBtn,backBtn,refreshBtn,diagramBtn);
+        openBtn.setOnMouseClicked(event -> openBtnAction());
+        saveBtn.setOnMouseClicked(event -> saveBtnAction());
+        backBtn.setOnMouseClicked(event -> backBtnAction());
+        refreshBtn.setOnMouseClicked(event -> refreshBtnAction());
+        diagramBtn.setOnMouseClicked(event -> diagramBtnAction());
 
         //拓扑图布局
         BorderPane borderPane = new BorderPane();
         borderPane.setPrefSize(700,400);
-        borderPane.setBorder(new Border(new BorderStroke(Color.GREY, BorderStrokeStyle.SOLID, null, new BorderWidths(1))));
+        //borderPane.setBorder(new Border(new BorderStroke(Color.GREY, BorderStrokeStyle.SOLID, null, new BorderWidths(1))));
 
+        Pane p =new Pane();
+        p.setPrefWidth(700);
+        p.setBorder(new Border(new BorderStroke(Color.GREY, BorderStrokeStyle.SOLID, null, new BorderWidths(1))));
         Label grpLabel = new Label("监控资源模板拓扑图");
         grpLabel.setFont(new Font(14));
         grpLabel.setAlignment(Pos.CENTER_LEFT);
@@ -104,7 +154,8 @@ public class ResourceSelectFrame extends Application {
         grpLabel.setPrefWidth(700);
         grpLabel.setPadding(new Insets(5, 5, 5, 10));
         //grpLabel.setBorder(new Border(new BorderStroke(Color.GREY, BorderStrokeStyle.SOLID, null, new BorderWidths(1))));
-        borderPane.setTop(grpLabel);
+        p.getChildren().add(grpLabel);
+        borderPane.setTop(p);
 
         /*Canvas canvas = new Canvas(300, 100);
         GraphicsContext gc = canvas.getGraphicsContext2D();
@@ -115,15 +166,14 @@ public class ResourceSelectFrame extends Application {
         gc.strokeText("Hello Canvas", 150, 20);
         borderPane.setCenter(canvas);*/
 
-        Pane graph = paint(borderPane.getHeight()-grpLabel.getHeight()-10,borderPane.getWidth()-borderPane.getHeight()-10);
-        graph.setPrefWidth(700);
-        graph.setBorder(new Border(new BorderStroke(Color.GREY, BorderStrokeStyle.SOLID, null, new BorderWidths(1))));
-        borderPane.setCenter(graph);
+        graphPane = paint(borderPane.getHeight()-grpLabel.getHeight()-10,borderPane.getWidth()-borderPane.getHeight()-10);
+        graphPane.setPrefWidth(700);
+        graphPane.setBorder(new Border(new BorderStroke(Color.GREY, BorderStrokeStyle.SOLID, null, new BorderWidths(1))));
+        borderPane.setCenter(graphPane);
 
         //信息框布局
         VBox vBox = new VBox();
-        vBox.setPadding(new Insets(0, 5, 5, 5));
-        vBox.setBorder(new Border(new BorderStroke(Color.GREY, BorderStrokeStyle.SOLID, null, new BorderWidths(1))));
+        //vBox.setBorder(new Border(new BorderStroke(Color.GREY, BorderStrokeStyle.SOLID, null, new BorderWidths(1))));
 
         Label infoLabel = new Label("资源信息预览");
         infoLabel.setFont(new Font(14));
@@ -131,50 +181,39 @@ public class ResourceSelectFrame extends Application {
         infoLabel.setPrefHeight(20);
         infoLabel.setPrefWidth(300);
         infoLabel.setPadding(new Insets(5, 5, 5, 10));
-        //infoLabel.setBorder(new Border(new BorderStroke(Color.GREY, BorderStrokeStyle.SOLID, null, new BorderWidths(1))));
+        infoLabel.setBorder(new Border(new BorderStroke(Color.GREY, BorderStrokeStyle.SOLID, null, new BorderWidths(1))));
         vBox.getChildren().add(infoLabel);
+
+        checkBox = new CheckBox("将该设备添加到监控图");
+        checkBox.setSelected(true);
+        checkBox.setPadding(new Insets(5, 5, 5, 10));
+        vBox.getChildren().add(checkBox);
 
         Label lbDevInfo = new Label("基本信息:");
         Label lbProperty = new Label("监测属性:");
         Label lbLink = new Label("连接信息:");
-        BorderPane devInfoBorderPane = new BorderPane();
-        VBox propertyBox = new VBox();
-        VBox linkBox = new VBox();
+        lbDevInfo.setPadding(new Insets(3, 3, 3, 5));
+        lbProperty.setPadding(new Insets(3, 3, 3, 5));
+        lbLink.setPadding(new Insets(3, 3, 3, 5));
+        devInfoBorderPane = new BorderPane();
+        propertyBox = new VBox();
+        linkBox = new VBox();
         devInfoBorderPane.setPrefSize(300,400);
         propertyBox.setPrefSize(300,400);
         linkBox.setPrefSize(300,400);
+        //devInfoBorderPane.setBorder(new Border(new BorderStroke(Color.GREY, BorderStrokeStyle.SOLID, null, new BorderWidths(1))));
+        //propertyBox.setBorder(new Border(new BorderStroke(Color.GREY, BorderStrokeStyle.SOLID, null, new BorderWidths(1))));
+        //linkBox.setBorder(new Border(new BorderStroke(Color.GREY, BorderStrokeStyle.SOLID, null, new BorderWidths(1))));
 
-        //包含三个信息框--基本信息、监测属性、连接属性
-        //基本信息--列表
-        List<String> infoList = new ArrayList<>();
-        infoList.add("名称：设备");
-        infoList.add("----------");
-        infoList.add("----------");
-        ListView<String> infoListView = new ListView<>(FXCollections.observableList(infoList));
-        infoListView.setCellFactory(list -> new ResourceManageFrame.ListViewCell());
-        infoListView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
-        infoListView.setOnMouseClicked(event -> {
-            String info = infoListView.getSelectionModel().getSelectedItem();//info
-        });
-        devInfoBorderPane.setTop(lbDevInfo);
-        devInfoBorderPane.setCenter(infoListView);
-
-        //监测属性--多选框
-        CheckBox ck1 = new CheckBox("麻婆豆腐"); // 创建一个复选框
-        CheckBox ck2 = new CheckBox("清蒸桂花鱼"); // 创建一个复选框
-        CheckBox ck3 = new CheckBox("香辣小龙虾"); // 创建一个复选框
-        propertyBox.getChildren().add(lbProperty);
-        propertyBox.getChildren().add(ck1);
-        propertyBox.getChildren().add(ck2);
-        propertyBox.getChildren().add(ck3);
-
-        //连接属性--多选框
-        linkBox.getChildren().add(lbLink);
-        linkBox.getChildren().add(ck1);
-
+        //基本信息--字符串列表
+        vBox.getChildren().add(lbDevInfo);
         vBox.getChildren().add(devInfoBorderPane);
-        vBox.getChildren().add(propertyBox);
-        vBox.getChildren().add(linkBox);
+        //监测属性--多选框列表
+        vBox.getChildren().add(lbProperty);
+        vBox.getChildren().addAll(propertyBox);
+        //连接属性--多选框列表
+        vBox.getChildren().add(lbLink);
+        vBox.getChildren().addAll(linkBox);
 
         pane.setTop(flowPane);
         pane.setCenter(borderPane);
@@ -201,6 +240,7 @@ public class ResourceSelectFrame extends Application {
                     if (entrys.getKey().id.equals("站点名称")&&entrys.getValue().size()!=0) {
                         for (Object obj : entrys.getValue()) {
                             siteName = obj.toString();
+
                             System.out.println("siteName: "+siteName);
                             return;
                         }
@@ -210,12 +250,89 @@ public class ResourceSelectFrame extends Application {
         }
     }
 
+    private void initList(OwlObject owlObject){
+        devInfoList.clear();
+        propertyCkList.clear();
+        linkCkList.clear();
+
+        checkBox.addEventHandler(MouseEvent.MOUSE_CLICKED,event -> {
+            if (checkBox.isSelected()) {
+                owlObject.visible = true;
+            } else {
+                owlObject.visible = false;
+            }
+        });
+
+        String s1 = "Name: "+owlObject.id;
+        String s2 = "Type: "+owlObject.type.id;
+        devInfoList.add(s1);
+        devInfoList.add(s2);
+        for(Map.Entry<OwlDataAttribute, Set<Object>> entry : owlObject.dataAttrs.entrySet()){
+            if(entry.getKey().id!=null){
+                for (Object owlobj : entry.getValue()) {
+                    System.out.println("entry.getKey().id: "+entry.getKey().id+"---:"+owlobj.toString());
+                    String s = entry.getKey().id+": "+owlobj.toString();
+                    devInfoList.add(s);
+                }
+            }
+        }
+
+        for (Map.Entry<OwlObjectAttribute, Set<OwlObject>> e : owlObject.objAttrs.entrySet()) {
+            if (e.getKey().id.equals("has_property")) {
+                for (OwlObject obj : e.getValue()) {
+                    CheckBox ck = new CheckBox(obj.id);
+                    ck.setSelected(obj.visible);
+                    propertyCkList.add(ck);
+                    ck.addEventHandler(MouseEvent.MOUSE_CLICKED,event -> {
+                        if (ck.isSelected()) {
+                            obj.visible = true;
+                        } else {
+                            obj.visible = false;
+                        }
+                    });
+                }
+            }
+            if (e.getKey().id.equals("connect") || e.getKey().id.equals("data_trans")) {
+                for (OwlObject obj : e.getValue()) {
+                    if (obj.visible) {
+                        String s = owlObject.id + "-" + obj.id;
+                        CheckBox ck = new CheckBox(s);
+                        ck.setSelected(true);
+                        linkCkList.add(ck);
+                    }
+                }
+            }
+        }
+    }
+
+    private void updateVBox(BorderPane devInfoBorderPane,VBox propertyBox,VBox linkBox){
+        devInfoBorderPane.getChildren().clear();
+        propertyBox.getChildren().clear();
+        linkBox.getChildren().clear();
+
+        ListView<String> infoListView = new ListView<>(FXCollections.observableList(devInfoList));
+        infoListView.setCellFactory(list -> new ResourceManageFrame.ListViewCell());
+        infoListView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+        infoListView.setOnMouseClicked(event -> {
+            String info = infoListView.getSelectionModel().getSelectedItem();//info
+        });
+
+        ListView<CheckBox> propertyListView = new ListView<>(FXCollections.observableList(propertyCkList));
+        propertyListView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+        ListView<CheckBox> linkListView = new ListView<>(FXCollections.observableList(linkCkList));
+        linkListView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+
+        devInfoBorderPane.setCenter(infoListView);
+        propertyBox.getChildren().add(propertyListView);
+        linkBox.getChildren().add(linkListView);
+    }
+
     private Pane paint(double height,double width){
         System.out.println("height: "+height+" width:"+width);
         Pane graph = new Pane();
-        main_objMap.clear(); //<url,OwlObject> 存储类型为FOI的对象
-        vertex_main_objMap.clear(); //<id,OwlObject> 方便查找对象信息
-        vertex_objMap.clear(); //<id,Object>  方便查找图形对象，进行图形的增删改查
+        main_objMap.clear();
+        vertex_main_objMap.clear();
+        vertex_objMap.clear();
         init_main_objMap(new_objMap,main_objMap);
         //先判断个数
         int num= OwlResourceUtil.getFOINum(main_objMap);
@@ -271,7 +388,7 @@ public class ResourceSelectFrame extends Application {
                             line.endXProperty().bind(node2.layoutXProperty().add(node2.widthProperty().divide(2)));
                             line.endYProperty().bind(node2.layoutYProperty().add(node2.heightProperty().divide(2)));
                             graph.getChildren().add(line);
-                            edge_objMap.put(line,entry.getValue().id+"-"+obj2.id);
+                            edge_objMap.put(entry.getValue().id+"-"+obj2.id,line);
                         }
                     });
                 }
@@ -289,7 +406,7 @@ public class ResourceSelectFrame extends Application {
                             line.endXProperty().bind(node2.layoutXProperty().add(node2.widthProperty().divide(2)));
                             line.endYProperty().bind(node2.layoutYProperty().add(node2.heightProperty().divide(2)));
                             graph.getChildren().add(line);
-                            edge_objMap.put(line,entry.getValue().id+"-"+obj2.id);
+                            edge_objMap.put(entry.getValue().id+"-"+obj2.id,line);
                         }
                     });
                 }
@@ -359,6 +476,8 @@ public class ResourceSelectFrame extends Application {
         node.addEventHandler(MouseEvent.MOUSE_CLICKED,event -> {
             String name = node.getId();
             System.out.println("nodeName: "+name);
+            initList(vertex_main_objMap.get(name));
+            updateVBox(devInfoBorderPane,propertyBox,linkBox);
         });
     }
 
@@ -377,11 +496,167 @@ public class ResourceSelectFrame extends Application {
         return node;
     }
 
+    private void openBtnAction() {
+        System.out.println("press button: open");
+
+    }
+
+    private void saveBtnAction() {
+        System.out.println("press button: save");
+        //保存为xmodel文件
+        FileFilter selectedFilter;
+        String filename;
+        String filename_xmodel = "" ;
+        String filename_xmi = "";
+        String lastDir = FileUtil.getAppPath();
+        System.out.println("FileUtil.getAppPath(): "+FileUtil.getAppPath());
+        String wd;
+        if (lastDir != null) {
+            wd = lastDir;
+        } else {
+            wd = FileUtil.getAppPath();
+        }
+        JFileChooser fc = new JFileChooser(wd);
+        // Adds the default file format
+        DefaultFileFilter defaultFilter = new DefaultFileFilter(".xmodel",
+                "xmodel file " + mxResources.get("file") + " (.xmodel)");
+        // Adds special vector graphics formats and HTML
+        fc.addChoosableFileFilter(defaultFilter);
+
+        // Adds filter that accepts all supported image formats
+        fc.setFileFilter(defaultFilter);
+        int rc = fc.showDialog(null, mxResources.get("save"));
+
+        if (rc != JFileChooser.APPROVE_OPTION) {
+            return;
+        } else {
+            lastDir = fc.getSelectedFile().getParent();
+        }
+
+        filename = fc.getSelectedFile().getAbsolutePath();
+        selectedFilter = fc.getFileFilter();
+        if (selectedFilter == null || !selectedFilter.equals(defaultFilter)) {
+            return;
+        }
+
+        String ext = ((DefaultFileFilter) selectedFilter).getExtension();
+
+        if (!filename.toLowerCase().endsWith(ext)) {
+            filename_xmodel =filename+ ext;
+        }
+
+       /* if (new File(filename_xmodel).exists() && JOptionPane.showConfirmDialog(graphComponent,
+                mxResources.get("overwriteExistingFile")) != JOptionPane.YES_OPTION) {
+            return;
+        }
+
+        System.out.println("filename:"+filename);
+        System.out.println("filename_xmodel:"+filename_xmodel);
+        System.out.println("filename_xmi:"+filename_xmi);
+
+        // save as xmodel file
+        mxCodec codec = new mxCodec();
+        graphPane.g
+        String xml = mxXmlUtils.getXml(codec.encode(graph.getModel()));
+
+        try {
+            mxUtils.writeFile(xml, filename_xmodel);
+        } catch (IOException e1) {
+            e1.printStackTrace();
+        }
+
+        SimplifyModelInfo ModelInfo =new SimplifyModelInfo(
+                editor.getResourceFile(),
+                editor.getNew_owlResourceData().classMap,
+                editor.getNew_owlResourceData().objAttrMap,
+                editor.getNew_owlResourceData().dataAttrMap,
+                editor.getNew_owlResourceData().objMap,
+                main_objMap,
+                vertex_main_objMap,
+                vertex_objMap,
+                edge_objMap
+        );
+
+        FileOutputStream outStream = null;
+        filename_xmi = filename+".xmi";
+        System.out.println("filename_xmi:"+filename_xmi);
+        try {
+            outStream = new FileOutputStream(filename_xmi);
+            ObjectOutputStream objectOutputStream = new ObjectOutputStream(outStream);
+            objectOutputStream.writeObject(ModelInfo);
+            outStream.close();
+            System.out.println("successful");
+        } catch (FileNotFoundException e1) {
+            e1.printStackTrace();
+        } catch (IOException e1) {
+            e1.printStackTrace();
+        }*/
+    }
+
+
+    private void backBtnAction() {
+        System.out.println("press button: back");
+
+    }
+
+    private void refreshBtnAction() {
+        System.out.println("press button: refresh");
+        graphPane.getChildren().clear();
+        //graphPane = paint();
+
+
+    }
+
+    private void diagramBtnAction() {
+        System.out.println("press button: diagram");
+         //匹配模板图时使用如下方法
+        //为graph匹配相似度最高的match_graph,得到对应模板图的文件名
+        OwlResourceUtil.print(new_owlResourceData);
+
+        String templatePath= ResMatchCore.getTemplatePath(new_owlResourceData);
+        System.out.println("templatePath:"+templatePath);
+
+        /*此段代码可以显示出模板mxe文件*/
+        if (templatePath == null) {
+            return;
+        }
+        Document document = null;
+        try {
+            document = mxXmlUtils.parseXml(FileUtil.readFile(this.getClass().getResourceAsStream(templatePath)));
+        } catch (IOException e1) {
+            e1.printStackTrace();
+        }
+        mxCodec codec = new mxCodec(document);
+        codec.decode(document.getDocumentElement(), editor.getGraphComponent().getGraph().getModel());
+        // 根据资源模型文件，对模板组态图进行调整,
+        // 则可以显示出调整好的组态图，图元没有绑定资源信息
+        GraphInterface<String> graph= showGraph.createGraph(new_owlResourceData);
+        new ModifyTemplateCore(templatePath).postProcess(graph,editor,filePath);
+
+        //添加标题
+        showTitle(siteName,editor);
+        editor.getGraphComponent().getGraph().refresh();
+        editor.getOrigin_owlResourceData().title = siteName;
+        editor.getNew_owlResourceData().title = siteName;
+
+        // 王伟：todo
+        WWFiberManager.doHandleForGraph(editor.getGraphComponent().getGraph());
+        primaryStage.close();
+        System.exit(0);
+    }
+
+
     public void show() {
         ResourceSelectFrame.launch();
     }
 
-    /*public static void main(String[] args) {
-        new ResourceSelectFrame().show();
-    }*/
+    public static void main(String[] args) {
+        //new ResourceSelectFrame().show();
+        List<String> candidateList =new ArrayList<>();
+        candidateList.add("111");
+        candidateList.add("222");
+        Object selectedVaule = JOptionPane.showInputDialog(null, AliasName.getAlias("select_template"),
+                AliasName.getAlias("select"), JOptionPane.INFORMATION_MESSAGE, null,
+                candidateList.toArray(), candidateList.get(0));
+    }
 }
