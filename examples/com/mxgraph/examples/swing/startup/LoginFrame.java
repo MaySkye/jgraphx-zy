@@ -6,15 +6,18 @@ import com.mxgraph.examples.swing.auth.Check;
 import com.mxgraph.examples.swing.auth.Md5;
 import com.mxgraph.examples.swing.auth.VerifyIdentity;
 import com.mxgraph.examples.swing.frame.StartUI;
+import com.mxgraph.examples.swing.util.FileUtil;
+import com.mxgraph.examples.swing.util.HttpUtil;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
+import java.io.*;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Properties;
 
 import static javax.swing.JFileChooser.FILES_AND_DIRECTORIES;
 
@@ -33,16 +36,30 @@ public class LoginFrame extends JFrame {
     private JLabel label3 = new JLabel("密码");
     private JTextField text1 = new JTextField();
     private JTextField text2 = new JTextField();
-    private JTextField text3 = new JTextField();
+    private JPasswordField  text3 = new JPasswordField ();
     private JButton button1 = new JButton("选择");
     private JButton button2 = new JButton("登录");
     private JButton button3 = new JButton("取消");
     private JFileChooser jfc = new JFileChooser();//文件选择器
     private ButtonAction btnAction = new ButtonAction();
 
+    private static Properties urlProperties = new Properties();
+    private static InputStream urlIn = null;
+    private static String loginUrl;
+
     private JLabel labelBack = new JLabel(new ImageIcon(this.getClass().getResource("/com/mxgraph/examples/swing/images/others/login_back.jpg")));
 
     public LoginFrame() {
+
+        try {
+            urlIn = new FileInputStream(new File(FileUtil.getAppPath()+"/config/http_url.properties"));
+            urlProperties.load(urlIn);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        loginUrl = urlProperties.getProperty("baseUrl")+urlProperties.getProperty("login")+"?_allow_anonymous=true";
 
         double lx = Toolkit.getDefaultToolkit().getScreenSize().getWidth();
         double ly = Toolkit.getDefaultToolkit().getScreenSize().getHeight();
@@ -122,28 +139,34 @@ public class LoginFrame extends JFrame {
                 path = text1.getText();
                 username = text2.getText();
                 password = text3.getText();
-                System.out.println("username: "+username);
+                System.out.println("username: "+username+" password:"+password);
 
-                /*if(username.equals("")){
-                    JOptionPane.showMessageDialog(null, "用户名不能为空", "提示", JOptionPane.ERROR_MESSAGE);
+                if(username.equals("")){
+                    JOptionPane.showMessageDialog(null, "用户名不能为空", "提示", JOptionPane.INFORMATION_MESSAGE);
                 }
-                if(password.equals("")){
-                    JOptionPane.showMessageDialog(null, "密码不能为空", "提示", JOptionPane.ERROR_MESSAGE);
+                else if(password.equals("")){
+                    JOptionPane.showMessageDialog(null, "密码不能为空", "提示", JOptionPane.INFORMATION_MESSAGE);
                 }
-                if(path.equals("")){
-                    JOptionPane.showMessageDialog(null, "文件路径不能为空", "提示", JOptionPane.ERROR_MESSAGE);
-                }*/
+                else if(path.equals("")){
+                    JOptionPane.showMessageDialog(null, "卡路径不能为空", "提示", JOptionPane.INFORMATION_MESSAGE);
+                }else{
+                    /*
+                     * 不进行验证时
+                     * */
+                    //boolean loginResult = login(username,password,path,loginUrl);
+                    boolean loginResult = true;
+                    if(loginResult){
+                        setVisible(false);
+                        dispose();
+                        new StartUI(username);
+                    }else{
+                        JOptionPane.showMessageDialog(null, "用户名密码错误", "提示", JOptionPane.ERROR_MESSAGE);
+                    }
 
-                /*
-                * 不进行验证时
-                * */
-                setVisible(false);
-                dispose();
-                new StartUI(username);
 
-                /*
-                * 进行用户身份验证+权限验证
-                * */
+                    /*
+                     * 进行用户身份验证+权限验证
+                     * */
                /* try {
                     //TODO: verifyIdentity
                     String resp = VerifyIdentity.VerifyIdentity(username, path);
@@ -175,9 +198,14 @@ public class LoginFrame extends JFrame {
                         jsonRead = JSONObject.parseObject(resp2);
                         code = (Integer)jsonRead.get("code");
                         if (code == 0) {
-                            setVisible(false);
-                            dispose();
-                            new StartUI(username);
+                            boolean loginResult = login(username,password,path,loginUrl);
+                            if(loginResult){
+                                setVisible(false);
+                                dispose();
+                                new StartUI(username);
+                            }else{
+                                JOptionPane.showMessageDialog(null, "用户名密码错误", "提示", JOptionPane.ERROR_MESSAGE);
+                            }
                         }
                     } else {
                         //显示错误弹出框
@@ -187,11 +215,25 @@ public class LoginFrame extends JFrame {
                 } catch (Exception ex) {
                     ex.printStackTrace();
                 }*/
+                }
             }
 
             if(e.getSource().equals(button3)){
                 System.exit(0);
             }
+        }
+    }
+
+    public boolean login(String username,String password,String path,String url){
+        //验证用户名密码
+        String loginResult = HttpUtil.loginPost(username,password,path,url);
+        System.out.println("loginResult: "+loginResult);
+        JSONObject obj = JSONObject.parseObject(loginResult);
+        String id_token = obj.getString("id_token");
+        if(id_token!=null){
+            return true;
+        }else{
+            return false;
         }
     }
 

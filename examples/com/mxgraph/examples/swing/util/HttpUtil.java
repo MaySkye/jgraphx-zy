@@ -1,5 +1,6 @@
 package com.mxgraph.examples.swing.util;
 
+import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.TypeReference;
 import com.mxgraph.examples.swing.db.SiteDTO;
 import com.mxgraph.examples.swing.db.TelemetryDTO;
@@ -49,6 +50,29 @@ public class HttpUtil {
         System.out.println("telemetryJson:  "+str);
         // Json字符串转换转化为list
         return JSON.parseObject(str, new TypeReference<List<TelemetryDTO>>() { });
+    }
+
+    public static String loginPost(String username,String password,String path,String url){
+
+        String JSONBody = null;
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("username", URLEncoder.encode(username,"utf-8"));
+            jsonObject.put("password", URLEncoder.encode(password,"utf-8"));
+            jsonObject.put("pemFileContent", URLEncoder.encode(path,"utf-8"));
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        JSONBody = jsonObject.toString();
+        //JSONBody = "["+JSONBody+"]";
+        System.out.println("JSONBody: "+JSONBody);
+
+        try {
+            return sendHttpPost(url,JSONBody);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     public static List<SiteDTO> getSiteDTOList(String url) {

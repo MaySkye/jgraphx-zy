@@ -24,5 +24,5 @@
     <map name="monitor_name_style" alias="fillColor=#DCDCDC;gradientColor=#FFFFFF;fontFamily=楷体;fontSize=16;fontStyle=1;fontColor=#000000;strokeColor=#000000;strokeWidth=1;labelPosition=center;align=center"/>
     <map name="monitor_data_style" alias="fillColor=#FFFFFF;gradientColor=#FFFFFF;fontFamily=楷体;fontSize=18;fontStyle=1;fontColor=#000099;strokeColor=#000000;strokeWidth=1;labelPosition=center;align=center"/>
     <map name="monitor_unit_style" alias="fillColor=#DCDCDC;;gradientColor=#FFFFFF;fontFamily=楷体;fontSize=16;fontStyle=1;fontColor=#000000;strokeColor=#000000;strokeWidth=1;labelPosition=center;align=center"/>
-    <map name="monitor_title_style" alias="fillColor=#FFFFFF;gradientColor=#FFFFFF;fontFamily=楷体;fontSize=32;fontStyle=1;fontColor=#000000;strokeColor=#FFFFFF;strokeWidth=0;labelPosition=center;align=center"/>
+    <map name="monitor_title_style" alias="fillColor=#F5F5F5;gradientColor=#F5F5F5;fontFamily=楷体;fontSize=36;fontStyle=1;fontColor=#000000;strokeColor=#FFFFFF;strokeWidth=0;labelPosition=center;align=center"/>
 </Template>

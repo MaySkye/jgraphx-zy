@@ -55,6 +55,16 @@ public class mxCell implements mxICell, Cloneable, Serializable
 		this.v = v;
 	}
 
+	protected String vertextInfo;
+
+	public String getVertextInfo() {
+		return vertextInfo;
+	}
+
+	public void setVertextInfo(String vertextInfo) {
+		this.vertextInfo = vertextInfo;
+	}
+
 	protected EdgeLink edgeLink;
 
 	public EdgeLink getEdgeLink() {
@@ -65,7 +75,18 @@ public class mxCell implements mxICell, Cloneable, Serializable
 		this.edgeLink = edgeLink;
 	}
 
+	protected String edgeLinkInfo;
+
+	public String getEdgeLinkInfo() {
+		return edgeLinkInfo;
+	}
+
+	public void setEdgeLinkInfo(String edgeLinkInfo) {
+		this.edgeLinkInfo = edgeLinkInfo;
+	}
+
 	protected String name;
+
 	protected String type;
 
 	public String getName() {
@@ -147,6 +168,7 @@ public class mxCell implements mxICell, Cloneable, Serializable
 	protected String monitor_device_name;
 	protected String monitor_property_name;
 	protected String monitor_property_type;
+	protected String monitor_property_kind;//属于开关量、模拟量、累计量和设定量
 	protected String monitor_unit;
 
 	public String getMonitor_device_name() {
@@ -181,7 +203,15 @@ public class mxCell implements mxICell, Cloneable, Serializable
 		this.monitor_unit = monitor_unit;
 	}
 
-    //原始资源文件，初始情况下两个字段内容相同
+	public String getMonitor_property_kind() {
+		return monitor_property_kind;
+	}
+
+	public void setMonitor_property_kind(String monitor_property_kind) {
+		this.monitor_property_kind = monitor_property_kind;
+	}
+
+	//原始资源文件，初始情况下两个字段内容相同
 	//如果为组态图重新绑定资源文件，则bindResourceFile值改变
 	protected String originalResourceFile;
 

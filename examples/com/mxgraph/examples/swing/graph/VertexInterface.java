@@ -1,5 +1,7 @@
 package com.mxgraph.examples.swing.graph;
 
+import com.alibaba.fastjson.JSON;
+
 import java.util.Iterator;
 import java.util.Map;
 
@@ -82,5 +84,7 @@ public interface VertexInterface<T> {
     public void setCost(double newCost);//设置到该顶点路径的费用
 
     public double getCost();//提取到该顶点路径的费用
+
+    public String getJsonStr(VertexInterface<T> v);
 
 }

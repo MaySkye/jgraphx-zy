@@ -64,11 +64,11 @@ public class GraphEditor extends BasicGraphEditor {
     public GraphEditor(String appTitle, mxGraphComponent component) {
         super(appTitle, component);
         final mxGraph graph = graphComponent.getGraph();
-        graphComponent.setPageVisible(true);
-        //graphComponent.setZoomPolicy(2);
-        graphComponent.setCenterZoom(true);
         graphComponent.setGridVisible(false);
-        graphComponent.zoomTo(1.0, graphComponent.isCenterZoom());
+        //graphComponent.zoomTo(0.75, true);
+        /*graphComponent.zoomActual();
+        graphComponent.setPageVisible(true);
+        graphComponent.setZoomPolicy(2);*/
 
         // Creates the shapes palette
         EditorPalette shapesPalette = insertPalette(mxResources.get("shapes"));

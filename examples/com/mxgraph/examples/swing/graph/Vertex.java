@@ -1,5 +1,6 @@
 package com.mxgraph.examples.swing.graph;
 
+import com.alibaba.fastjson.JSON;
 import com.mxgraph.examples.swing.owl.*;
 
 import java.util.*;
@@ -26,8 +27,6 @@ public class Vertex<T> implements VertexInterface<T>, java.io.Serializable {
     private boolean visited;//标识顶点是否已访问
     private VertexInterface<T> previousVertex;//该顶点的前驱顶点
     private double cost;//顶点的权值,与边的权值要区别开来
-
-
 
     public String getId() {
         return id;
@@ -69,6 +68,30 @@ public class Vertex<T> implements VertexInterface<T>, java.io.Serializable {
         this.name = name;
     }
 
+    public List<Edge> getEdgeList() {
+        return edgeList;
+    }
+
+    public void setEdgeList(List<Edge> edgeList) {
+        this.edgeList = edgeList;
+    }
+
+    public VertexInterface<T> getPreviousVertex() {
+        return previousVertex;
+    }
+
+    public void setPreviousVertex(VertexInterface<T> previousVertex) {
+        this.previousVertex = previousVertex;
+    }
+
+    public void setVisited(boolean visited) {
+        this.visited = visited;
+    }
+
+    public boolean getVisited(){
+        return visited;
+    }
+
     public Vertex(T vertexLabel){
 
         label = vertexLabel;
@@ -78,9 +101,6 @@ public class Vertex<T> implements VertexInterface<T>, java.io.Serializable {
         cost = 0;
     }
 
-    public Vertex() {
-        this(null);
-    }
 
     /**
      *Task: 这里用了一个单独的类来表示边,主要是考虑到带权值的边
@@ -271,6 +291,11 @@ public class Vertex<T> implements VertexInterface<T>, java.io.Serializable {
     @Override
     public double getCost() {
         return cost;
+    }
+
+    @Override
+    public String getJsonStr(VertexInterface<T> v) {
+        return JSON.toJSONString(v);
     }
 
     //判断两个顶点是否相同

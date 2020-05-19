@@ -54,14 +54,14 @@ public class BrowserFrame {
             pps.load(UploadMxeFileFrame.class.getResourceAsStream("/config/http_url.properties"));
             webvOwlUrl = pps.getProperty("mxbaseUrl") + pps.getProperty("webvOwlHtml");
             System.out.println("webvOwlUrl:"+webvOwlUrl);
-            webvDataPath=pps.getProperty("webvDataPath");
+            webvDataPath=FileUtil.getDirPath()+pps.getProperty("webvDataPath");
             System.out.println("webvDataPath:"+webvDataPath);
         } catch (IOException e) {
             e.printStackTrace();
         }
 
         updateJson(filepath, filename);
-        final String title = filename.substring(0, filename.length() - 4) + "站点关系图";
+        final String title = filename.substring(0, filename.length() - 4) + "资源文件关系图";
         Browser browser = new Browser();
         BrowserView view = new BrowserView(browser);
 

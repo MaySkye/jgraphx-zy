@@ -1,5 +1,6 @@
 package com.mxgraph.examples.swing.match;
 
+import com.alibaba.fastjson.JSON;
 import com.mxgraph.examples.swing.editor.BasicGraphEditor;
 import com.mxgraph.examples.swing.graph.EdgeLink;
 import com.mxgraph.examples.swing.graph.GraphInterface;
@@ -559,6 +560,8 @@ public class ModifyTemplateCore {
 
     public static void bindCellResource(mxCell cell, VertexInterface<String> resource) {
         cell.setV(resource);
+        cell.setVertextInfo(JSON.toJSONString(resource));
+        System.out.println("setVertextInfo: "+cell.getVertextInfo());
         String hasproperty=null;
         String hasconnect=null;
         if(resource.getLink_info()!=null){
@@ -795,6 +798,7 @@ public class ModifyTemplateCore {
 
     //第九步：并绑定连线的资源信息
     private void autoBindEdge(GraphInterface<String> res_graph, mxCell cell, Set<String> hasBind) {
+
         if (cell == null) {
             return;
         }
@@ -811,7 +815,20 @@ public class ModifyTemplateCore {
                 Map.Entry<String, MutableTriple<VertexInterface<String>, EdgeLink, VertexInterface<String>>> entry = e_entry.next();
                 MutableTriple<VertexInterface<String>, EdgeLink, VertexInterface<String>> e=entry.getValue();
 
-                if(cell.getV()==null&&cell.getTarget()==e.getLeft()&&cell.getSource()==e.getRight()
+                mxCell targetCell = getCellById(root,cell.getTarget().getId());
+                if(targetCell.getName().equals("port")){
+                    targetCell = getCellById(root,targetCell.getParent().getId());
+                }
+                mxCell sourceCell = getCellById(root,cell.getSource().getId());
+                if(sourceCell.getName().equals("port")){
+                    sourceCell = getCellById(root,sourceCell.getParent().getId());
+                }
+                if(cell.getV()==null&&targetCell.getName().equals(e.getRight().getId())&&sourceCell.getName().equals(e.getLeft().getId())
+                        &&!hasBind.contains(e.getMiddle().getId())){
+                    bindEdgeResource(cell,e.getMiddle());
+                    hasBind.add(e.getMiddle().getId());
+                }
+                if(cell.getV()==null&&targetCell.getName().equals(e.getLeft().getId())&&sourceCell.getName().equals(e.getRight().getId())
                         &&!hasBind.contains(e.getMiddle().getId())){
                     bindEdgeResource(cell,e.getMiddle());
                     hasBind.add(e.getMiddle().getId());
@@ -824,8 +841,27 @@ public class ModifyTemplateCore {
         }
     }
 
+    public mxCell getCellById(mxCell root, String id){
+        if (root == null || id == null) {
+            return null;
+        }
+        if (root.getId()==id) {
+            return root;
+        }
+        for (int i = 0; i < root.getChildCount(); ++i) {
+            mxCell child = (mxCell) root.getChildAt(i);
+            mxCell res = getCellById(child, id);
+            if (res != null) {
+                return res;
+            }
+        }
+        return null;
+    }
+
     public static void bindEdgeResource(mxCell cell, EdgeLink resource) {
         cell.setEdgeLink(resource);
+        cell.setEdgeLinkInfo(JSON.toJSONString(resource));
+        System.out.println("setEdgeLinkInfo: "+cell.getEdgeLinkInfo());
     }
 
     /********************************************************************************************/
@@ -911,7 +947,7 @@ public class ModifyTemplateCore {
                                 }
                             }
                         }
-
+                        //System.out.println("owlObject.type.parentClass.id: "+owlObject.type.parentClass.id);
                         if(!mxcell_property.containsKey(arr[r].trim())) {
                             // 创建监控图元三元组--Name，插入到cell中
                             String nameStyle = AliasName.getAlias("monitor_name_style");
@@ -922,6 +958,11 @@ public class ModifyTemplateCore {
                             nameMonitorCell.setType("Property");
                             nameMonitorCell.setAttr("property_name");
                             nameMonitorCell.setVertex(true);
+                            nameMonitorCell.setMonitor_device_name(child.getDeviceid());
+                            nameMonitorCell.setMonitor_property_name(arr[r].trim());
+                            nameMonitorCell.setMonitor_property_type(owlObject.type.id);
+                            nameMonitorCell.setMonitor_property_kind(owlObject.type.parentClass.id);
+                            nameMonitorCell.setMonitor_unit(unit);
                             nameMonitorCell.setConnectable(false);
                             ((mxCell) graph.getDefaultParent()).insert(nameMonitorCell);
                             mxcell_property.put(arr[r].trim(), nameMonitorCell);
@@ -942,6 +983,7 @@ public class ModifyTemplateCore {
                             dataMonitorCell.setMonitor_device_name(child.getDeviceid());
                             dataMonitorCell.setMonitor_property_name(arr[r].trim());
                             dataMonitorCell.setMonitor_property_type(owlObject.type.id);
+                            dataMonitorCell.setMonitor_property_kind(owlObject.type.parentClass.id);
                             dataMonitorCell.setMonitor_unit(unit);
                             dataMonitorCell.setConnectable(false);
                             ((mxCell) graph.getDefaultParent()).insert(dataMonitorCell);

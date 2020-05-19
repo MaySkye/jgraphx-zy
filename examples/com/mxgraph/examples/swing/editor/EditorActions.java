@@ -2064,7 +2064,7 @@ public class EditorActions {
         String title = sitename + "站点监控图";
         String titleStyle = AliasName.getAlias("monitor_title_style");
         mxCell titleCell = new mxCell(title, title,
-                new mxGeometry(100, 50, 400, 60), titleStyle);
+                new mxGeometry(editor.getGraphComponent().getWidth()/2-200, 50, 400, 60), titleStyle);
         //System.out.println("--------x:"+titleCell.getGeometry().getX()+"  y:"+titleCell.getGeometry().getY());
         titleCell.setType("title");
         titleCell.setVertex(true);
@@ -2418,7 +2418,7 @@ public class EditorActions {
             System.out.println("res_array.toString():" + res_array.toString());
             String url = "http://localhost:8888/telemetry/addtelemetry";
             try {
-                sendHttpPost(url, res_array.toJSONString());
+                sendHttpPost(url, URLEncoder.encode(res_array.toJSONString(),"utf-8"));
                 JOptionPane.showMessageDialog(null, "同步数据库数据完成.", "完成", JOptionPane.INFORMATION_MESSAGE);
             } catch (Exception e1) {
                 e1.printStackTrace();

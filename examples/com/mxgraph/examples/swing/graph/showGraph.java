@@ -130,7 +130,6 @@ public class showGraph {
                 mxCell root = (mxCell) mxgraph.getModel().getRoot();
                 edgelink_mx.setEdge(true);
                 edgelink_mx.setEdgeLink(edgelink);
-
                 //edgelink_mx.setValue(edgelink.getId());
                 //edgelink_mx.setStyle(editor.AllCellMap.get("fiber_vertical").getStyle());
                 //edgelink_mx.setStyle("strokeWidth=6");

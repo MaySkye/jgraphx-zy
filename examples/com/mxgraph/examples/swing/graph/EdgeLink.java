@@ -1,5 +1,7 @@
 package com.mxgraph.examples.swing.graph;
 
+import com.alibaba.fastjson.JSON;
+
 import java.io.Serializable;
 
 /**
@@ -54,4 +56,5 @@ public class EdgeLink implements Serializable {
     public void setState(String state) {
         this.state = state;
     }
+
 }

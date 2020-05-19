@@ -48,6 +48,14 @@ public class FileUtil {
         return rootPath;
     }
 
+    //项目所在的目录
+    public static String getDirPath() {
+        String projectName = "jgraphx-master";
+        String path = FileUtil.getAppPath();
+        String dirPath = path.substring(1, path.lastIndexOf(projectName));
+        return dirPath;
+    }
+
     public static String readFile(InputStream inputStream) throws IOException {
 
         BufferedReader br = new BufferedReader(new InputStreamReader(inputStream,"UTF-8"));

@@ -465,6 +465,25 @@ public class EditorMenuBar extends JMenuBar {
         menu.add(editor.bind("Get sinks", new AnalyzeGraph(AnalyzeType.GET_SINKS, aGraph)));
         menu.add(editor.bind("Is biconnected", new AnalyzeGraph(AnalyzeType.IS_BICONNECTED, aGraph)));
 
+        // Creates the chart menu
+        menu = add(new JMenu("资源组态图"));
+
+        //menu.add(editor.bind("资源管理" ,new EditorActions.ResourceManageAction()));
+        //menu.addSeparator();
+        menu.add(editor.bind("构建组态图", new EditorActions.GenerateMxeFileAction()));
+        //menu.add(editor.bind("生成组态图", new EditorActions.GenerateDiagramAction()));
+        menu.add(editor.bind("运行预览", new EditorActions.RunDiagramAction()));
+        menu.add(editor.bind("退出预览", new EditorActions.QuitRunStateAction()));
+        menu.add(editor.bind("保存发布", new EditorActions.SaveMxeFileAction()));
+        menu.add(editor.bind("同步数据库数据", new EditorActions.SynDatabaseAction()));
+        menu.addSeparator();
+        menu.add(editor.bind("查看关系图", new EditorActions.ViewSchemaAction()));
+        //menu.add(editor.bind("地图展示", new MapChartAction()));
+        //menu.add(editor.bind("直接加载fibre", new EditorActions.TestAction()));
+        //menu.add(editor.bind("选择fibre显示的资源", new EditorActions.SelectResAction()));
+        //menu.add(editor.bind("打开service文件", new EditorActions.OpenServiceFileAction()));
+        //menu.add(editor.bind("打开xmodel文件", new EditorActions.OpenxModelFileAction()));
+
         // Creates the help menu
         menu = add(new JMenu(mxResources.get("help")));
         item = menu.add(new JMenuItem(mxResources.get("aboutGraphEditor")));
@@ -478,26 +497,7 @@ public class EditorMenuBar extends JMenuBar {
             }
         });
 
-        // Creates the chart menu
-        menu = add(new JMenu("组态图操作"));
-        System.out.println("username: "+username);
 
-        menu.add(editor.bind("资源管理" ,new EditorActions.ResourceManageAction()));
-        menu.addSeparator();
-        menu.add(editor.bind("构建组态图", new EditorActions.GenerateMxeFileAction()));
-        menu.add(editor.bind("生成组态图", new EditorActions.GenerateDiagramAction()));
-        menu.add(editor.bind("同步数据库数据", new EditorActions.SynDatabaseAction()));
-        menu.addSeparator();
-        menu.add(editor.bind("运行预览", new EditorActions.RunDiagramAction()));
-        menu.add(editor.bind("退出预览", new EditorActions.QuitRunStateAction()));
-        menu.add(editor.bind("保存发布", new EditorActions.SaveMxeFileAction()));
-        menu.addSeparator();
-        menu.add(editor.bind("查看关系图", new EditorActions.ViewSchemaAction()));
-        //menu.add(editor.bind("地图展示", new MapChartAction()));
-        //menu.add(editor.bind("直接加载fibre", new EditorActions.TestAction()));
-        //menu.add(editor.bind("选择fibre显示的资源", new EditorActions.SelectResAction()));
-        //menu.add(editor.bind("打开service文件", new EditorActions.OpenServiceFileAction()));
-        //menu.add(editor.bind("打开xmodel文件", new EditorActions.OpenxModelFileAction()));
     }
 
     /**
