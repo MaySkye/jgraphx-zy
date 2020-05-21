@@ -153,7 +153,7 @@ public class LoginFrame extends JFrame {
                     /*
                      * 不进行验证时
                      * */
-                 /*   boolean loginResult = login(username,password,path,loginUrl);
+                    boolean loginResult = login(username,password,path,loginUrl);
                     //boolean loginResult = true;
                     if(loginResult){
                         setVisible(false);
@@ -161,13 +161,13 @@ public class LoginFrame extends JFrame {
                         new StartUI(username);
                     }else{
                         JOptionPane.showMessageDialog(null, "用户名密码错误", "提示", JOptionPane.ERROR_MESSAGE);
-                    }*/
+                    }
 
 
                     /*
                      * 进行用户身份验证+权限验证
                      * */
-                try {
+               /* try {
                     //TODO: verifyIdentity
                     String resp = VerifyIdentity.VerifyIdentity(username, path);
                     JSONObject jsonRead = JSONObject.parseObject(resp);
@@ -214,7 +214,7 @@ public class LoginFrame extends JFrame {
                     }
                 } catch (Exception ex) {
                     ex.printStackTrace();
-                }
+                }*/
                 }
             }
 
