@@ -816,11 +816,12 @@ public class ModifyTemplateCore {
                 MutableTriple<VertexInterface<String>, EdgeLink, VertexInterface<String>> e=entry.getValue();
 
                 mxCell targetCell = getCellById(root,cell.getTarget().getId());
-                if(targetCell.getName().equals("port")){
+                mxCell sourceCell = getCellById(root,cell.getSource().getId());
+                if(targetCell == null || sourceCell == null) continue;
+                if("port".equals(targetCell.getName())){
                     targetCell = getCellById(root,targetCell.getParent().getId());
                 }
-                mxCell sourceCell = getCellById(root,cell.getSource().getId());
-                if(sourceCell.getName().equals("port")){
+                if("port".equals(sourceCell.getName())){
                     sourceCell = getCellById(root,sourceCell.getParent().getId());
                 }
                 if(cell.getV()==null&&targetCell.getName().equals(e.getRight().getId())&&sourceCell.getName().equals(e.getLeft().getId())
