@@ -17,6 +17,9 @@ public class EdgeLink implements Serializable {
     private String image;
     private String state;
 
+    public EdgeLink() {
+    }
+
     public String getId() {
         return id;
     }

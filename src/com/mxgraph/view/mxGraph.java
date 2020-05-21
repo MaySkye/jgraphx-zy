@@ -359,7 +359,7 @@ public class mxGraph extends mxEventSource
 	 * Specifies if the graph should automatically update the cell size
 	 * after an edit. This is used in isAutoSizeCell. Default is false.
 	 */
-	protected boolean autoSizeCells = false;
+	protected boolean autoSizeCells = true;
 
 	/**
 	 * <mxRectangle> that specifies the area in which all cells in the

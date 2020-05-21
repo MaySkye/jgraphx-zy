@@ -28,6 +28,9 @@ public class Vertex<T> implements VertexInterface<T>, java.io.Serializable {
     private VertexInterface<T> previousVertex;//该顶点的前驱顶点
     private double cost;//顶点的权值,与边的权值要区别开来
 
+    public Vertex() {
+    }
+
     public String getId() {
         return id;
     }

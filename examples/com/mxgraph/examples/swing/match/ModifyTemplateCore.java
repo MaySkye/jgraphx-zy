@@ -49,9 +49,9 @@ public class ModifyTemplateCore {
     private Map<String,mxCell> mxcell_device=new HashMap<>();
     private static int MonitorHeight = 40;
     private static int MonitorNameWidth = 180;
-    private static int MonitorDataWidth = 60;
+    private static int MonitorDataWidth = 160;
     private static int MonitorUnitWidth = 40;
-    private static int DeviceWidth=280;
+    private static int DeviceWidth=380;
     private static int DeviceHeight=30;
 
     static {

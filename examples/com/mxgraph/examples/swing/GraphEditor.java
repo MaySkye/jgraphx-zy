@@ -65,6 +65,10 @@ public class GraphEditor extends BasicGraphEditor {
         super(appTitle, component);
         final mxGraph graph = graphComponent.getGraph();
         graphComponent.setGridVisible(false);
+        System.out.println("graphComponent.getWidth: "+graphComponent.getWidth());
+        System.out.println("graphComponent.getHeight: "+graphComponent.getHeight());
+        graphComponent.setPageVisible(false);
+
         //graphComponent.zoomTo(0.75, true);
         /*graphComponent.zoomActual();
         graphComponent.setPageVisible(true);

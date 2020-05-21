@@ -32,7 +32,7 @@ public class ResMatchCore {
 
         List<String> candidateList = getCandidate(targetStatic);
 
-/*        Object selectedVaule = JOptionPane.showInputDialog(null, AliasName.getAlias("select_template"),
+        Object selectedVaule = JOptionPane.showInputDialog(null, AliasName.getAlias("select_template"),
                 AliasName.getAlias("select"), JOptionPane.INFORMATION_MESSAGE, null,
                 candidateList.toArray(), candidateList.get(0));
 
@@ -41,8 +41,8 @@ public class ResMatchCore {
         }
 
         //得到选中模板图的路径并返回
-        String graphName = selectedVaule.toString();//graphName代表选中的模板的名字*/
-        String graphName = candidateList.get(0);
+        String graphName = selectedVaule.toString();//graphName代表选中的模板的名字
+        //String graphName = candidateList.get(0);
 
         StringBuilder graphPath = new StringBuilder();
 
