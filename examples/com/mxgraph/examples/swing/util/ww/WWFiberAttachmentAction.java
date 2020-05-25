@@ -318,7 +318,8 @@ public class WWFiberAttachmentAction {
         String newFiberStyle = mxStyleUtils.setStyle(fiberCell.getStyle(), "opacity", "0");
         fiberCell.setStyle(newFiberStyle);
         // 原始光纤上移，使用graoh.orderCells()会导致录入历史
-        fiberCell.getParent().insert(fiberCell);
+        mxCell defaultParent = (mxCell)graph.getDefaultParent();
+        defaultParent.insert(fiberCell);
 //        graph.cellsOrdered(new mxCell[]{line1, line2, mline}, true);
         graph.refresh();
     }
