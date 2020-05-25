@@ -3,6 +3,7 @@ package com.mxgraph.examples.swing.startup;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.mxgraph.examples.swing.auth.Check;
+import com.mxgraph.examples.swing.auth.Common;
 import com.mxgraph.examples.swing.auth.Md5;
 import com.mxgraph.examples.swing.auth.VerifyIdentity;
 import com.mxgraph.examples.swing.frame.StartUI;
@@ -153,7 +154,7 @@ public class LoginFrame extends JFrame {
                     /*
                      * 不进行验证时
                      * */
-                    boolean loginResult = login(username,password,path,loginUrl);
+                  /*  boolean loginResult = login(username,password,path,loginUrl);
                     //boolean loginResult = true;
                     if(loginResult){
                         setVisible(false);
@@ -161,14 +162,15 @@ public class LoginFrame extends JFrame {
                         new StartUI(username);
                     }else{
                         JOptionPane.showMessageDialog(null, "用户名密码错误", "提示", JOptionPane.ERROR_MESSAGE);
-                    }
+                    }*/
 
 
                     /*
                      * 进行用户身份验证+权限验证
                      * */
-               /* try {
+                try {
                     //TODO: verifyIdentity
+                    Common.init();
                     String resp = VerifyIdentity.VerifyIdentity(username, path);
                     JSONObject jsonRead = JSONObject.parseObject(resp);
                     Integer code = (Integer)jsonRead.get("code");
@@ -198,7 +200,8 @@ public class LoginFrame extends JFrame {
                         jsonRead = JSONObject.parseObject(resp2);
                         code = (Integer)jsonRead.get("code");
                         if (code == 0) {
-                            boolean loginResult = login(username,password,path,loginUrl);
+                            //boolean loginResult = login(username,password,path,loginUrl);
+                            boolean loginResult=true;
                             if(loginResult){
                                 setVisible(false);
                                 dispose();
@@ -214,7 +217,7 @@ public class LoginFrame extends JFrame {
                     }
                 } catch (Exception ex) {
                     ex.printStackTrace();
-                }*/
+                }
                 }
             }
 

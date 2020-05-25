@@ -1,16 +1,35 @@
 package com.mxgraph.examples.swing.auth;
 
-import java.io.BufferedReader;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import com.mxgraph.examples.swing.frame.UploadMxeFileFrame;
+
+import java.io.*;
+import java.util.Iterator;
+import java.util.Properties;
 
 public class Common {
     // 开发环境url
-    public static final String devUrlPrefix = "http://localhost:9090/";
+    public static String devUrlPrefix = "";
     // 正式环境url
-    public static final String proUrlPrefix = "https://172.16.79.60:4433/api/";
-    public static final String opensslPath = "C:\\Program Files\\Git\\usr\\bin\\openssl";
+    public static String proUrlPrefix = "";
+    public static String opensslPath = "";
+
+    public static void init() {
+        Properties prop = new Properties();
+        try {
+            //读取属性文件config.properties
+            prop.load(Common.class.getResourceAsStream("/config/kong_conf.properties"));
+            Iterator<String> it = prop.stringPropertyNames().iterator();
+            while (it.hasNext()) {
+                String key = it.next();
+                System.out.println(key + ":  " + prop.getProperty(key));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        devUrlPrefix = prop.getProperty("devUrlPrefix");
+        proUrlPrefix = prop.getProperty("proUrlPrefix");
+        opensslPath = prop.getProperty("opensslPath");
+    }
 
     public static String getFileContent(FileInputStream fis, String encoding) throws IOException {
         try(BufferedReader br = new BufferedReader( new InputStreamReader(fis, encoding))) {
