@@ -1,7 +1,7 @@
 package com.mxgraph.examples.swing.decode;
 
 /**
- * Created by QiboLee on 2017/6/1 0001.
+ * （解析）边类
  */
 public class EdgeEle {
 

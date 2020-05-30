@@ -12,6 +12,9 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * 边解析类
+ */
 public class EdgeDecoder {
 
     public static List<EdgeEle> egdeList;
@@ -29,6 +32,12 @@ public class EdgeDecoder {
         }
     }
 
+    /**
+     * 解析xml文档
+     * @param inputStream
+     * @return
+     * @throws IOException
+     */
     private static List<EdgeEle> decodeDoc(InputStream inputStream) throws IOException {
         // 将xml解析为Document实例
         String content = FileUtil.readFile(inputStream);
@@ -47,6 +56,11 @@ public class EdgeDecoder {
         return list;
     }
 
+    /**
+     * 解析边图元
+     * @param node
+     * @return
+     */
     private static EdgeEle decodeCell(Node node) {
         /*
         <edge>
@@ -67,6 +81,12 @@ public class EdgeDecoder {
         return ele;
     }
 
+    /**
+     * 解析属性，并添加至边的图元中
+     * @param node
+     * @param ele
+     * @return
+     */
     private static EdgeEle decodeAttrs(Node node, EdgeEle ele) {
         /*
         <edge>
@@ -78,6 +98,13 @@ public class EdgeDecoder {
         return obj;
     }
 
+
+    /**
+     * 解析边结点的孩子，也即属性name、type、width...
+     * @param node
+     * @param ele
+     * @return
+     */
     private static EdgeEle decodeChildren(Node node, EdgeEle ele) {
         /*
         <edge>
@@ -97,6 +124,11 @@ public class EdgeDecoder {
         return ele;
     }
 
+    /**
+     * 解析单个孩子，也即一个属性
+     * @param ele
+     * @param node
+     */
     private static void decodeChild(EdgeEle ele, Node node) {
         /*
         <name>pipe_horizontal</name>

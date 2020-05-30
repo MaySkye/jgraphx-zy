@@ -13,7 +13,9 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
-
+/**
+ * 图元解析类
+ */
 public class CellDecoder {
     public static List<CellEle> opticalDeviceCellList = null;
     public static List<CellEle> networkDeviceCellList = null;
@@ -28,6 +30,12 @@ public class CellDecoder {
         }
     }
 
+    /**
+     * 解析xml文档
+     * @param inputStream
+     * @return
+     * @throws IOException
+     */
     private static List<CellEle> decodeDoc(InputStream inputStream) throws IOException {
         // 将xml解析为Document实例
         String content = FileUtil.readFile(inputStream);
@@ -46,6 +54,11 @@ public class CellDecoder {
         return list;
     }
 
+    /**
+     * 解析图元
+     * @param node
+     * @return
+     */
     private static CellEle decodeCell(Node node) {
         // 若不是Element，则返回null
         if (node == null || node.getNodeType() != Node.ELEMENT_NODE) {
@@ -57,6 +70,12 @@ public class CellDecoder {
         return ele;
     }
 
+    /**
+     * 解析属性，添加至图元中
+     * @param node
+     * @param ele
+     * @return
+     */
     private static CellEle decodeAttrs(Node node, CellEle ele) {
         /* 结点示例： <cell name="boiler1" type="Boiler" icon="/com/mxgraph/examples/swing/images/boiler1.png" style="">  */
 
@@ -101,6 +120,12 @@ public class CellDecoder {
         return ele;
     }
 
+    /**
+     * 解析连接端口（多个）
+     * @param node
+     * @param ele
+     * @return
+     */
     private static CellEle decodePorts(Node node, CellEle ele) {
         /* 结点示例
         <port attr="electric" location="up" direction="out" x="0.5" y="0.28"/>
@@ -118,6 +143,11 @@ public class CellDecoder {
         return ele;
     }
 
+    /**
+     * 解析连接端口（单个）
+     * @param node
+     * @return
+     */
     private static CellPort decodePort(Node node) {
         /*
         <port attr="electric" location="up" direction="out" x="0.5" y="0.28"/>

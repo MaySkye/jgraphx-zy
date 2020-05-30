@@ -1,6 +1,8 @@
 package com.mxgraph.examples.swing.decode;
 
-
+/**
+ * 端口解析类
+ */
 public class CellPort {
     // fiber port style
     private static final String style_fiber= "rounded=1;fillColor=#AAEEAE;gradientColor=#EEEEFF;strokeWidth=1;strokeColor=#EEEEFF";
