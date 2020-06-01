@@ -26,15 +26,17 @@ public class WWFiberManager {
             // 空指针检测
             if (selectionCell == null)
                 return;
-            // 如果图元类型为设备
+            // 如果图元类型为光纤
             if (selectionCell.getType() != null && selectionCell.getType().indexOf("FiberEdge") != -1) {
                 WWFiberAttachmentAction factory = new WWFiberAttachmentAction(graph, selectionCell);
                 factory.doHandleForFiber();
             } else {
                 WWLogger.infoF("图元类型为设备，有{0}条光纤连接", selectionCell.getEdgeCount());
+                // 遍历与设备相连的连线
                 for (int i = 0; i < selectionCell.getEdgeCount(); i++) {
                     mxCell fiberEdge = (mxCell) selectionCell.getEdgeAt(i);
                     WWLogger.infoF(fiberEdge.getName());
+                    // 若连线为光纤
                     if (fiberEdge.getType() != null && fiberEdge.getType().indexOf("FiberEdge") != -1) {
                         WWFiberAttachmentAction factory = new WWFiberAttachmentAction(graph, fiberEdge);
                         factory.doHandleForFiber();
