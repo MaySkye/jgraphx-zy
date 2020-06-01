@@ -78,6 +78,8 @@ public class WWFiberAttachmentAction {
             imageCellsOfFiberEdge.put(fiberCell.getId(), fiberImageSet);
         }
         fiberImageSet.add(cell);
+        // 将光纤图片下移一层，导致无法撤销操作
+        graph.getModel().add(parentCell, cell, 0);
         return cell;
     }
 
@@ -163,6 +165,7 @@ public class WWFiberAttachmentAction {
      * @param y
      * @return
      */
+    @Deprecated
     private mxCell addFiberPoint(double x, double y) {
         WWLogger.debug("YES YES");
         x -= halfDiffer;
@@ -207,6 +210,8 @@ public class WWFiberAttachmentAction {
             imageCellsOfFiberEdge.put(fiberCell.getId(), fiberImageSet);
         }
         fiberImageSet.add(cell);
+        // 将光纤图片下移一层，导致无法撤销操作
+        graph.getModel().add(parentCell, cell, 0);
         return cell;
     }
 
