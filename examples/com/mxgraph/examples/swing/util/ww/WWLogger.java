@@ -1,7 +1,5 @@
 package com.mxgraph.examples.swing.util.ww;
 
-import sun.plugin2.message.Message;
-
 import java.text.MessageFormat;
 
 /**
@@ -10,7 +8,7 @@ import java.text.MessageFormat;
 public class WWLogger {
     enum LogLevel {
         DEBUG,
-        LOG,
+        INFO,
         WARN,
         ERROR,
         NONE
@@ -21,7 +19,7 @@ public class WWLogger {
     private static void printCurrentMethod() {
         StackTraceElement[] stacks = Thread.currentThread().getStackTrace();
         StackTraceElement element = (StackTraceElement) stacks[4];
-        String out = MessageFormat.format("      \033[47;35m{0}.{1}()  Line: {2}\033[0m", element.getClassName(), element.getMethodName(), element.getLineNumber());
+        String out = MessageFormat.format("      \033[47;35m{0} --- {1}()  Line: {2}\033[0m", element.getClassName(), element.getMethodName(), element.getLineNumber());
         System.out.println(out);
     }
 
@@ -41,20 +39,20 @@ public class WWLogger {
         doLog(LogLevel.DEBUG, content);
     }
 
-    public static void log(Object content) {
-        doLog(LogLevel.LOG, content);
+    public static void info(Object content) {
+        doLog(LogLevel.INFO, content);
     }
 
-    public static void logF(String pattern, Object... args) {
-        doLog(LogLevel.LOG, MessageFormat.format(pattern, args));
+    public static void infoF(String pattern, Object... args) {
+        doLog(LogLevel.INFO, MessageFormat.format(pattern, args));
     }
 
-    public static void log(Object... args) {
+    public static void info(Object... args) {
         String content = "";
         for (Object arg : args) {
             content += arg + " ";
         }
-        doLog(LogLevel.LOG, content);
+        doLog(LogLevel.INFO, content);
     }
 
     public static void warn(Object content) {
@@ -94,14 +92,14 @@ public class WWLogger {
     }
 
     private static void doLog(LogLevel level, Object content) {
-        if (!isNeedPrint(LogLevel.ERROR)) return;
+        if (!isNeedPrint(level)) return;
         switch (level) {
             case DEBUG:
                 System.out.print("\033[44;37m" + "【WW】debug:" + "\033[0m ");
                 System.out.print("\033[30;34m" + content + "\033[0m");
                 printCurrentMethod();
                 break;
-            case LOG:
+            case INFO:
                 System.out.print("\033[42m" + "【WW】Log:" + "\033[0m ");
                 System.out.print(content);
                 printCurrentMethod();
@@ -118,3 +116,4 @@ public class WWLogger {
         }
     }
 }
+
