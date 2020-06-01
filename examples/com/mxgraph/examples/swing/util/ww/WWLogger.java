@@ -14,7 +14,7 @@ public class WWLogger {
         NONE
     }
 
-    public static final LogLevel logLevel = LogLevel.NONE;
+    public static final LogLevel logLevel = LogLevel.ERROR;
 
     private static void printCurrentMethod() {
         StackTraceElement[] stacks = Thread.currentThread().getStackTrace();
@@ -23,9 +23,6 @@ public class WWLogger {
         System.out.println(out);
     }
 
-    public static void debug(Object content) {
-        doLog(LogLevel.DEBUG, content);
-    }
 
     public static void debugF(String pattern, Object... args) {
         doLog(LogLevel.DEBUG, MessageFormat.format(pattern, args));
@@ -39,9 +36,6 @@ public class WWLogger {
         doLog(LogLevel.DEBUG, content);
     }
 
-    public static void info(Object content) {
-        doLog(LogLevel.INFO, content);
-    }
 
     public static void infoF(String pattern, Object... args) {
         doLog(LogLevel.INFO, MessageFormat.format(pattern, args));
@@ -53,10 +47,6 @@ public class WWLogger {
             content += arg + " ";
         }
         doLog(LogLevel.INFO, content);
-    }
-
-    public static void warn(Object content) {
-        doLog(LogLevel.WARN, content);
     }
 
     public static void warnF(String pattern, Object args) {

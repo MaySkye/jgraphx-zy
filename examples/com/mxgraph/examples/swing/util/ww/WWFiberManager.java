@@ -31,10 +31,10 @@ public class WWFiberManager {
                 WWFiberAttachmentAction factory = new WWFiberAttachmentAction(graph, selectionCell);
                 factory.doHandleForFiber();
             } else {
-                WWLogger.logF("图元类型为设备，有{0}条光纤连接", selectionCell.getEdgeCount());
+                WWLogger.infoF("图元类型为设备，有{0}条光纤连接", selectionCell.getEdgeCount());
                 for (int i = 0; i < selectionCell.getEdgeCount(); i++) {
                     mxCell fiberEdge = (mxCell) selectionCell.getEdgeAt(i);
-                    WWLogger.log(fiberEdge.getName());
+                    WWLogger.infoF(fiberEdge.getName());
                     if (fiberEdge.getType() != null && fiberEdge.getType().indexOf("FiberEdge") != -1) {
                         WWFiberAttachmentAction factory = new WWFiberAttachmentAction(graph, fiberEdge);
                         factory.doHandleForFiber();
