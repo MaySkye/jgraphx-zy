@@ -529,12 +529,21 @@ public class WWFiberAttachmentAction {
     }
 
 
+    /**
+     * 获取点的X、Y坐标
+     * @param point
+     * @return
+     */
     @Deprecated
     private static String getPureXY(mxPoint point) {
         String pureXY = point.getX() + "," + point.getY();
         return pureXY;
     }
 
+    /**
+     * 为光纤交点处，添加指示图标（暂不实现）
+     * @param graph
+     */
     @Deprecated
     public static void findAndAddPoint(mxGraph graph) {
         if (true)
@@ -583,6 +592,10 @@ public class WWFiberAttachmentAction {
         allPointToFront(graph);
     }
 
+    /**
+     * 所有光纤交点处的指示图标，上移一层（废弃）
+     * @param graph
+     */
     @Deprecated
     private static void allPointToFront(mxGraph graph) {
         mxCell defaultParent = (mxCell) (graph.getDefaultParent());
