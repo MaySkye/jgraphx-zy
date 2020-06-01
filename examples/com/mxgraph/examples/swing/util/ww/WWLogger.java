@@ -14,7 +14,7 @@ public class WWLogger {
         NONE
     }
 
-    public static final LogLevel logLevel = LogLevel.ERROR;
+    public static final LogLevel logLevel = LogLevel.NONE;
 
     /**
      * 内部方法，打印所在方法
